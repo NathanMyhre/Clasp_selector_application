@@ -11,13 +11,12 @@ import java.util.List;
 
 public class ClaspSelector {
     public final HashMap<String, Clasp> clasps;
+    public Parameters params;
 
-    public ClaspSelector() {
-        clasps = ClaspSelector.buildNewMap();
-    }
+
 
     //Bug: If I decide later that I want to improve performance, might be good here
-    public ClaspSelector(HashMap<String, String>) {
+    public ClaspSelector(HashMap<String, String> input) {
         clasps = ClaspSelector.buildNewMap();
 
     }
