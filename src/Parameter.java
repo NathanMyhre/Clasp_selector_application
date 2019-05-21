@@ -34,6 +34,17 @@ public abstract class Parameter<T> {
         }
         return newParameter;
     }
+
+    //Bug: need a better equals method for Parameter in the future.
+    public boolean equalTo( Parameter p) {
+        if (this.paramValue == null || this.paramName ==null) {
+            return false;
+        } else if (p.paramName == null || p.paramValue == null) {
+            return false;
+        }
+        return (this.paramName.equals(p.paramName)
+                && (this.paramValue.equals(p.paramValue)));
+    }
 }
 
 class StressReleaseNeeded extends Parameter {

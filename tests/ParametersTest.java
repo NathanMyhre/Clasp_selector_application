@@ -10,7 +10,7 @@ public class ParametersTest {
     public void testNull(){
         Scanner empty = new Scanner("");
         Parameters emptyParams = new Parameters(empty);
-
+        assert(false);
     }
 
     @Test
@@ -19,7 +19,12 @@ public class ParametersTest {
         Scanner stressFalse = new Scanner( "stressrelease false");
         Parameters paramTrue = new Parameters(stressTrue);
         Parameters paramFalse = new Parameters(stressFalse);
-
+        Parameter pT = Parameter.newParameter("stressrelease", "true");
+        Parameter pF = Parameter.newParameter("stressrelease", "false");
+        assert(paramTrue.params.containsKey("stressrelease"));
+        assertTrue(paramTrue.params.get("stressrelease").equalTo(pT));
+        assert(paramFalse.params.containsKey("stressrelease"));
+        assertTrue(paramFalse.params.get("stressrelease").equalTo(pF));
     }
 
     @Test
@@ -30,16 +35,24 @@ public class ParametersTest {
         Parameters param1 = new Parameters(survey1);
         Parameters param2 = new Parameters(survey2);
         Parameters param3 = new Parameters(survey3);
+        assert(param1.params.containsKey("retentiveundercut"));
 
     }
 
+    //tests addition of single retentive undercut parameter.
+    //Bug: Parameters is easy to break with retentive undercut - .01 vs 0.01?
     @Test
     public void testRetentiveUndercutOnly(){
-        Scanner retent1 = new Scanner("retentiveundercut .01");
-        Scanner retent2 = new Scanner("retentiveundercut .02");
+        Scanner retent1 = new Scanner("retentiveundercut 0.01");
+        Scanner retent2 = new Scanner("retentiveundercut 0.02");
         Parameters param1 = new Parameters(retent1);
         Parameters param2 = new Parameters(retent2);
-
+        Parameter p1 = Parameter.newParameter("retentiveundercut", "0.01");
+        Parameter p2 = Parameter.newParameter("retentiveundercut", "0.02");
+        assert(param1.params.containsKey("retentiveundercut"));
+        assertTrue(param1.params.get("retentiveundercut").equalTo(p1));
+        assert(param2.params.containsKey("retentiveundercut"));
+        assertTrue(param2.params.get("retentiveundercut").equalTo(p2));
     }
 
     @Test
@@ -102,6 +115,6 @@ public class ParametersTest {
             + "estheticconcern true "
             + "toothtype anterior ");
         Parameters full1Parameters = new Parameters (full1);
-        assert(full1Parameters.checkFullCriteria());
+        assert(full1Parameters.sanityCheck());
     }
 }

@@ -16,7 +16,7 @@ public class ClaspSelector {
 
 
     //Bug: If I decide later that I want to improve performance, might be good here
-    public ClaspSelector(HashMap<String, String> input) {
+    public ClaspSelector(HashMap<String, String> input, Parameters inputParams) {
         clasps = ClaspSelector.buildNewMap();
 
     }
@@ -26,7 +26,29 @@ public class ClaspSelector {
         return this.clasps;
     }
 
-    public static HashMap<String, Clasp> buildNewMap() {
+    private static void checkParameter(ClaspSelector claspSel, Parameter currentParam) {
+        if (currentParam.paramName.equals("stressrelease")){
+
+        } else if (currentParam.paramName.equals("surveylineclass")) {
+
+        } else if (currentParam.paramName.equals("retentiveUndercut")) {
+
+        } else if (currentParam.paramName.equals("occlusion")) {
+
+        } else if (currentParam.paramName.equals("softtissueundercut")) {
+
+        } else if (currentParam.paramName.equals("bucalvestibule2mm")) {
+
+        } else if (currentParam.paramName.equals("estheticconcern")) {
+
+        } else if (currentParam.paramName.equals("toothtype")) {
+
+        } else {
+            //Bug: throw error or s/t if ClaspSelector.checkParameter is unable to find a parameter.
+        }
+    }
+
+    private static HashMap<String, Clasp> buildNewMap() {
         HashMap<String, Clasp> map = new HashMap<String, Clasp>();
         map.put("ibarmesial", Clasp.factory("ibarmesial"));
         map.put("ibardistal", Clasp.factory("ibardistal"));
