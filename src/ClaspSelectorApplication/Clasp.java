@@ -1,3 +1,5 @@
+package ClaspSelectorApplication;
+
 /**
  * Abstract container for clasps. Each subclass requires a number of
  * parameters defined in order to be constructed: Stress release needed,
@@ -78,49 +80,49 @@ public abstract class Clasp {
 class IBarMesial extends Clasp {
     IBarMesial( ) {
         this.name = "I-Bar Clasp, Mesial Rest";
-        this.picture = "???";
+        this.picture = "C:\\Users\\natha\\OneDrive - University of Iowa\\Documents\\Clasp Selector\\ibarmesial.pdf";
     }
 }
 
 class IBarDistal extends Clasp {
     IBarDistal ( ) {
         this.name = "I-Bar Clasp, Distal Rest";
-        this.picture = "???";
+        this.picture = "C:\\Users\\natha\\OneDrive - University of Iowa\\Documents\\Clasp Selector\\ibardistal.pdf";
     }
 }
 
 class IBarCingulum extends Clasp {
     IBarCingulum ( ) {
         this.name = "I-Bar Clasp, Cingulum Rest";
-        this.picture = "???";
+        this.picture = "C:\\Users\\natha\\OneDrive - University of Iowa\\Documents\\Clasp Selector\\ibarcingulum.pdf";
     }
 }
 
 class ModTBarMesial extends Clasp {
     ModTBarMesial (){
         this.name = "Mod T-Bar Clasp, Mesial Rest";
-        this.picture = "???";
+        this.picture = "C:\\Users\\natha\\OneDrive - University of Iowa\\Documents\\Clasp Selector\\modtbarmesial.pdf";
     }
 }
 
 class ModTBarDistal extends Clasp {
     ModTBarDistal( ){
         this.name = "Mod T-Bar Clasp, Distal Rest";
-        this.picture = "???";
+        this.picture = "C:\\Users\\natha\\OneDrive - University of Iowa\\Documents\\Clasp Selector\\modtbardistal.pdf";
     }
 }
 
 class ModTBarCingulum extends Clasp {
     ModTBarCingulum (){
         this.name = "Mod T-Bar Clasp, Cingulum Rest";
-        this.picture = "???";
+        this.picture = "C:\\Users\\natha\\OneDrive - University of Iowa\\Documents\\Clasp Selector\\modtbarcingulum.pdf";
     }
 }
 
 class WWMesial extends Clasp {
     WWMesial (){
         this.name = "WW Clasp, Mesial Rest";
-        this.picture = "???";
+        this.picture = "C:\\Users\\natha\\OneDrive - University of Iowa\\Documents\\Clasp Selector\\wwmesial.pdf";
 
     }
 }
@@ -128,42 +130,42 @@ class WWMesial extends Clasp {
 class WWDistal extends Clasp {
     WWDistal (){
         this.name = "WW Clasp, Distal Rest";
-        this.picture = "???";
+        this.picture = "C:\\Users\\natha\\OneDrive - University of Iowa\\Documents\\Clasp Selector\\wwdistal.pdf";
     }
 }
 
 class WWCingulum extends Clasp {
     WWCingulum (){
         this.name = "WW Clasp, Cingulum Rest";
-        this.picture = "???";
+        this.picture = "C:\\Users\\natha\\OneDrive - University of Iowa\\Documents\\Clasp Selector\\wwcingulum.pdf";
     }
 }
 
 class CCMesial extends Clasp {
     CCMesial (){
         this.name = "CC Clasp, Mesial Rest";
-        this.picture = "???";
+        this.picture = "C:\\Users\\natha\\OneDrive - University of Iowa\\Documents\\Clasp Selector\\ccmesial.pdf";
     }
 }
 
 class CCDistal extends Clasp {
     CCDistal (){
         this.name = "CC Clasp, Distal Rest";
-        this.picture = "???";
+        this.picture = "C:\\Users\\natha\\OneDrive - University of Iowa\\Documents\\Clasp Selector\\ccdistal.pdf";
     }
 }
 
 class CCCingulum extends Clasp {
     CCCingulum (){
         this.name = "CC Clasp, Cingulum Rest";
-        this.picture = "???";
+        this.picture = "C:\\Users\\natha\\OneDrive - University of Iowa\\Documents\\Clasp Selector\\cccingulum.pdf";
     }
 }
 
 class Ring extends Clasp {
     Ring () {
         this.name = "Ring Rest";
-        this.picture = "???";
+        this.picture = "C:\\Users\\natha\\OneDrive - University of Iowa\\Documents\\Clasp Selector\\ring.pdf";
     }
 
 }

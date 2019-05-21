@@ -1,4 +1,4 @@
-/**
+package ClaspSelectorApplication; /**
  * ClaspSelector implements clasp selection logic and contains the list of
  * valid clasps in a given patient case. Parameters defined in order to be
  * constructed: Stress release needed, Survey line classification, Retentive undercut,
@@ -7,7 +7,6 @@
  */
 
 import java.util.HashMap;
-import java.util.List;
 
 public class ClaspSelector {
     public final HashMap<String, Clasp> clasps;

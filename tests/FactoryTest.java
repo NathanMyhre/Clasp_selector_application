@@ -1,3 +1,4 @@
+import ClaspSelectorApplication.Clasp;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -54,6 +55,6 @@ public class FactoryTest {
     @Test
     public void testRing() {
         Clasp ring = Clasp.factory("ring");
-        assertEquals("Ring Rest", ring.toString());
+        assertEquals("com.company.Ring Rest", ring.toString());
     }
 }

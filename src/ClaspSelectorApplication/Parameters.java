@@ -1,5 +1,6 @@
+package ClaspSelectorApplication;
+
 import java.util.Scanner;
-import java.io.File;
 import java.util.HashMap;
 
 /**Parameters is the container for all of the parameters needed for

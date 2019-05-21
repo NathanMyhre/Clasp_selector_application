@@ -1,8 +1,8 @@
+import ClaspSelectorApplication.ClaspSelector;
+import ClaspSelectorApplication.Parameters;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
 import java.util.Scanner;
-import java.io.File;
 
 public class ClaspSelectorTest {
 
@@ -25,6 +25,23 @@ public class ClaspSelectorTest {
 
     @Test
     public void testModTBarD() {
+        Scanner input = new Scanner("stressrelease false "
+                + "surveylineclass 2 "
+                + "retentiveundercut .01 "
+                + "occlusion mesial "
+                + "softtissueundercut false "
+                + "bucalvestibule2mm true "
+                + "estheticconcern false "
+                + "toothtype premolar");
+        Parameters paramsBig = new Parameters(input);
+        ClaspSelector claspsBig = new ClaspSelector(paramsBig);
+        for (String s : claspsBig.clasps.keySet()) {
+            System.out.println(claspsBig.clasps.get(s));
+        }
+    }
+
+    @Test
+    public void testAnother() {
         Scanner input = new Scanner("stressrelease false "
                 + "surveylineclass 2 "
                 + "retentiveundercut .01 "

@@ -1,7 +1,9 @@
+import ClaspSelectorApplication.Parameter;
+import ClaspSelectorApplication.Parameters;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import java.io.File;
+
 import java.util.Scanner;
 
 public class ParametersTest {
