@@ -28,15 +28,65 @@ public class ClaspSelector {
 
     private static void checkParameter(ClaspSelector claspSel, Parameter currentParam) {
         if (currentParam.paramName.equals("stressrelease")){
-
+            if (currentParam.paramValue.equals(true))  {
+                claspSel.clasps.remove("ibardistal");
+                claspSel.clasps.remove("ccmesial");
+                claspSel.clasps.remove("ccdistal");
+                claspSel.clasps.remove("cccingulum");
+                claspSel.clasps.remove("ring");
+            } else if (currentParam.paramValue.equals(false)) {
+                //no need to do anything
+            } else {
+                //Bug: throw error w/in ClaspSelector, but should never happen here.
+            }
         } else if (currentParam.paramName.equals("surveylineclass")) {
-
+            if (currentParam.paramValue.equals(1)) {
+                claspSel.clasps.remove("modtbarmesial");
+                claspSel.clasps.remove("modtbardistal");
+                claspSel.clasps.remove("modtbarcingulum");
+                claspSel.clasps.remove("ring");
+            } else if (currentParam.paramValue.equals(2)) {
+                claspSel.clasps.remove("ibarmesial");
+                claspSel.clasps.remove("ibardistal");
+                claspSel.clasps.remove(("ibarcingulum"));
+                claspSel.clasps.remove("wwmesial");
+                claspSel.clasps.remove("wwdistal");
+                claspSel.clasps.remove("wwcingulum");
+                claspSel.clasps.remove("ccmesial");
+            } else if (currentParam.paramValue.equals(3)) {
+                //Do nothing here
+            } else {
+                //Bug: throw error w/in ClaspSelector, but should never happen here.
+            }
         } else if (currentParam.paramName.equals("retentiveUndercut")) {
-
+            if (currentParam.paramValue.equals(.01)) {
+                claspSel.clasps.remove("wwmesial");
+                claspSel.clasps.remove("wwdistal");
+                claspSel.clasps.remove("wwcingulum");
+            } else if (currentParam.paramValue.equals(.02)) {
+                //do nothing here
+            }
         } else if (currentParam.paramName.equals("occlusion")) {
-
+            if (currentParam.paramValue.equals("mesial")) {
+                claspSel.clasps.remove("ibarmesial");
+                claspSel.clasps.remove("modtbarmesial");
+                claspSel.clasps.remove("wwmesial");
+                claspSel.clasps.remove("ccmesial");
+            } else if (currentParam.paramValue.equals("distal")) {
+                claspSel.clasps.remove("ibardistal");
+                claspSel.clasps.remove("modtbardistal");
+                claspSel.clasps.remove("wwdistal");
+                claspSel.clasps.remove("ccdistal");
+            }
         } else if (currentParam.paramName.equals("softtissueundercut")) {
-
+            if (currentParam.paramValue.equals(true)){
+                claspSel.clasps.remove("ibarmesial");
+                claspSel.clasps.remove("ibardistal");
+                claspSel.clasps.remove("ibarcingulum");
+                claspSel.clasps.remove("modtbarmesial");
+                claspSel.clasps.remove("modtbardistal");
+                claspSel.clasps.remove("modtbarcingulum");
+            }
         } else if (currentParam.paramName.equals("bucalvestibule2mm")) {
 
         } else if (currentParam.paramName.equals("estheticconcern")) {
