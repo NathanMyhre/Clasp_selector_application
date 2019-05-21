@@ -16,9 +16,11 @@ public class ClaspSelector {
 
 
     //Bug: If I decide later that I want to improve performance, might be good here
-    public ClaspSelector(HashMap<String, String> input, Parameters inputParams) {
+    public ClaspSelector( Parameters inputParams) {
         clasps = ClaspSelector.buildNewMap();
-
+        for( String s : inputParams.params.keySet() ) {
+            ClaspSelector.addParameter(this, inputParams.params.get(s));
+        }
     }
 
 
@@ -26,7 +28,7 @@ public class ClaspSelector {
         return this.clasps;
     }
 
-    private static void checkParameter(ClaspSelector claspSel, Parameter currentParam) {
+    private static void addParameter(ClaspSelector claspSel, Parameter currentParam) {
         if (currentParam.paramName.equals("stressrelease")){
             if (currentParam.paramValue.equals(true))  {
                 claspSel.clasps.remove("ibardistal");
@@ -86,13 +88,51 @@ public class ClaspSelector {
                 claspSel.clasps.remove("modtbarmesial");
                 claspSel.clasps.remove("modtbardistal");
                 claspSel.clasps.remove("modtbarcingulum");
-            }
+            } //do nothing on false case
         } else if (currentParam.paramName.equals("bucalvestibule2mm")) {
-
+            if (currentParam.paramValue.equals(false)) {
+                claspSel.clasps.remove("ibarmesial");
+                claspSel.clasps.remove("ibardistal");
+                claspSel.clasps.remove("ibarcingulum");
+                claspSel.clasps.remove("modtbarmesial");
+                claspSel.clasps.remove("modtbardistal");
+                claspSel.clasps.remove("modtbarcingulum");
+            } //do nothing on true case
         } else if (currentParam.paramName.equals("estheticconcern")) {
-
+            if(currentParam.paramValue.equals(true)) {
+                claspSel.clasps.remove("wwmesial");
+                claspSel.clasps.remove("wwdistal");
+                claspSel.clasps.remove("wwcingulum");
+                claspSel.clasps.remove("ccmesial");
+                claspSel.clasps.remove("ccdistal");
+                claspSel.clasps.remove("cccingulum");
+                claspSel.clasps.remove("ring");
+            } //do nothing on false case
         } else if (currentParam.paramName.equals("toothtype")) {
-
+            if (currentParam.paramValue.equals("anterior")) {
+                claspSel.clasps.remove("ibarmesial");
+                claspSel.clasps.remove("ibardistal");
+                claspSel.clasps.remove("modtbarmesial");
+                claspSel.clasps.remove("modtbardistal");
+                claspSel.clasps.remove("wwmesial");
+                claspSel.clasps.remove("wwdistal");
+                claspSel.clasps.remove("ring");
+            } else if (currentParam.paramValue.equals("premolar")) {
+                claspSel.clasps.remove("ibarcingulum");
+                claspSel.clasps.remove("modtbarcingulum");
+                claspSel.clasps.remove("wwcingulum");
+                claspSel.clasps.remove("cccingulum");
+                claspSel.clasps.remove("ring");
+            } else if (currentParam.paramValue.equals("molar")) {
+                claspSel.clasps.remove("ibarmesial");
+                claspSel.clasps.remove("ibardistal");
+                claspSel.clasps.remove("ibarcingulum");
+                claspSel.clasps.remove("modtbarmesial");
+                claspSel.clasps.remove("modtbardistal");
+                claspSel.clasps.remove("modtbarcingulum");
+                claspSel.clasps.remove("wwcingulum");
+                claspSel.clasps.remove("cccingulum");
+            }
         } else {
             //Bug: throw error or s/t if ClaspSelector.checkParameter is unable to find a parameter.
         }

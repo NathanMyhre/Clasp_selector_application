@@ -14,10 +14,6 @@ public class Main {
 
     public static void main(String[] args) {
 	// write your code here
-        HashMap<String, Integer> p = new HashMap<String, Integer>();
-        p.put("Test", 1);
-        System.out.println(p.get("Test"));
-        p.remove("Test");
-        p.remove("Test");
+
     }
 }
