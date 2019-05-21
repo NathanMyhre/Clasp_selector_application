@@ -127,6 +127,15 @@ public class ParametersTest {
         Parameters paramAnterior = new Parameters(toothTypeAnterior);
         Parameters paramPremolar = new Parameters(toothTypePremolar);
         Parameters paramMolar = new Parameters(toothTypeMolar);
+        Parameter pA = Parameter.newParameter("toothtype", "anterior");
+        Parameter pP = Parameter.newParameter("toothtype", "premolar");
+        Parameter pM = Parameter.newParameter("toothtype", "molar");
+        assert(paramAnterior.params.containsKey("toothtype"));
+        assert(paramPremolar.params.containsKey("toothtype"));
+        assert(paramMolar.params.containsKey("toothtype"));
+        assertTrue(paramAnterior.params.get("toothtype").equalTo(pA));
+        assertTrue(paramPremolar.params.get("toothtype").equalTo(pP));
+        assertTrue(paramMolar.params.get("toothtype").equalTo(pM));
 
     }
 
