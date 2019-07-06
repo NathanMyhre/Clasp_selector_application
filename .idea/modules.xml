@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Clasp/Clasp.iml" filepath="$PROJECT_DIR$/Clasp/Clasp.iml" />
       <module fileurl="file://$PROJECT_DIR$/Clasp_selector_application.iml" filepath="$PROJECT_DIR$/Clasp_selector_application.iml" />
     </modules>
   </component>
