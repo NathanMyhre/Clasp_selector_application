@@ -18,28 +18,28 @@ public class ClaspGUI extends JPanel{
 
     //buttons that go in middle panel
     public JButton stressReleaseInfo;
-    public JRadioButton stressReleaseYes, stressReleaseNo;
+    public ClaspRadioButton stressReleaseYes, stressReleaseNo;
     public ButtonGroup stressReleaseGroup;
     public JButton surveyLineInfo;
-    public JRadioButton surveyLineClass1, surveyLineClass2, surveyLineClass3;
+    public ClaspRadioButton surveyLineClass1, surveyLineClass2, surveyLineClass3;
     public ButtonGroup surveyLineGroup;
     public JButton retentiveUndercutInfo;
-    public JRadioButton retentiveUndercut1, retentiveUndercut2;
+    public ClaspRadioButton retentiveUndercut1, retentiveUndercut2;
     public ButtonGroup retentiveUndercutGroup;
     public JButton occlusionInfo;
-    public JRadioButton occlusionMedial, occlusionDistal;
+    public ClaspRadioButton occlusionMedial, occlusionDistal;
     public ButtonGroup occlusionGroup;
     public JButton softTissueUndercutInfo;
-    public JRadioButton softTissueUndercutYes, softTissueUndercutNo;
+    public ClaspRadioButton softTissueUndercutYes, softTissueUndercutNo;
     public ButtonGroup softTissueUndercutGroup;
     public JButton buccalVestib2mmInfo;
-    public JRadioButton buccalVestib2mmYes, buccalVestib2mmNo;
+    public ClaspRadioButton buccalVestib2mmYes, buccalVestib2mmNo;
     public ButtonGroup buccalVestib2mmGroup;
     public JButton estheticInfo;
-    public JRadioButton estheticYes, estheticNo;
+    public ClaspRadioButton estheticYes, estheticNo;
     public ButtonGroup estheticGroup;
     public JButton toothTypeInfo;
-    public JRadioButton toothTypeAnterior, toothTypePremolar, toothTypeMolar;
+    public ClaspRadioButton toothTypeAnterior, toothTypePremolar, toothTypeMolar;
     public ButtonGroup toothTypeGroup;
 
     //buttons that go in right panel
@@ -147,7 +147,9 @@ public class ClaspGUI extends JPanel{
 
         //add item listener to stress release info to open a new text window.
 
-        gui.stressReleaseYes = new JRadioButton("Yes");
+        gui.stressReleaseYes = new ClaspRadioButton("Stress Release Needed", "Yes", gui);
+        gui.stressReleaseYes.setActionCommand("Stress Release Needed ; Yes");
+        gui.stressReleaseYes.addActionListener(gui.stressReleaseYes);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridheight = 1;
         c.ipady = 15;
@@ -159,7 +161,8 @@ public class ClaspGUI extends JPanel{
         //Bug: add item listener to StressRelease radio buttons to deactivate accordingly.
         //Bug: add insets to stress release items
 
-        gui.stressReleaseNo = new JRadioButton("No");
+        gui.stressReleaseNo = new ClaspRadioButton("Stress Release Needed", "No", gui);
+        gui.stressReleaseNo.setActionCommand("Stress Release Needed ; No");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridheight = 1;
         c.ipady = 15;
@@ -190,7 +193,8 @@ public class ClaspGUI extends JPanel{
         gui.surveyLineGroup = new ButtonGroup();
 
         //add Survey Line Classification Button 1
-        gui.surveyLineClass1 = new JRadioButton("I");
+        gui.surveyLineClass1 = new ClaspRadioButton("Survey Line Classification", "I", gui);
+        gui.surveyLineClass1.setActionCommand("Survey Line Classification ; I");
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -200,7 +204,8 @@ public class ClaspGUI extends JPanel{
         gui.middlePanel.add(gui.surveyLineClass1, c);
 
         //add Survey Line Classification Button 2
-        gui.surveyLineClass2 = new JRadioButton("II");
+        gui.surveyLineClass2 = new ClaspRadioButton("Survey Line Classification", "II", gui);
+        gui.surveyLineClass2.setActionCommand("Survey Line Classification ; II");
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -210,7 +215,8 @@ public class ClaspGUI extends JPanel{
         gui.middlePanel.add(gui.surveyLineClass2, c);
 
         //add Survey Line Classification Button 3
-        gui.surveyLineClass3 = new JRadioButton("III");
+        gui.surveyLineClass3 = new ClaspRadioButton("Survey Line Classification", "III", gui);
+        gui.surveyLineClass3.setActionCommand("Survey Line Classification ; III");
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -238,7 +244,8 @@ public class ClaspGUI extends JPanel{
         gui.retentiveUndercutGroup = new ButtonGroup();
 
         //add Retentive Undercut button 0.01"
-        gui.retentiveUndercut1 = new JRadioButton("0.01\"");
+        gui.retentiveUndercut1 = new ClaspRadioButton("Retentive Undercut", "0.01\"", gui);
+        gui.retentiveUndercut1.setActionCommand("Retentive Undercut ; 0.01");
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -248,7 +255,7 @@ public class ClaspGUI extends JPanel{
         gui.middlePanel.add(gui.retentiveUndercut1, c);
 
         //add Retentive Undercut button 0.02"
-        gui.retentiveUndercut2 = new JRadioButton("0.02\"");
+        gui.retentiveUndercut2 = new ClaspRadioButton("Retentive Undercut", "0.02\"", gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -276,7 +283,7 @@ public class ClaspGUI extends JPanel{
         gui.occlusionGroup = new ButtonGroup();
 
         //Add Occlusion = Medial radio button
-        gui.occlusionMedial = new JRadioButton("Medial");
+        gui.occlusionMedial = new ClaspRadioButton("Occlusion", "Medial", gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -286,7 +293,7 @@ public class ClaspGUI extends JPanel{
         gui.middlePanel.add(gui.occlusionMedial, c);
 
         //Add Occlusion= Distal radio button
-        gui.occlusionDistal = new JRadioButton("Distal");
+        gui.occlusionDistal = new ClaspRadioButton("Occlusion", "Distal", gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -312,7 +319,7 @@ public class ClaspGUI extends JPanel{
         gui.softTissueUndercutGroup = new ButtonGroup();
 
         //Add Soft Tissue Undercut = Yes button
-        gui.softTissueUndercutYes = new JRadioButton("Yes");
+        gui.softTissueUndercutYes = new ClaspRadioButton("Soft Tissue Undercut", "Yes", gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -322,7 +329,7 @@ public class ClaspGUI extends JPanel{
         gui.middlePanel.add(gui.softTissueUndercutYes, c);
 
         //Add Soft Tissue Undercut = No button
-        gui.softTissueUndercutNo = new JRadioButton("No");
+        gui.softTissueUndercutNo = new ClaspRadioButton("Soft Tissue Undercut", "No", gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -349,7 +356,7 @@ public class ClaspGUI extends JPanel{
         gui.buccalVestib2mmGroup = new ButtonGroup();
 
         //Add 2mm or more Buccal Vestibule = Yes button
-        gui.buccalVestib2mmYes = new JRadioButton("Yes");
+        gui.buccalVestib2mmYes = new ClaspRadioButton("2mm or More Buccal Vestibule", "Yes", gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -359,7 +366,7 @@ public class ClaspGUI extends JPanel{
         gui.middlePanel.add(gui.buccalVestib2mmYes, c);
 
         //Add 2mm or more Buccal Vestibule = No button
-        gui.buccalVestib2mmNo = new JRadioButton("No");
+        gui.buccalVestib2mmNo = new ClaspRadioButton("2mm or More Buccal Vestibule", "No", gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -386,7 +393,7 @@ public class ClaspGUI extends JPanel{
         gui.estheticGroup = new ButtonGroup();
 
         //add Esthetically concerned = yes button
-        gui.estheticYes = new JRadioButton("Yes");
+        gui.estheticYes = new ClaspRadioButton("Esthetically Concerned Patient", "Yes", gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -396,7 +403,7 @@ public class ClaspGUI extends JPanel{
         gui.middlePanel.add(gui.estheticYes, c);
 
         //add Esthetically concerned = No button
-        gui.estheticNo = new JRadioButton("No");
+        gui.estheticNo = new ClaspRadioButton("Esthetically Concerned Patient", "No", gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -423,7 +430,7 @@ public class ClaspGUI extends JPanel{
         gui.toothTypeGroup = new ButtonGroup();
 
         //add Esthetically concerned = yes button
-        gui.toothTypeAnterior = new JRadioButton("Anterior");
+        gui.toothTypeAnterior = new ClaspRadioButton("Tooth Type", "Anterior", gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -433,7 +440,7 @@ public class ClaspGUI extends JPanel{
         gui.middlePanel.add(gui.toothTypeAnterior, c);
 
         //add Esthetically concerned = No button
-        gui.toothTypePremolar = new JRadioButton("PreMolar");
+        gui.toothTypePremolar = new ClaspRadioButton("Tooth Type", "PreMolar", gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -443,7 +450,7 @@ public class ClaspGUI extends JPanel{
         gui.middlePanel.add(gui.toothTypePremolar, c);
 
         //add Esthetically concerned = No button
-        gui.toothTypeMolar = new JRadioButton("Molar");
+        gui.toothTypeMolar = new ClaspRadioButton("Tooth Type", "Molar", gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -508,6 +515,22 @@ public class ClaspGUI extends JPanel{
 
     }
 
+    public static void setClaspCriteria(String criteria, String value, ClaspGUI gui) {
+        //Stress Release needed criteria
+        if ("Stress Release Needed".equals(criteria)) {
+            if ("Yes".equals(value)) {
+                gui.iBarDistal.setEnabled(false);
+            }
+        }
+        //Survey Line Classification criteria
+        //Retentive Undercut criteria
+        //Occlusion Criteria
+        //Soft Tissue Undercut criteria
+        //2mm or more buccal vestibule criteria
+        //Esthetically concerned criteria
+        //Tooth type Criteria
+    }
+
     private static void createAndShowGUI() {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -518,7 +541,8 @@ public class ClaspGUI extends JPanel{
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {//Schedule a job for the event-dispatching thread:
+    public static void main(String[] args) {
+        //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
