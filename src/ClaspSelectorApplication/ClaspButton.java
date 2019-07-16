@@ -240,6 +240,27 @@ class ModTBarDistalButton extends ClaspButton{
         this.setEnabled(true);
         for (String crit : criteria.keySet()) {
             String value = criteria.get(crit);
+            if ("Survey Line Classification".equals(crit)) {
+                if ("I".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Occlusion".equals(crit)) {
+                if ("Distal".equals(value)){
+                    this.setEnabled(false);
+                }
+            } else if ("Soft Tissue Undercut".equals(crit)) {
+                if ("Yes".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("2mm or More Buccal Vestibule".equals(crit)) {
+                if ("No".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Tooth Type".equals(crit)) {
+                if ("Anterior".equals(value) || "Molar".equals(value)) {
+                    this.setEnabled(false);
+                }
+            }
         }
     }
 }
@@ -258,6 +279,23 @@ class ModTBarCingulumButton extends ClaspButton{
         this.setEnabled(true);
         for (String crit : criteria.keySet()) {
             String value = criteria.get(crit);
+            if ("Survey Line Classification".equals(crit)) {
+                if ("I".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Soft Tissue Undercut".equals(crit)) {
+                if ("Yes".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("2mm or More Buccal Vestibule".equals(crit)) {
+                if ("No".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Tooth Type".equals(crit)) {
+                if ("PreMolar".equals(value) || "Molar".equals(value)) {
+                    this.setEnabled(false);
+                }
+            }
         }
     }
 }
@@ -276,6 +314,27 @@ class WWMesialButton extends ClaspButton{
         this.setEnabled(true);
         for (String crit : criteria.keySet()) {
             String value = criteria.get(crit);
+            if ("Survey Line Classification".equals(crit)) {
+                if ("II".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Retentive Undercut".equals(crit)) {
+                if ("0.01".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Occlusion".equals(crit)) {
+                if ("Mesial".equals(value)){
+                    this.setEnabled(false);
+                }
+            } else if ("Esthetically Concerned Patient".equals(crit)) {
+                if ("Yes".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Tooth Type".equals(crit)) {
+                if ("Anterior".equals(value) ) {
+                    this.setEnabled(false);
+                }
+            }
         }
     }
 }
@@ -294,6 +353,27 @@ class WWDistalButton extends ClaspButton{
         this.setEnabled(true);
         for (String crit : criteria.keySet()) {
             String value = criteria.get(crit);
+            if ("Survey Line Classification".equals(crit)) {
+                if ("II".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Retentive Undercut".equals(crit)) {
+                if ("0.01".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Occlusion".equals(crit)) {
+                if ("Distal".equals(value)){
+                    this.setEnabled(false);
+                }
+            } else if ("Esthetically Concerned Patient".equals(crit)) {
+                if ("Yes".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Tooth Type".equals(crit)) {
+                if ("Anterior".equals(value) ) {
+                    this.setEnabled(false);
+                }
+            }
         }
     }
 }
@@ -312,6 +392,23 @@ class WWCingulumButton extends ClaspButton{
         this.setEnabled(true);
         for (String crit : criteria.keySet()) {
             String value = criteria.get(crit);
+            if ("Survey Line Classification".equals(crit)) {
+                if ("II".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Retentive Undercut".equals(crit)) {
+                if ("0.01".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Esthetically Concerned Patient".equals(crit)) {
+                if ("Yes".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Tooth Type".equals(crit)) {
+                if ("PreMolar".equals(value) || "Molar".equals(value)) {
+                    this.setEnabled(false);
+                }
+            }
         }
     }
 }
@@ -330,6 +427,27 @@ class CCMesialButton extends ClaspButton{
         this.setEnabled(true);
         for (String crit : criteria.keySet()) {
             String value = criteria.get(crit);
+            if ("Stress Release Needed".equals(crit)) {
+                if ("Yes".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Survey Line Classification".equals(crit)) {
+                if ("II".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Occlusion".equals(crit)) {
+                if ("Mesial".equals(value)){
+                    this.setEnabled(false);
+                }
+            } else if ("Esthetically Concerned Patient".equals(crit)) {
+                if ("Yes".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Tooth Type".equals(crit)) {
+                if ("Anterior".equals(value) ) {
+                    this.setEnabled(false);
+                }
+            }
         }
     }
 }
@@ -348,6 +466,27 @@ class CCDistalButton extends ClaspButton{
         this.setEnabled(true);
         for (String crit : criteria.keySet()) {
             String value = criteria.get(crit);
+            if ("Stress Release Needed".equals(crit)) {
+                if ("Yes".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Survey Line Classification".equals(crit)) {
+                if ("II".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Occlusion".equals(crit)) {
+                if ("Distal".equals(value)){
+                    this.setEnabled(false);
+                }
+            } else if ("Esthetically Concerned Patient".equals(crit)) {
+                if ("Yes".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Tooth Type".equals(crit)) {
+                if ("Anterior".equals(value) ) {
+                    this.setEnabled(false);
+                }
+            }
         }
     }
 }
@@ -366,6 +505,23 @@ class CCCingulumButton extends ClaspButton{
         this.setEnabled(true);
         for (String crit : criteria.keySet()) {
             String value = criteria.get(crit);
+            if ("Stress Release Needed".equals(crit)) {
+                if ("Yes".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Survey Line Classification".equals(crit)) {
+                if ("II".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Esthetically Concerned Patient".equals(crit)) {
+                if ("Yes".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Tooth Type".equals(crit)) {
+                if ("PreMolar".equals(value) || "Molar".equals(value)) {
+                    this.setEnabled(false);
+                }
+            }
         }
     }
 }
@@ -384,6 +540,23 @@ class RingButton extends ClaspButton{
         this.setEnabled(true);
         for (String crit : criteria.keySet()) {
             String value = criteria.get(crit);
+            if ("Stress Release Needed".equals(crit)) {
+                if ("Yes".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Survey Line Classification".equals(crit)) {
+                if ("I".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Esthetically Concerned Patient".equals(crit)) {
+                if ("Yes".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Tooth Type".equals(crit)) {
+                if ("PreMolar".equals(value) || "Anterior".equals(value)) {
+                    this.setEnabled(false);
+                }
+            }
         }
     }
 }
