@@ -16,10 +16,40 @@ public abstract class ClaspButton extends JButton implements ActionListener {
 
     }
 
+    /**
+     * Factory method for creating Clasp buttons. Subclass hierarchy allows us to call updateStatus method for multiple
+     * types of ClaspButtons and have different criteria
+     * @param input Name of button
+     * @return new ClaspButton of a specific type.
+     */
     public static ClaspButton factory(String input) {
         ClaspButton output;
         if ("I-Bar Clasp Mesial Rest".equals(input)){
             output = new IBarMesialButton(input);
+        } else if ("I-Bar Clasp Distal Rest".equals(input)){
+            output = new IBarDistalButton(input);
+        } else if ("I-Bar Clasp Cingulum Rest".equals(input)){
+            output = new IBarCingulumButton(input);
+        } else if ("Mod T-Bar Clasp Mesial Rest".equals(input)) {
+            output = new ModTBarMesialButton(input);
+        } else if ("Mod T-Bar Clasp Distal Rest".equals(input)) {
+            output = new ModTBarDistalButton(input);
+        } else if ("Mod T-Bar Clasp Cingulum Rest".equals(input)) {
+            output = new ModTBarCingulumButton(input);
+        } else if ("WW Clasp Mesial Rest".equals(input)) {
+            output = new WWMesialButton(input);
+        } else if ("WW Clasp Distal Rest".equals(input)) {
+            output = new WWDistalButton(input);
+        } else if ("WW Clasp Cingulum Rest".equals(input)) {
+            output = new WWCingulumButton(input);
+        } else if ("CC Clasp Mesial Rest".equals(input)) {
+            output = new CCMesialButton(input);
+        } else if ("CC Clasp Distal Rest".equals(input)) {
+            output = new CCDistalButton(input);
+        } else if ("CC Clasp Cingulum Rest".equals(input)) {
+            output = new CCCingulumButton(input);
+        } else if ("Ring Clasp".equals(input)) {
+            output = new RingButton(input);
         }
         else {
             output = null;
@@ -48,9 +78,34 @@ class IBarMesialButton extends ClaspButton{
 
     @Override
     public void updateStatus(HashMap<String, String> criteria) {
+        this.setEnabled(true);
         //input = list of criteria
         //for each item in criteria list
             //If criteria is of certain type, deactivate - see parameters for details.
+        for (String crit : criteria.keySet()){
+            String value = criteria.get(crit);
+            if ("Survey Line Classification".equals(crit)) {
+                if ("II".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Occlusion".equals(crit)) {
+                if ("Mesial".equals(value)){
+                    this.setEnabled(false);
+                }
+            } else if ("Soft Tissue Undercut".equals(crit)) {
+                if ("Yes".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("2mm or More Buccal Vestibule".equals(crit)) {
+                if ("No".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Tooth Type".equals(crit)) {
+                if ("Anterior".equals(value) || "Molar".equals(value)) {
+                    this.setEnabled(false);
+                }
+            }
+        }
     }
 }
 
@@ -62,6 +117,35 @@ class IBarDistalButton extends ClaspButton{
 
     @Override
     public void updateStatus(HashMap<String, String> criteria) {
+        this.setEnabled(true);
+        for (String crit : criteria.keySet()) {
+            String value = criteria.get(crit);
+            if ("Stress Release Needed".equals(crit)) {
+                if ("Yes".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } if ("Survey Line Classification".equals(crit)) {
+                if ("II".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Occlusion".equals(crit)) {
+                if ("Distal".equals(value)){
+                    this.setEnabled(false);
+                }
+            } else if ("Soft Tissue Undercut".equals(crit)) {
+                if ("Yes".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("2mm or More Buccal Vestibule".equals(crit)) {
+                if ("No".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Tooth Type".equals(crit)) {
+                if ("Anterior".equals(value) || "Molar".equals(value)) {
+                    this.setEnabled(false);
+                }
+            }
+        }
         //input = list of criteria
         //for each item in criteria list
         //If criteria is of certain type, deactivate - see parameters for details.
@@ -79,6 +163,27 @@ class IBarCingulumButton extends ClaspButton{
         //input = list of criteria
         //for each item in criteria list
         //If criteria is of certain type, deactivate - see parameters for details.
+        this.setEnabled(true);
+        for (String crit : criteria.keySet()) {
+            String value = criteria.get(crit);
+            if ("Survey Line Classification".equals(crit)) {
+                if ("II".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Soft Tissue Undercut".equals(crit)) {
+                if ("Yes".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("2mm or More Buccal Vestibule".equals(crit)) {
+                if ("No".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Tooth Type".equals(crit)) {
+                if ("PreMolar".equals(value) || "Molar".equals(value)) {
+                    this.setEnabled(false);
+                }
+            }
+        }
     }
 }
 
@@ -93,6 +198,31 @@ class ModTBarMesialButton extends ClaspButton{
         //input = list of criteria
         //for each item in criteria list
         //If criteria is of certain type, deactivate - see parameters for details.
+        this.setEnabled(true);
+        for (String crit : criteria.keySet()) {
+            String value = criteria.get(crit);
+            if ("Survey Line Classification".equals(crit)) {
+                if ("I".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Occlusion".equals(crit)) {
+                if ("Mesial".equals(value)){
+                    this.setEnabled(false);
+                }
+            } else if ("Soft Tissue Undercut".equals(crit)) {
+                if ("Yes".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("2mm or More Buccal Vestibule".equals(crit)) {
+                if ("No".equals(value)) {
+                    this.setEnabled(false);
+                }
+            } else if ("Tooth Type".equals(crit)) {
+                if ("Anterior".equals(value) || "Molar".equals(value)) {
+                    this.setEnabled(false);
+                }
+            }
+        }
     }
 }
 
@@ -107,5 +237,153 @@ class ModTBarDistalButton extends ClaspButton{
         //input = list of criteria
         //for each item in criteria list
         //If criteria is of certain type, deactivate - see parameters for details.
+        this.setEnabled(true);
+        for (String crit : criteria.keySet()) {
+            String value = criteria.get(crit);
+        }
+    }
+}
+
+class ModTBarCingulumButton extends ClaspButton{
+    ModTBarCingulumButton(String input) {
+        super(input);
+
+    }
+
+    @Override
+    public void updateStatus(HashMap<String, String> criteria) {
+        //input = list of criteria
+        //for each item in criteria list
+        //If criteria is of certain type, deactivate - see parameters for details.
+        this.setEnabled(true);
+        for (String crit : criteria.keySet()) {
+            String value = criteria.get(crit);
+        }
+    }
+}
+
+class WWMesialButton extends ClaspButton{
+    WWMesialButton(String input) {
+        super(input);
+
+    }
+
+    @Override
+    public void updateStatus(HashMap<String, String> criteria) {
+        //input = list of criteria
+        //for each item in criteria list
+        //If criteria is of certain type, deactivate - see parameters for details.
+        this.setEnabled(true);
+        for (String crit : criteria.keySet()) {
+            String value = criteria.get(crit);
+        }
+    }
+}
+
+class WWDistalButton extends ClaspButton{
+    WWDistalButton(String input) {
+        super(input);
+
+    }
+
+    @Override
+    public void updateStatus(HashMap<String, String> criteria) {
+        //input = list of criteria
+        //for each item in criteria list
+        //If criteria is of certain type, deactivate - see parameters for details.
+        this.setEnabled(true);
+        for (String crit : criteria.keySet()) {
+            String value = criteria.get(crit);
+        }
+    }
+}
+
+class WWCingulumButton extends ClaspButton{
+    WWCingulumButton(String input) {
+        super(input);
+
+    }
+
+    @Override
+    public void updateStatus(HashMap<String, String> criteria) {
+        //input = list of criteria
+        //for each item in criteria list
+        //If criteria is of certain type, deactivate - see parameters for details.
+        this.setEnabled(true);
+        for (String crit : criteria.keySet()) {
+            String value = criteria.get(crit);
+        }
+    }
+}
+
+class CCMesialButton extends ClaspButton{
+    CCMesialButton(String input) {
+        super(input);
+
+    }
+
+    @Override
+    public void updateStatus(HashMap<String, String> criteria) {
+        //input = list of criteria
+        //for each item in criteria list
+        //If criteria is of certain type, deactivate - see parameters for details.
+        this.setEnabled(true);
+        for (String crit : criteria.keySet()) {
+            String value = criteria.get(crit);
+        }
+    }
+}
+
+class CCDistalButton extends ClaspButton{
+    CCDistalButton(String input) {
+        super(input);
+
+    }
+
+    @Override
+    public void updateStatus(HashMap<String, String> criteria) {
+        //input = list of criteria
+        //for each item in criteria list
+        //If criteria is of certain type, deactivate - see parameters for details.
+        this.setEnabled(true);
+        for (String crit : criteria.keySet()) {
+            String value = criteria.get(crit);
+        }
+    }
+}
+
+class CCCingulumButton extends ClaspButton{
+    CCCingulumButton(String input) {
+        super(input);
+
+    }
+
+    @Override
+    public void updateStatus(HashMap<String, String> criteria) {
+        //input = list of criteria
+        //for each item in criteria list
+        //If criteria is of certain type, deactivate - see parameters for details.
+        this.setEnabled(true);
+        for (String crit : criteria.keySet()) {
+            String value = criteria.get(crit);
+        }
+    }
+}
+
+class RingButton extends ClaspButton{
+    RingButton(String input) {
+        super(input);
+
+    }
+
+    @Override
+    public void updateStatus(HashMap<String, String> criteria) {
+        //input = list of criteria
+        //for each item in criteria list
+        //If criteria is of certain type, deactivate - see parameters for details.
+        this.setEnabled(true);
+        for (String crit : criteria.keySet()) {
+            String value = criteria.get(crit);
+        }
     }
 }
