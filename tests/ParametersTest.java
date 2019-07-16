@@ -1,5 +1,5 @@
-import ClaspSelectorApplication.Parameter;
-import ClaspSelectorApplication.Parameters;
+import BackEnd.Parameter;
+import BackEnd.Parameters;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

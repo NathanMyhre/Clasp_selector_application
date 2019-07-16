@@ -1,4 +1,4 @@
-package ClaspSelectorApplication;
+package BackEnd;
 
 import java.util.Scanner;
 import java.util.HashMap;

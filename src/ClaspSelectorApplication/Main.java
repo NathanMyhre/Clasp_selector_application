@@ -8,6 +8,10 @@
  */
 package ClaspSelectorApplication;
 
+import BackEnd.Clasp;
+import BackEnd.ClaspSelector;
+import BackEnd.Parameters;
+
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;

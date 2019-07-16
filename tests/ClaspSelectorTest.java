@@ -1,5 +1,5 @@
-import ClaspSelectorApplication.ClaspSelector;
-import ClaspSelectorApplication.Parameters;
+import BackEnd.ClaspSelector;
+import BackEnd.Parameters;
 import org.junit.Test;
 
 import java.util.Scanner;

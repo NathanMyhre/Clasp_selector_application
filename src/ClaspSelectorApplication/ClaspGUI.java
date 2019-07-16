@@ -10,8 +10,10 @@ import java.awt.*;
 import java.io.File;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
+import java.util.HashMap;
 
-public class ClaspGUI extends JPanel{
+public class ClaspGUI extends JPanel implements ActionListener{
     public JPanel leftPanel, middlePanel, rightPanel;
     public static Insets insets = new Insets(5,5,5,5 );
     public static Insets defaultInset = new Insets(0,0,0,0);
@@ -57,6 +59,12 @@ public class ClaspGUI extends JPanel{
     public ClaspButton ccCingulum;
     public ClaspButton ring;
 
+    //Data structure to track the active radio buttons
+    public HashMap<String, String> activeCriteria;
+
+    //Data structure to hold buttons
+    public LinkedList<ClaspButton> buttonList;
+
 
 
 //Javadoc: 3 columns, 1 row. 1 JPanel per column
@@ -70,26 +78,27 @@ public class ClaspGUI extends JPanel{
         //Note: create GBC now, and only change within static methods - scope keeps safe.
         GridBagConstraints c = new GridBagConstraints();
 
+
         //Can't add buttons from static context: can clean up if time later
-        iBarMesial = new ClaspButton("I-Bar Clasp Mesial Rest");
-        iBarDistal = new ClaspButton("I-Bar Clasp Distal Rest");
-        iBarCingulum = new ClaspButton("I-Bar Clasp Cingulum Rest");
-        modTBarMesial = new ClaspButton("Mod T-Bar Clasp Mesial Rest");
-        modTBarDistal = new ClaspButton("Mod T-Bar Clasp Distal Rest");
-        modTBarCingulum = new ClaspButton("Mod T-Bar Clasp Cingulum Rest");
-        wwMesial = new ClaspButton("WW Clasp Mesial Rest");
-        wwDistal = new ClaspButton("WW Clasp Distal Rest");
-        wwCingulum =new ClaspButton("WW Clasp Cingulum Rest");
-        ccMesial = new ClaspButton("CC Clasp Mesial Rest");
-        ccDistal = new ClaspButton("CC Clasp Distal Rest");
-        ccCingulum = new ClaspButton("CC Clasp Cingulum Rest");
-        ring = new ClaspButton("Ring Clasp");
+        iBarMesial = ClaspButton.factory("I-Bar Clasp Mesial Rest");
+        iBarDistal = ClaspButton.factory("I-Bar Clasp Distal Rest");
+        iBarCingulum = ClaspButton.factory("I-Bar Clasp Cingulum Rest");
+        modTBarMesial = ClaspButton.factory("Mod T-Bar Clasp Mesial Rest");
+        modTBarDistal = ClaspButton.factory("Mod T-Bar Clasp Distal Rest");
+        modTBarCingulum = ClaspButton.factory("Mod T-Bar Clasp Cingulum Rest");
+        wwMesial = ClaspButton.factory("WW Clasp Mesial Rest");
+        wwDistal = ClaspButton.factory("WW Clasp Distal Rest");
+        wwCingulum =ClaspButton.factory("WW Clasp Cingulum Rest");
+        ccMesial = ClaspButton.factory("CC Clasp Mesial Rest");
+        ccDistal = ClaspButton.factory("CC Clasp Distal Rest");
+        ccCingulum = ClaspButton.factory("CC Clasp Cingulum Rest");
+        ring = ClaspButton.factory("Ring Clasp");
 
 
         //Add and activate clasp buttons
         ClaspGUI.addClaspButtons(this, c);
 
-        //Add and activate buttons for patient criteria.
+        //Add radio buttons for patient selection criteria
         ClaspGUI.addStressReleaseButtons(this, c);
         ClaspGUI.addSurveyLineButtons(this, c);
         ClaspGUI.addRetentiveUndercutButtons(this, c);
@@ -99,34 +108,23 @@ public class ClaspGUI extends JPanel{
         ClaspGUI.addEstheticConcernButtons(this, c);
         ClaspGUI.addToothTypeButtons(this, c);
 
+        //Map of active criteria
+        activeCriteria = new HashMap<String, String>();
+        //List of all clasp buttons for checking criteria
+        buttonList = new LinkedList<ClaspButton>();
+
+
         //Bug: Make Reset button Class that implements action listener, deactivating everything. Or, see if possible in button group.
         //ClaspGUI.addResetButton(this, c);
 
+        //Add the three thirds of the GUI.
         this.add(leftPanel);
         this.add(middlePanel);
         this.add(rightPanel);
 
     }
 
-    //
-    class ClaspButton extends JButton implements ActionListener{
-        public final String name;
 
-        private ClaspButton(String input) {
-            super(input);
-            name = input;
-
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            //Deactivate button if proper button is clicked.
-        }
-
-        private void openFile(){
-
-        }
-    }
 
     //Creates info button and radio buttons for Stress Release choices
     private static void addStressReleaseButtons(ClaspGUI gui, GridBagConstraints c){
@@ -149,7 +147,7 @@ public class ClaspGUI extends JPanel{
 
         gui.stressReleaseYes = new ClaspRadioButton("Stress Release Needed", "Yes", gui);
         gui.stressReleaseYes.setActionCommand("Stress Release Needed ; Yes");
-        gui.stressReleaseYes.addActionListener(gui.stressReleaseYes);
+        gui.stressReleaseYes.addActionListener(gui);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridheight = 1;
         c.ipady = 15;
@@ -195,6 +193,7 @@ public class ClaspGUI extends JPanel{
         //add Survey Line Classification Button 1
         gui.surveyLineClass1 = new ClaspRadioButton("Survey Line Classification", "I", gui);
         gui.surveyLineClass1.setActionCommand("Survey Line Classification ; I");
+        gui.surveyLineClass1.addActionListener(gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -513,6 +512,25 @@ public class ClaspGUI extends JPanel{
 
         gui.rightPanel.add(reset, c);
 
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        //parse string via e.getActionCommand (I think)
+        //If first string == criteria, then do x
+        //If Second String == Value
+
+        //Bug: what are the error values we expect?
+        //Bug: Special character parsing is flimsy, is there a better way we can do this?
+        String[] splitString = e.getActionCommand().split(" ; ");
+        //Selection logic - send a message to the clasp GUI that this has been deactivated.
+        String crit = splitString[0];   //Get the current criterion
+        String val = splitString[1];    //Get the current value
+        if ("Stress Release Needed".equals(crit)) {
+            if ("Yes".equals(val)) {
+                activeCriteria.put(crit, val);
+            }
+        }
     }
 
     public static void setClaspCriteria(String criteria, String value, ClaspGUI gui) {

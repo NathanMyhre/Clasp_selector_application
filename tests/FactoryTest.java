@@ -1,4 +1,4 @@
-import ClaspSelectorApplication.Clasp;
+import BackEnd.Clasp;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

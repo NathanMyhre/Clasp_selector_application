@@ -1,4 +1,4 @@
-import ClaspSelectorApplication.Parameter;
+import BackEnd.Parameter;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

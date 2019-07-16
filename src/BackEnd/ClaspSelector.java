@@ -1,4 +1,4 @@
-package ClaspSelectorApplication; /**
+package BackEnd; /**
  * ClaspSelector implements clasp selection logic and contains the list of
  * valid clasps in a given patient case. Parameters defined in order to be
  * constructed: Stress release needed, Survey line classification, Retentive undercut,
