@@ -7,13 +7,13 @@ import java.util.HashMap;
 
 public abstract class ClaspButton extends JButton implements ActionListener {
     public final String name;
-    public final String path;
+    public String path;
 
     public ClaspButton(String input) {
         super(input);
         name = input;
         path = input;
-
+        this.addActionListener(this);
     }
 
     /**
@@ -61,18 +61,40 @@ public abstract class ClaspButton extends JButton implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //Open file if clicked?
+        ImageIcon image = createImageIcon(path, name);
+        ClaspGUI.makeClaspWindow(this, image);
     }
 
-    /**Deactivate button if criteria are met.
-     *
+    /**
+     * Deactivate button if criteria are met.
+     * @param criteria is the patient criteria for selecting a clasp.
      */
     public void updateStatus(HashMap<String, String> criteria){}
+
+    /**
+     * Creates an ImageIcon if the path is valid.
+     * @param path - resource path
+     * @param description - description of the file
+     */
+    protected ImageIcon createImageIcon(String path,
+                                        String description) {
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL, description);
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            return null;
+        }
+    }
+
 }
+
+
 
 class IBarMesialButton extends ClaspButton{
     IBarMesialButton(String input) {
         super(input);
+        path = "images\\ibarmesial.PNG";
 
     }
 
@@ -112,6 +134,7 @@ class IBarMesialButton extends ClaspButton{
 class IBarDistalButton extends ClaspButton{
     IBarDistalButton(String input) {
         super(input);
+        path = "images\\ibardistal.PNG";
 
     }
 
@@ -155,6 +178,7 @@ class IBarDistalButton extends ClaspButton{
 class IBarCingulumButton extends ClaspButton{
     IBarCingulumButton(String input) {
         super(input);
+        path = "images\\ibarcingulum.PNG";
 
     }
 
@@ -190,6 +214,7 @@ class IBarCingulumButton extends ClaspButton{
 class ModTBarMesialButton extends ClaspButton{
     ModTBarMesialButton(String input) {
         super(input);
+        path = "images\\modtbarmesial.PNG";
 
     }
 
@@ -229,6 +254,7 @@ class ModTBarMesialButton extends ClaspButton{
 class ModTBarDistalButton extends ClaspButton{
     ModTBarDistalButton(String input) {
         super(input);
+        path = "images\\modtbardistal.PNG";
 
     }
 
@@ -268,6 +294,7 @@ class ModTBarDistalButton extends ClaspButton{
 class ModTBarCingulumButton extends ClaspButton{
     ModTBarCingulumButton(String input) {
         super(input);
+        path = "images\\modtbarcingulum.PNG";
 
     }
 
@@ -303,6 +330,7 @@ class ModTBarCingulumButton extends ClaspButton{
 class WWMesialButton extends ClaspButton{
     WWMesialButton(String input) {
         super(input);
+        path = "images\\wwmesial.PNG";
 
     }
 
@@ -342,6 +370,7 @@ class WWMesialButton extends ClaspButton{
 class WWDistalButton extends ClaspButton{
     WWDistalButton(String input) {
         super(input);
+        path = "images\\wwdistal.PNG";
 
     }
 
@@ -381,6 +410,7 @@ class WWDistalButton extends ClaspButton{
 class WWCingulumButton extends ClaspButton{
     WWCingulumButton(String input) {
         super(input);
+        path = "images\\wwcingulum.PNG";
 
     }
 
@@ -416,6 +446,7 @@ class WWCingulumButton extends ClaspButton{
 class CCMesialButton extends ClaspButton{
     CCMesialButton(String input) {
         super(input);
+        path = "images\\ccmesial.PNG";
 
     }
 
@@ -455,6 +486,7 @@ class CCMesialButton extends ClaspButton{
 class CCDistalButton extends ClaspButton{
     CCDistalButton(String input) {
         super(input);
+        path = "images\\ccdistal.PNG";
 
     }
 
@@ -494,6 +526,7 @@ class CCDistalButton extends ClaspButton{
 class CCCingulumButton extends ClaspButton{
     CCCingulumButton(String input) {
         super(input);
+        path = "images\\cccingulum.png";
 
     }
 
@@ -529,6 +562,7 @@ class CCCingulumButton extends ClaspButton{
 class RingButton extends ClaspButton{
     RingButton(String input) {
         super(input);
+        path = "images\\ring.PNG";
 
     }
 
