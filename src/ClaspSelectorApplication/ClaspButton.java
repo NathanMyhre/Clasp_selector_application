@@ -8,11 +8,13 @@ import java.util.HashMap;
 public abstract class ClaspButton extends JButton implements ActionListener {
     public final String name;
     public String path;
+    public ClaspGUI gui;
 
-    public ClaspButton(String input) {
+    public ClaspButton(String input, ClaspGUI g) {
         super(input);
         name = input;
         path = input;
+        gui = g;
         this.addActionListener(this);
     }
 
@@ -22,34 +24,36 @@ public abstract class ClaspButton extends JButton implements ActionListener {
      * @param input Name of button
      * @return new ClaspButton of a specific type.
      */
-    public static ClaspButton factory(String input) {
+    public static ClaspButton factory(String input, ClaspGUI g) {
         ClaspButton output;
         if ("I-Bar Clasp Mesial Rest".equals(input)){
-            output = new IBarMesialButton(input);
+            output = new IBarMesialButton(input, g);
         } else if ("I-Bar Clasp Distal Rest".equals(input)){
-            output = new IBarDistalButton(input);
+            output = new IBarDistalButton(input, g);
         } else if ("I-Bar Clasp Cingulum Rest".equals(input)){
-            output = new IBarCingulumButton(input);
+            output = new IBarCingulumButton(input, g);
         } else if ("Mod T-Bar Clasp Mesial Rest".equals(input)) {
-            output = new ModTBarMesialButton(input);
+            output = new ModTBarMesialButton(input, g);
         } else if ("Mod T-Bar Clasp Distal Rest".equals(input)) {
-            output = new ModTBarDistalButton(input);
+            output = new ModTBarDistalButton(input, g);
         } else if ("Mod T-Bar Clasp Cingulum Rest".equals(input)) {
-            output = new ModTBarCingulumButton(input);
+            output = new ModTBarCingulumButton(input, g);
         } else if ("WW Clasp Mesial Rest".equals(input)) {
-            output = new WWMesialButton(input);
+            output = new WWMesialButton(input, g);
         } else if ("WW Clasp Distal Rest".equals(input)) {
-            output = new WWDistalButton(input);
+            output = new WWDistalButton(input, g);
         } else if ("WW Clasp Cingulum Rest".equals(input)) {
-            output = new WWCingulumButton(input);
+            output = new WWCingulumButton(input, g);
         } else if ("CC Clasp Mesial Rest".equals(input)) {
-            output = new CCMesialButton(input);
+            output = new CCMesialButton(input, g);
         } else if ("CC Clasp Distal Rest".equals(input)) {
-            output = new CCDistalButton(input);
+            output = new CCDistalButton(input, g);
         } else if ("CC Clasp Cingulum Rest".equals(input)) {
-            output = new CCCingulumButton(input);
+            output = new CCCingulumButton(input, g);
         } else if ("Ring Clasp".equals(input)) {
-            output = new RingButton(input);
+            output = new RingButton(input, g);
+        } else if ("RESET".equals(input)) {
+            output = new ResetButton(input, g);
         }
         else {
             output = null;
@@ -63,6 +67,7 @@ public abstract class ClaspButton extends JButton implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         ImageIcon image = createImageIcon(path, name);
         ClaspGUI.makeClaspWindow(this, image);
+        System.out.println("Proof");
     }
 
     /**
@@ -89,11 +94,12 @@ public abstract class ClaspButton extends JButton implements ActionListener {
 
 }
 
-
-
+/**
+ * Button to select the I-Bar Mesial Rest clasp.
+ */
 class IBarMesialButton extends ClaspButton{
-    IBarMesialButton(String input) {
-        super(input);
+    IBarMesialButton(String input, ClaspGUI g) {
+        super(input, g);
         path = "images\\ibarmesial.PNG";
 
     }
@@ -131,9 +137,12 @@ class IBarMesialButton extends ClaspButton{
     }
 }
 
+/**
+ * Button to select the I-Bar Distal Rest clasp.
+ */
 class IBarDistalButton extends ClaspButton{
-    IBarDistalButton(String input) {
-        super(input);
+    IBarDistalButton(String input, ClaspGUI g) {
+        super(input, g);
         path = "images\\ibardistal.PNG";
 
     }
@@ -176,8 +185,8 @@ class IBarDistalButton extends ClaspButton{
 }
 
 class IBarCingulumButton extends ClaspButton{
-    IBarCingulumButton(String input) {
-        super(input);
+    IBarCingulumButton(String input, ClaspGUI g) {
+        super(input, g);
         path = "images\\ibarcingulum.PNG";
 
     }
@@ -212,8 +221,8 @@ class IBarCingulumButton extends ClaspButton{
 }
 
 class ModTBarMesialButton extends ClaspButton{
-    ModTBarMesialButton(String input) {
-        super(input);
+    ModTBarMesialButton(String input, ClaspGUI g) {
+        super(input, g);
         path = "images\\modtbarmesial.PNG";
 
     }
@@ -252,8 +261,8 @@ class ModTBarMesialButton extends ClaspButton{
 }
 
 class ModTBarDistalButton extends ClaspButton{
-    ModTBarDistalButton(String input) {
-        super(input);
+    ModTBarDistalButton(String input, ClaspGUI g) {
+        super(input, g);
         path = "images\\modtbardistal.PNG";
 
     }
@@ -292,8 +301,8 @@ class ModTBarDistalButton extends ClaspButton{
 }
 
 class ModTBarCingulumButton extends ClaspButton{
-    ModTBarCingulumButton(String input) {
-        super(input);
+    ModTBarCingulumButton(String input, ClaspGUI g) {
+        super(input, g);
         path = "images\\modtbarcingulum.PNG";
 
     }
@@ -328,8 +337,8 @@ class ModTBarCingulumButton extends ClaspButton{
 }
 
 class WWMesialButton extends ClaspButton{
-    WWMesialButton(String input) {
-        super(input);
+    WWMesialButton(String input, ClaspGUI g) {
+        super(input, g);
         path = "images\\wwmesial.PNG";
 
     }
@@ -347,7 +356,7 @@ class WWMesialButton extends ClaspButton{
                     this.setEnabled(false);
                 }
             } else if ("Retentive Undercut".equals(crit)) {
-                if ("0.01".equals(value)) {
+                if ("0.01\"".equals(value)) {
                     this.setEnabled(false);
                 }
             } else if ("Occlusion".equals(crit)) {
@@ -368,8 +377,8 @@ class WWMesialButton extends ClaspButton{
 }
 
 class WWDistalButton extends ClaspButton{
-    WWDistalButton(String input) {
-        super(input);
+    WWDistalButton(String input, ClaspGUI g) {
+        super(input, g);
         path = "images\\wwdistal.PNG";
 
     }
@@ -387,7 +396,7 @@ class WWDistalButton extends ClaspButton{
                     this.setEnabled(false);
                 }
             } else if ("Retentive Undercut".equals(crit)) {
-                if ("0.01".equals(value)) {
+                if ("0.01\"".equals(value)) {
                     this.setEnabled(false);
                 }
             } else if ("Occlusion".equals(crit)) {
@@ -408,8 +417,8 @@ class WWDistalButton extends ClaspButton{
 }
 
 class WWCingulumButton extends ClaspButton{
-    WWCingulumButton(String input) {
-        super(input);
+    WWCingulumButton(String input, ClaspGUI g) {
+        super(input, g);
         path = "images\\wwcingulum.PNG";
 
     }
@@ -427,7 +436,7 @@ class WWCingulumButton extends ClaspButton{
                     this.setEnabled(false);
                 }
             } else if ("Retentive Undercut".equals(crit)) {
-                if ("0.01".equals(value)) {
+                if ("0.01\"".equals(value)) {
                     this.setEnabled(false);
                 }
             } else if ("Esthetically Concerned Patient".equals(crit)) {
@@ -444,8 +453,8 @@ class WWCingulumButton extends ClaspButton{
 }
 
 class CCMesialButton extends ClaspButton{
-    CCMesialButton(String input) {
-        super(input);
+    CCMesialButton(String input, ClaspGUI g) {
+        super(input, g);
         path = "images\\ccmesial.PNG";
 
     }
@@ -484,8 +493,8 @@ class CCMesialButton extends ClaspButton{
 }
 
 class CCDistalButton extends ClaspButton{
-    CCDistalButton(String input) {
-        super(input);
+    CCDistalButton(String input, ClaspGUI g) {
+        super(input, g);
         path = "images\\ccdistal.PNG";
 
     }
@@ -524,8 +533,8 @@ class CCDistalButton extends ClaspButton{
 }
 
 class CCCingulumButton extends ClaspButton{
-    CCCingulumButton(String input) {
-        super(input);
+    CCCingulumButton(String input, ClaspGUI g) {
+        super(input, g);
         path = "images\\cccingulum.png";
 
     }
@@ -560,8 +569,8 @@ class CCCingulumButton extends ClaspButton{
 }
 
 class RingButton extends ClaspButton{
-    RingButton(String input) {
-        super(input);
+    RingButton(String input, ClaspGUI g) {
+        super(input, g);
         path = "images\\ring.PNG";
 
     }
@@ -592,5 +601,17 @@ class RingButton extends ClaspButton{
                 }
             }
         }
+    }
+}
+
+class ResetButton extends ClaspButton {
+    ResetButton (String input, ClaspGUI g) {
+        super (input, g);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        ClaspGUI.resetButtons(gui);
+        System.out.println("called");
     }
 }

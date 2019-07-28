@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
-public class ClaspRadioButton extends JRadioButton {
+public class ClaspRadioButton extends JRadioButton implements ActionListener{
     String criteria;
     String value;
     ClaspGUI gui;
@@ -20,6 +20,14 @@ public class ClaspRadioButton extends JRadioButton {
         criteria = c;
         value = value;
         gui = myGUI;
+        this.setActionCommand(criteria + " ; " + value);
+        this.addActionListener(this);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String input = e.getActionCommand();
+        gui.radioButtonClicked(input);
     }
 
 }

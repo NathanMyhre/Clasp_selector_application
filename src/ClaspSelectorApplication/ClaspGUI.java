@@ -17,7 +17,7 @@ import java.util.HashMap;
  * ClaspGUI is a Clasp selecting assistance application.
  *
  */
-public class ClaspGUI extends JPanel implements ActionListener{
+public class ClaspGUI extends JPanel{
     public JPanel leftPanel, middlePanel, rightPanel;
     public static HashMap<String, String> definitions = ClaspGUI.makeDefinitions();
     public static Insets insets = new Insets(5,5,5,5 );
@@ -65,6 +65,7 @@ public class ClaspGUI extends JPanel implements ActionListener{
     public ClaspButton ccDistal;
     public ClaspButton ccCingulum;
     public ClaspButton ring;
+    public ClaspButton reset;
 
     //Data structure to track the active radio buttons
     public HashMap<String, String> activeCriteria;
@@ -98,19 +99,20 @@ public class ClaspGUI extends JPanel implements ActionListener{
         addLeftHandButtons(this, c);
 
         //initialize buttons and add them to the button List
-        iBarMesial = ClaspButton.factory("I-Bar Clasp Mesial Rest"); buttons.add(iBarMesial);
-        iBarDistal = ClaspButton.factory("I-Bar Clasp Distal Rest"); buttons.add(iBarDistal);
-        iBarCingulum = ClaspButton.factory("I-Bar Clasp Cingulum Rest"); buttons.add(iBarCingulum);
-        modTBarMesial = ClaspButton.factory("Mod T-Bar Clasp Mesial Rest"); buttons.add(modTBarMesial);
-        modTBarDistal = ClaspButton.factory("Mod T-Bar Clasp Distal Rest"); buttons.add(modTBarDistal);
-        modTBarCingulum = ClaspButton.factory("Mod T-Bar Clasp Cingulum Rest"); buttons.add(modTBarCingulum);
-        wwMesial = ClaspButton.factory("WW Clasp Mesial Rest"); buttons.add(wwMesial);
-        wwDistal = ClaspButton.factory("WW Clasp Distal Rest"); buttons.add(wwDistal);
-        wwCingulum =ClaspButton.factory("WW Clasp Cingulum Rest"); buttons.add(wwCingulum);
-        ccMesial = ClaspButton.factory("CC Clasp Mesial Rest"); buttons.add(ccMesial);
-        ccDistal = ClaspButton.factory("CC Clasp Distal Rest"); buttons.add(ccDistal);
-        ccCingulum = ClaspButton.factory("CC Clasp Cingulum Rest"); buttons.add(ccCingulum);
-        ring = ClaspButton.factory("Ring Clasp"); buttons.add(ring);
+        iBarMesial = ClaspButton.factory("I-Bar Clasp Mesial Rest", this); buttons.add(iBarMesial);
+        iBarDistal = ClaspButton.factory("I-Bar Clasp Distal Rest", this); buttons.add(iBarDistal);
+        iBarCingulum = ClaspButton.factory("I-Bar Clasp Cingulum Rest", this); buttons.add(iBarCingulum);
+        modTBarMesial = ClaspButton.factory("Mod T-Bar Clasp Mesial Rest", this); buttons.add(modTBarMesial);
+        modTBarDistal = ClaspButton.factory("Mod T-Bar Clasp Distal Rest", this); buttons.add(modTBarDistal);
+        modTBarCingulum = ClaspButton.factory("Mod T-Bar Clasp Cingulum Rest", this); buttons.add(modTBarCingulum);
+        wwMesial = ClaspButton.factory("WW Clasp Mesial Rest", this); buttons.add(wwMesial);
+        wwDistal = ClaspButton.factory("WW Clasp Distal Rest", this); buttons.add(wwDistal);
+        wwCingulum =ClaspButton.factory("WW Clasp Cingulum Rest", this); buttons.add(wwCingulum);
+        ccMesial = ClaspButton.factory("CC Clasp Mesial Rest", this); buttons.add(ccMesial);
+        ccDistal = ClaspButton.factory("CC Clasp Distal Rest", this); buttons.add(ccDistal);
+        ccCingulum = ClaspButton.factory("CC Clasp Cingulum Rest", this); buttons.add(ccCingulum);
+        ring = ClaspButton.factory("Ring Clasp", this); buttons.add(ring);
+        reset = ClaspButton.factory("RESET", this);
 
         //Add and place clasp buttons to GUI
         ClaspGUI.addClaspButtons(this, c);
@@ -139,9 +141,6 @@ public class ClaspGUI extends JPanel implements ActionListener{
         buttonGroups.add(stressReleaseGroup); buttonGroups.add(surveyLineGroup); buttonGroups.add(retentiveUndercutGroup);
         buttonGroups.add(occlusionGroup); buttonGroups.add(softTissueUndercutGroup); buttonGroups.add(buccalVestib2mmGroup);
         buttonGroups.add(estheticGroup); buttonGroups.add(toothTypeGroup);
-
-        //Bug: Make Reset button Class that implements action listener, deactivating everything. Or, see if possible in button group.
-        ClaspGUI.addResetButton(this, c);
 
         //Add the three thirds of the GUI.
         this.add(leftPanel);
@@ -206,8 +205,6 @@ public class ClaspGUI extends JPanel implements ActionListener{
         //add item listener to stress release info to open a new text window.
 
         gui.stressReleaseYes = new ClaspRadioButton("Stress Release Needed", "Yes", gui);
-        gui.stressReleaseYes.setActionCommand("Stress Release Needed ; Yes");
-        gui.stressReleaseYes.addActionListener(gui);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridheight = 1;
         c.ipady = 15;
@@ -220,8 +217,6 @@ public class ClaspGUI extends JPanel implements ActionListener{
         //Bug: add insets to stress release items
 
         gui.stressReleaseNo = new ClaspRadioButton("Stress Release Needed", "No", gui);
-        gui.stressReleaseNo.setActionCommand("Stress Release Needed ; No");
-        gui.stressReleaseNo.addActionListener(gui);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridheight = 1;
         c.ipady = 15;
@@ -253,8 +248,6 @@ public class ClaspGUI extends JPanel implements ActionListener{
 
         //add Survey Line Classification Button 1
         gui.surveyLineClass1 = new ClaspRadioButton("Survey Line Classification", "I", gui);
-        gui.surveyLineClass1.setActionCommand("Survey Line Classification ; I");
-        gui.surveyLineClass1.addActionListener(gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -265,8 +258,6 @@ public class ClaspGUI extends JPanel implements ActionListener{
 
         //add Survey Line Classification Button 2
         gui.surveyLineClass2 = new ClaspRadioButton("Survey Line Classification", "II", gui);
-        gui.surveyLineClass2.setActionCommand("Survey Line Classification ; II");
-        gui.surveyLineClass2.addActionListener(gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -277,8 +268,6 @@ public class ClaspGUI extends JPanel implements ActionListener{
 
         //add Survey Line Classification Button 3
         gui.surveyLineClass3 = new ClaspRadioButton("Survey Line Classification", "III", gui);
-        gui.surveyLineClass3.setActionCommand("Survey Line Classification ; III");
-        gui.surveyLineClass3.addActionListener(gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -307,8 +296,6 @@ public class ClaspGUI extends JPanel implements ActionListener{
 
         //add Retentive Undercut button 0.01"
         gui.retentiveUndercut1 = new ClaspRadioButton("Retentive Undercut", "0.01\"", gui);
-        gui.retentiveUndercut1.setActionCommand("Retentive Undercut ; 0.01");
-        gui.retentiveUndercut1.addActionListener(gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -319,8 +306,6 @@ public class ClaspGUI extends JPanel implements ActionListener{
 
         //add Retentive Undercut button 0.02"
         gui.retentiveUndercut2 = new ClaspRadioButton("Retentive Undercut", "0.02\"", gui);
-        gui.retentiveUndercut2.setActionCommand("Retentive Undercut ; 0.02");
-        gui.retentiveUndercut2.addActionListener(gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -349,8 +334,6 @@ public class ClaspGUI extends JPanel implements ActionListener{
 
         //Add Occlusion = mesial radio button
         gui.occlusionMesial = new ClaspRadioButton("Occlusion", "Mesial", gui);
-        gui.occlusionMesial.setActionCommand("Occlusion ; Mesial");
-        gui.occlusionMesial.addActionListener(gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -361,8 +344,6 @@ public class ClaspGUI extends JPanel implements ActionListener{
 
         //Add Occlusion= Distal radio button
         gui.occlusionDistal = new ClaspRadioButton("Occlusion", "Distal", gui);
-        gui.occlusionDistal.setActionCommand("Occlusion ; Distal");
-        gui.occlusionDistal.addActionListener(gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -389,8 +370,6 @@ public class ClaspGUI extends JPanel implements ActionListener{
 
         //Add Soft Tissue Undercut = Yes button
         gui.softTissueUndercutYes = new ClaspRadioButton("Soft Tissue Undercut", "Yes", gui);
-        gui.softTissueUndercutYes.setActionCommand("Soft Tissue Undercut ; Yes");
-        gui.softTissueUndercutYes.addActionListener(gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -401,8 +380,6 @@ public class ClaspGUI extends JPanel implements ActionListener{
 
         //Add Soft Tissue Undercut = No button
         gui.softTissueUndercutNo = new ClaspRadioButton("Soft Tissue Undercut", "No", gui);
-        gui.softTissueUndercutNo.setActionCommand("Soft Tissue Undercut ; No");
-        gui.softTissueUndercutNo.addActionListener(gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -430,8 +407,6 @@ public class ClaspGUI extends JPanel implements ActionListener{
 
         //Add 2mm or more Buccal Vestibule = Yes button
         gui.buccalVestib2mmYes = new ClaspRadioButton("2mm or More Buccal Vestibule", "Yes", gui);
-        gui.buccalVestib2mmYes.setActionCommand("2mm or More Buccal Vestibule ; Yes");
-        gui.buccalVestib2mmYes.addActionListener(gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -442,8 +417,6 @@ public class ClaspGUI extends JPanel implements ActionListener{
 
         //Add 2mm or more Buccal Vestibule = No button
         gui.buccalVestib2mmNo = new ClaspRadioButton("2mm or More Buccal Vestibule", "No", gui);
-        gui.buccalVestib2mmNo.setActionCommand("2mm or More Buccal Vestibule ; No");
-        gui.buccalVestib2mmNo.addActionListener(gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -471,8 +444,6 @@ public class ClaspGUI extends JPanel implements ActionListener{
 
         //add Esthetically concerned = yes button
         gui.estheticYes = new ClaspRadioButton("Esthetically Concerned Patient", "Yes", gui);
-        gui.estheticYes.setActionCommand("Esthetically Concerned Patient ; Yes");
-        gui.estheticYes.addActionListener(gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -483,8 +454,6 @@ public class ClaspGUI extends JPanel implements ActionListener{
 
         //add Esthetically concerned = No button
         gui.estheticNo = new ClaspRadioButton("Esthetically Concerned Patient", "No", gui);
-        gui.estheticNo.setActionCommand("Esthetically Concerned Patient ; No");
-        gui.estheticNo.addActionListener(gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -512,8 +481,6 @@ public class ClaspGUI extends JPanel implements ActionListener{
 
         //add Esthetically concerned = yes button
         gui.toothTypeAnterior = new ClaspRadioButton("Tooth Type", "Anterior", gui);
-        gui.toothTypeAnterior.setActionCommand("Tooth Type ; Anterior");
-        gui.toothTypeAnterior.addActionListener(gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -524,8 +491,6 @@ public class ClaspGUI extends JPanel implements ActionListener{
 
         //add Esthetically concerned = No button
         gui.toothTypePremolar = new ClaspRadioButton("Tooth Type", "PreMolar", gui);
-        gui.toothTypePremolar.setActionCommand("Tooth Type ; PreMolar");
-        gui.toothTypePremolar.addActionListener(gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -536,8 +501,6 @@ public class ClaspGUI extends JPanel implements ActionListener{
 
         //add Esthetically concerned = No button
         gui.toothTypeMolar = new ClaspRadioButton("Tooth Type", "Molar", gui);
-        gui.toothTypeMolar.setActionCommand("Tooth Type ; Molar");
-        gui.toothTypeMolar.addActionListener(gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 15;
@@ -584,10 +547,8 @@ public class ClaspGUI extends JPanel implements ActionListener{
         c.gridy = 12;
         gui.rightPanel.add(gui.ring, c);
 
-    }
-
-    //Make button that clears all selections.
-    private static void addResetButton(ClaspGUI gui, GridBagConstraints c) {
+        //Add the reset button
+        c.fill = 0;
         c.gridy = GridBagConstraints.RELATIVE;
         c.gridx = 0;
         c.ipady = 5;
@@ -596,34 +557,21 @@ public class ClaspGUI extends JPanel implements ActionListener{
         c.anchor = GridBagConstraints.PAGE_END;
         c.weightx = 1.0;
         c.weighty = 1.0;
-
-        //Bug: Reset button might need to implement Action Listener, right now, only finished layout.
-        JButton reset = new JButton ("RESET");
-        reset.setActionCommand("RESET ; RESET");
-        reset.addActionListener(gui);
-
-        gui.rightPanel.add(reset, c);
+        gui.rightPanel.add(gui.reset, c);
 
     }
 
 
     /**
-     * Listens and acts on actions performed in ClaspGUI. Mainly clicking of radio buttons, and the reset button. The
-     * GUI is organized such that this listener will act on multiple panes - e.g. the middle and right panes.
-     * @param e action event performed.
+     * Listens and acts the clicking of radio button. Updates the valid clasps based on selected radio buttons.
+     * @param input String input from the action event performed.
      */
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String[] splitString = e.getActionCommand().split(" ; ");
+
+    public void radioButtonClicked(String input) {
+        String[] splitString = input.split(" ; ");
         String crit = splitString[0];   //Get the current criterion
         String val = splitString[1];    //Get the current value
         activeCriteria.put(crit, val);  //remember criteria, value pairing
-        if ("RESET".equals(crit)) {
-            activeCriteria.clear();
-            for(ButtonGroup b : buttonGroups) {
-                b.clearSelection();
-            }
-        }
         for (ClaspButton button : buttons) {
             button.updateStatus(activeCriteria);    //Update activity status of the ClaspButtons
         }
@@ -631,6 +579,11 @@ public class ClaspGUI extends JPanel implements ActionListener{
         //Bug: Special character parsing is flimsy, is there a better way we can do this?
     }
 
+    /**
+     * Opens a new window when a ClaspButton is clicked
+     * @param claspButton The clasp button clicked.
+     * @param claspImage The image related to clasp.
+     */
     public static void makeClaspWindow(ClaspButton claspButton, ImageIcon claspImage) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -675,7 +628,20 @@ public class ClaspGUI extends JPanel implements ActionListener{
 
             }
         });
+    }
 
+    /**
+     * Resets all buttons to default state. Only called when RESET button is clicked.
+     * @param g the GUI from which the buttons will be cleared.
+     */
+    public static void resetButtons(ClaspGUI g) {
+        g.activeCriteria.clear();
+        for (ClaspButton b : g.buttons) {
+            b.updateStatus(g.activeCriteria);
+        }
+        for(ButtonGroup b : g.buttonGroups) {
+            b.clearSelection();
+        }
     }
 
     private static void createAndShowGUI() {
