@@ -174,7 +174,7 @@ public class ClaspGUI extends JPanel{
         c.insets = insets;
         gui.leftPanel.add(tCase, c);
 
-        JButton abutmentTooth = new InfoButton("Abutment Tooth");
+        AbutmentToothButton abutmentTooth = new AbutmentToothButton("Abutment Tooth", gui);
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
         c.ipady = 75;
@@ -630,19 +630,23 @@ public class ClaspGUI extends JPanel{
         });
     }
 
-    public static void openArchWindow(AbutmentToothButton button, ImageIcon image) {
+    public static void openArchWindow(AbutmentToothButton button, ImageIcon imageOne, ImageIcon imageTwo) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 JFrame frame = new JFrame(button.name);
                 frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
                 JPanel panel = new JPanel();
-                //panel.add();
+                JLabel maxilla = new JLabel(imageOne);
+                JLabel mandible = new JLabel(imageTwo);
+                //add logic for abutment teeth
+                panel.add(maxilla);
+                panel.add(mandible);
                 frame.add(panel);
                 frame.pack();
                 frame.setLocationByPlatform(true);
                 frame.setVisible(true);
-                frame.setResizable(false);
+                frame.setResizable(true);
 
             }
         });

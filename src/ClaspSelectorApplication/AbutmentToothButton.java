@@ -15,12 +15,15 @@ public class AbutmentToothButton extends JButton implements ActionListener {
         super(input);
         gui = g;
         name = "Abutment Tooth Selection";
+        this.addActionListener(this);
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e){
-        ClaspGUI.openArchWindow(this, );
+        ImageIcon mandibularArchPic = this.createImageIcon("images\\mandibular.PNG", "Mandibular Arch US numbering system");
+        ImageIcon maxillaryArchPic = this.createImageIcon("images\\maxillary.PNG", "Maxillary Arch US numbering system");
+        ClaspGUI.openArchWindow(this, maxillaryArchPic, mandibularArchPic);
     }
 
     /**
@@ -28,7 +31,7 @@ public class AbutmentToothButton extends JButton implements ActionListener {
      * @param path - resource path
      * @param description - description of the file
      */
-    private static ImageIcon createImageIcon(String path,
+    private ImageIcon createImageIcon(String path,
                                         String description) {
         java.net.URL imgURL = getClass().getResource(path);
         if (imgURL != null) {
