@@ -630,7 +630,7 @@ public class ClaspGUI extends JPanel{
         });
     }
 
-    public static void openArchWindow(AbutmentToothButton button) {
+    public static void openArchWindow(AbutmentToothButton button, ImageIcon image) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
