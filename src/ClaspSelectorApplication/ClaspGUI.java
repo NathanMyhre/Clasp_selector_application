@@ -630,6 +630,24 @@ public class ClaspGUI extends JPanel{
         });
     }
 
+    public static void openArchWindow(AbutmentToothButton button) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JFrame frame = new JFrame(button.name);
+                frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+                JPanel panel = new JPanel();
+                //panel.add();
+                frame.add(panel);
+                frame.pack();
+                frame.setLocationByPlatform(true);
+                frame.setVisible(true);
+                frame.setResizable(false);
+
+            }
+        });
+    }
+
     /**
      * Resets all buttons to default state. Only called when RESET button is clicked.
      * @param g the GUI from which the buttons will be cleared.
