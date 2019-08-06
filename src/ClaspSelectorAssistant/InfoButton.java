@@ -1,9 +1,8 @@
-package ClaspSelectorApplication;
+package ClaspSelectorAssistant;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 
 public class InfoButton extends JButton implements ActionListener {
     public String name;

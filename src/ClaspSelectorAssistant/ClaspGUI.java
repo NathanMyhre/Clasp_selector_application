@@ -1,4 +1,4 @@
-package ClaspSelectorApplication;
+package ClaspSelectorAssistant;
 
 //Notes to self: Key words to search in development:
     //Bug: Something that needs to be fixed later, or a feature that could be added later.
@@ -7,21 +7,23 @@ package ClaspSelectorApplication;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.HashMap;
+
+//Bug: Prevent multiple alert windows from popping up
 
 /** Bug: Javadoc for fields
  * ClaspGUI is a Clasp selecting assistance application.
  *
  */
 public class ClaspGUI extends JPanel{
-    public JPanel leftPanel, middlePanel, rightPanel;
+    public AbutmentToothPanel leftPanel;
+    public JPanel middlePanel, rightPanel;
     public static HashMap<String, String> definitions = ClaspGUI.makeDefinitions();
     public static Insets insets = new Insets(5,5,5,5 );
     public static Insets defaultInset = new Insets(0,0,0,0);
+    public ImageIcon mandibularArchPic;
+    public ImageIcon maxillaryArchPic;
 
     //buttons that go in middle pane
     public InfoButton stressReleaseInfo;
@@ -71,8 +73,9 @@ public class ClaspGUI extends JPanel{
     public HashMap<String, String> activeCriteria;
 
     //Data structures to hold buttons
+    //Bug:Abutment tooth selection does not select radio buttons. Might have to make HashMaps with button data structures.
     public LinkedList<ClaspButton> buttons;
-    public LinkedList<ClaspRadioButton> radioButtons;
+    public HashMap<String, ClaspRadioButton> radioButtons;
     public LinkedList<ButtonGroup> buttonGroups;
 
 
@@ -81,9 +84,13 @@ public class ClaspGUI extends JPanel{
     //Javadoc: Jpanels: 1 cell = 20 height
     public ClaspGUI() {
         this.setLayout(new GridBagLayout());
-        leftPanel = new JPanel(new GridBagLayout());
+        leftPanel = new AbutmentToothPanel(new GridBagLayout(), this);
         middlePanel = new JPanel(new GridBagLayout());
         rightPanel = new JPanel(new GridBagLayout());
+
+        //create images of mandibular arches
+        mandibularArchPic = createImageIcon("images\\mandibular.PNG", "Mandibular Arch US numbering system");
+        maxillaryArchPic = createImageIcon("images\\maxillary.PNG", "Maxillary Arch US numbering system");
 
         //Note: create GBC now, and only change within static methods - scope keeps safe.
         GridBagConstraints c = new GridBagConstraints();
@@ -92,11 +99,11 @@ public class ClaspGUI extends JPanel{
         activeCriteria = new HashMap<String, String>();
         //List of all clasp buttons for checking criteria
         buttons = new LinkedList<ClaspButton>();
-        radioButtons = new LinkedList<ClaspRadioButton>();
+        radioButtons = new HashMap<String, ClaspRadioButton>();
         buttonGroups = new LinkedList<ButtonGroup>();
 
         //Add Left most buttons to GUI
-        addLeftHandButtons(this, c);
+        //addLeftHandButtons(this, c);
 
         //initialize buttons and add them to the button List
         iBarMesial = ClaspButton.factory("I-Bar Clasp Mesial Rest", this); buttons.add(iBarMesial);
@@ -130,13 +137,15 @@ public class ClaspGUI extends JPanel{
         ClaspGUI.addToothTypeButtons(this, c);
 
         //Add Radio buttons and button groups to lists for use later if needed.
-        radioButtons.add(stressReleaseYes); radioButtons.add(stressReleaseNo); radioButtons.add(surveyLineClass1);
-        radioButtons.add(surveyLineClass2); radioButtons.add(surveyLineClass3); radioButtons.add(retentiveUndercut1);
-        radioButtons.add(retentiveUndercut2); radioButtons.add(occlusionDistal); radioButtons.add(occlusionMesial);
-        radioButtons.add(softTissueUndercutYes); radioButtons.add(softTissueUndercutNo);
-        radioButtons.add(buccalVestib2mmYes); radioButtons.add(buccalVestib2mmNo); radioButtons.add(estheticYes);
-        radioButtons.add(estheticNo); radioButtons.add(toothTypeAnterior); radioButtons.add(toothTypeMolar);
-        radioButtons.add(toothTypePremolar);
+        radioButtons.put("Stress Release Needed ; Yes", stressReleaseYes); radioButtons.put("Stress Release Needed ; No", stressReleaseNo);
+        radioButtons.put("Survey Line Classification ; I", surveyLineClass1); radioButtons.put("Survey Line Classification ; II", surveyLineClass2);
+        radioButtons.put("Survey Line Classification ; II", surveyLineClass3); radioButtons.put("Retentive Undercut ; 0.01\"", retentiveUndercut1);
+        radioButtons.put("Retentive Undercut ; 0.02\"", retentiveUndercut2); radioButtons.put("Occlusion ; Distal", occlusionDistal);
+        radioButtons.put("Occlusion ; Medial", occlusionMesial); radioButtons.put("Soft Tissue Undercut ; Yes", softTissueUndercutYes);
+        radioButtons.put("Soft Tissue Undercut ; No",softTissueUndercutNo); radioButtons.put("2mm or More Buccal Vestibule ; Yes", buccalVestib2mmYes);
+        radioButtons.put("2mm or More Buccal Vestibule ; No", buccalVestib2mmNo); radioButtons.put("Esthetically Concerned Patient ; Yes", estheticYes);
+        radioButtons.put("Esthetically Concerned Patient ; No", estheticNo); radioButtons.put("Tooth Type ; Anterior",toothTypeAnterior);
+        radioButtons.put("Tooth Type ; Molar", toothTypeMolar); radioButtons.put("Tooth Type ; PreMolar", toothTypePremolar);
 
         buttonGroups.add(stressReleaseGroup); buttonGroups.add(surveyLineGroup); buttonGroups.add(retentiveUndercutGroup);
         buttonGroups.add(occlusionGroup); buttonGroups.add(softTissueUndercutGroup); buttonGroups.add(buccalVestib2mmGroup);
@@ -163,7 +172,8 @@ public class ClaspGUI extends JPanel{
         return defs;
     }
 
-    private static void addLeftHandButtons(ClaspGUI gui, GridBagConstraints c) {
+    //THIS METHOD IS DEPRECATED. REPLACED WITH ABUTMENTTOOTHPANEL
+    /*private static void addLeftHandButtons(ClaspGUI gui, GridBagConstraints c) {
         JButton tCase = new InfoButton("Case");
         c.fill = GridBagConstraints.BOTH;
         c.gridheight = 1;
@@ -183,7 +193,7 @@ public class ClaspGUI extends JPanel{
         c.gridy = 1;
         c.insets = insets;
         gui.leftPanel.add(abutmentTooth, c);
-    }
+    }*/
 
     //Creates info button and radio buttons for Stress Release choices
     private static void addStressReleaseButtons(ClaspGUI gui, GridBagConstraints c){
@@ -353,6 +363,7 @@ public class ClaspGUI extends JPanel{
         gui.middlePanel.add(gui.occlusionDistal, c);
     }
 
+    //Creates info button and radio buttons for soft tissue undercut choices
     private static void addsoftTissueUndercutButtons(ClaspGUI gui, GridBagConstraints c) {
         gui.softTissueUndercutInfo = new InfoButton("Soft Tissue Undercut");
         c.fill = GridBagConstraints.BOTH;
@@ -572,8 +583,47 @@ public class ClaspGUI extends JPanel{
         String crit = splitString[0];   //Get the current criterion
         String val = splitString[1];    //Get the current value
         activeCriteria.put(crit, val);  //remember criteria, value pairing
+        int invalidTally = 0;
         for (ClaspButton button : buttons) {
             button.updateStatus(activeCriteria);    //Update activity status of the ClaspButtons
+            if(!button.isEnabled()) {
+                invalidTally++;
+            }
+        }
+        // Make a new window to alert users that there are no valid clasps available.
+        if (invalidTally >= 13) {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    JFrame frame = new JFrame("Alert: No Valid Clasps");
+                    frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+                    JTextArea textArea = new JTextArea(15, 50);
+                    textArea.setWrapStyleWord(true);
+                    textArea.setEditable(false);
+                    textArea.append(" No viable clasps exist with the current configuration.\n" +
+                            "\n" +
+                            "Please consider the following:" +
+                            "\n" +
+
+                            "    1: Surveyed crowns: surveyed crowns can be made to provide appropriate depth and location of undercuts.  \n" +
+                            "\n" +
+                            "    2: Composite addition: composite can be added to the tooth to provide appropriate depth and location of undercuts \n " +
+                            "       (composite added to the tooth should be based on a surveyed wax pattern made on a surveyed diagnostic cast)\n" +
+                            "\n" +
+                            "    3: Preparation of an enamel dimple: a dimple can be prepared in the enamel of the abutment tooth to provide an  \n " +
+                            "       appropriate undercut in an appropriate location.\n" +
+                            "\n" +
+                            "    4: Choose a different abutment");
+                    JPanel infoPanel = new JPanel();
+                    infoPanel.add(textArea);
+                    frame.add(infoPanel);
+                    frame.pack();
+                    frame.setLocationByPlatform(true);
+                    frame.setVisible(true);
+                    frame.setResizable(false);
+
+                }
+            });
         }
         //Bug: what are the error values we expect?
         //Bug: Special character parsing is flimsy, is there a better way we can do this?
@@ -630,6 +680,12 @@ public class ClaspGUI extends JPanel{
         });
     }
 
+    /**
+     * Opens the window containing pictures of arches
+     * @param button
+     * @param imageOne
+     * @param imageTwo
+     */
     public static void openArchWindow(AbutmentToothButton button, ImageIcon imageOne, ImageIcon imageTwo) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -666,12 +722,32 @@ public class ClaspGUI extends JPanel{
         }
     }
 
+    /**
+     * Creates an ImageIcon if the path is valid.
+     * @param path - resource path
+     * @param description - description of the file
+     */
+    public ImageIcon createImageIcon(String path,
+                                      String description) {
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL, description);
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            return null;
+        }
+    }
+
+    //Builds and shows the GUI.
     private static void createAndShowGUI() {
-        JFrame frame = new JFrame();
+        JFrame frame = new JFrame("Clasp Selector Assistant");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         frame.setContentPane(new ClaspGUI());
 
+        //frame.setLocationByPlatform(true);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //frame.setUndecorated(true);
         frame.pack();
         frame.setVisible(true);
     }

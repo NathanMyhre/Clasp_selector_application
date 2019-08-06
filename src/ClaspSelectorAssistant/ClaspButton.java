@@ -1,4 +1,4 @@
-package ClaspSelectorApplication;
+package ClaspSelectorAssistant;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

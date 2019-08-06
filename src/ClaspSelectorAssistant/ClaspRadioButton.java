@@ -1,9 +1,8 @@
-package ClaspSelectorApplication;
+package ClaspSelectorAssistant;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedList;
 
 public class ClaspRadioButton extends JRadioButton implements ActionListener{
     String criteria;
@@ -15,10 +14,10 @@ public class ClaspRadioButton extends JRadioButton implements ActionListener{
     }
 
     //Set the radio button to equal its required value, but remember the criteria and gui to which it belongs.
-    public ClaspRadioButton (String c, String value, ClaspGUI myGUI) {
-        super(value);
+    public ClaspRadioButton (String c, String val, ClaspGUI myGUI) {
+        super(val);
         criteria = c;
-        value = value;
+        value = val;
         gui = myGUI;
         this.setActionCommand(criteria + " ; " + value);
         this.addActionListener(this);
@@ -28,6 +27,10 @@ public class ClaspRadioButton extends JRadioButton implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         String input = e.getActionCommand();
         gui.radioButtonClicked(input);
+    }
+
+    public String myString(){
+        return (criteria + " ; " + value);
     }
 
 }

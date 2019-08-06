@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Clasp_selector_application:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Clasp_selector_application_jar</output-path>
+    <root id="archive" name="Clasp_selector_application.jar">
+      <element id="module-output" name="Clasp_selector_assistant" />
+    </root>
+  </artifact>
+</component>
