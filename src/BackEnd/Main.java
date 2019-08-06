@@ -6,7 +6,7 @@
  * @version 1.0
  * @since 2019-04-17
  */
-package ClaspSelectorAssistant;
+package BackEnd;
 
 import BackEnd.Clasp;
 import BackEnd.ClaspSelector;

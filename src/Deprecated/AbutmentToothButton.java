@@ -1,4 +1,6 @@
-package ClaspSelectorAssistant;
+package Deprecated;
+
+import ClaspSelectorAssistant.ClaspGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -37,7 +39,7 @@ public class AbutmentToothButton extends JButton implements ActionListener {
     public void actionPerformed(ActionEvent e){
         ImageIcon mandibularArchPic = this.createImageIcon("images\\mandibular.PNG", "Mandibular Arch US numbering system");
         ImageIcon maxillaryArchPic = this.createImageIcon("images\\maxillary.PNG", "Maxillary Arch US numbering system");
-        ClaspGUI.openArchWindow(this, maxillaryArchPic, mandibularArchPic);
+        //ClaspGUI.openArchWindow(this, maxillaryArchPic, mandibularArchPic);
     }
 
     /**

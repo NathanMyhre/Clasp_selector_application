@@ -17,66 +17,66 @@ import java.util.HashMap;
  *
  */
 public class ClaspGUI extends JPanel{
-    public AbutmentToothPanel leftPanel;
-    public JPanel middlePanel, rightPanel;
+    private AbutmentToothPanel leftPanel;
+    private JPanel middlePanel, rightPanel;
     public static HashMap<String, String> definitions = ClaspGUI.makeDefinitions();
-    public static Insets insets = new Insets(5,5,5,5 );
-    public static Insets defaultInset = new Insets(0,0,0,0);
-    public ImageIcon mandibularArchPic;
-    public ImageIcon maxillaryArchPic;
+    private static Insets insets = new Insets(5,5,5,5 );
+    private static Insets defaultInset = new Insets(0,0,0,0);
+    private ImageIcon mandibularArchPic;
+    private ImageIcon maxillaryArchPic;
 
     //buttons that go in middle pane
-    public InfoButton stressReleaseInfo;
-    public InfoButton surveyLineInfo;
-    public InfoButton retentiveUndercutInfo;
-    public InfoButton occlusionInfo;
-    public InfoButton softTissueUndercutInfo;
-    public InfoButton buccalVestib2mmInfo;
-    public InfoButton estheticInfo;
-    public InfoButton toothTypeInfo;
+    private InfoButton stressReleaseInfo;
+    private InfoButton surveyLineInfo;
+    private InfoButton retentiveUndercutInfo;
+    private InfoButton occlusionInfo;
+    private InfoButton softTissueUndercutInfo;
+    private InfoButton buccalVestib2mmInfo;
+    private InfoButton estheticInfo;
+    private InfoButton toothTypeInfo;
 
-    public ClaspRadioButton stressReleaseYes, stressReleaseNo;
-    public ClaspRadioButton surveyLineClass1, surveyLineClass2, surveyLineClass3;
-    public ClaspRadioButton retentiveUndercut1, retentiveUndercut2;
-    public ClaspRadioButton occlusionMesial, occlusionDistal;
-    public ClaspRadioButton softTissueUndercutYes, softTissueUndercutNo;
-    public ClaspRadioButton buccalVestib2mmYes, buccalVestib2mmNo;
-    public ClaspRadioButton estheticYes, estheticNo;
-    public ClaspRadioButton toothTypeAnterior, toothTypePremolar, toothTypeMolar;
+    private ClaspRadioButton stressReleaseYes, stressReleaseNo;
+    private ClaspRadioButton surveyLineClass1, surveyLineClass2, surveyLineClass3;
+    private ClaspRadioButton retentiveUndercut1, retentiveUndercut2;
+    private ClaspRadioButton occlusionMesial, occlusionDistal;
+    private ClaspRadioButton softTissueUndercutYes, softTissueUndercutNo;
+    private ClaspRadioButton buccalVestib2mmYes, buccalVestib2mmNo;
+    private ClaspRadioButton estheticYes, estheticNo;
+    private ClaspRadioButton toothTypeAnterior, toothTypePremolar, toothTypeMolar;
 
-    public ButtonGroup stressReleaseGroup;
-    public ButtonGroup surveyLineGroup;
-    public ButtonGroup retentiveUndercutGroup;
-    public ButtonGroup occlusionGroup;
-    public ButtonGroup softTissueUndercutGroup;
-    public ButtonGroup buccalVestib2mmGroup;
-    public ButtonGroup estheticGroup;
-    public ButtonGroup toothTypeGroup;
+    private ButtonGroup stressReleaseGroup;
+    private ButtonGroup surveyLineGroup;
+    private ButtonGroup retentiveUndercutGroup;
+    private ButtonGroup occlusionGroup;
+    private ButtonGroup softTissueUndercutGroup;
+    private ButtonGroup buccalVestib2mmGroup;
+    private ButtonGroup estheticGroup;
+    private ButtonGroup toothTypeGroup;
 
     //buttons that go in right panel
-    public ClaspButton iBarMesial;
-    public ClaspButton iBarDistal;
-    public ClaspButton iBarCingulum;
-    public ClaspButton modTBarMesial;
-    public ClaspButton modTBarDistal;
-    public ClaspButton modTBarCingulum;
-    public ClaspButton wwMesial;
-    public ClaspButton wwDistal;
-    public ClaspButton wwCingulum;
-    public ClaspButton ccMesial;
-    public ClaspButton ccDistal;
-    public ClaspButton ccCingulum;
-    public ClaspButton ring;
-    public ClaspButton reset;
+    private ClaspButton iBarMesial;
+    private ClaspButton iBarDistal;
+    private ClaspButton iBarCingulum;
+    private ClaspButton modTBarMesial;
+    private ClaspButton modTBarDistal;
+    private ClaspButton modTBarCingulum;
+    private ClaspButton wwMesial;
+    private ClaspButton wwDistal;
+    private ClaspButton wwCingulum;
+    private ClaspButton ccMesial;
+    private ClaspButton ccDistal;
+    private ClaspButton ccCingulum;
+    private ClaspButton ring;
+    private ClaspButton reset;
 
     //Data structure to track the active radio buttons
-    public HashMap<String, String> activeCriteria;
+    private HashMap<String, String> activeCriteria;
 
     //Data structures to hold buttons
     //Bug:Abutment tooth selection does not select radio buttons. Might have to make HashMaps with button data structures.
-    public LinkedList<ClaspButton> buttons;
-    public HashMap<String, ClaspRadioButton> radioButtons;
-    public LinkedList<ButtonGroup> buttonGroups;
+     LinkedList<ClaspButton> buttons;
+     HashMap<String, ClaspRadioButton> radioButtons;
+     LinkedList<ButtonGroup> buttonGroups;
 
 
 
@@ -680,33 +680,6 @@ public class ClaspGUI extends JPanel{
         });
     }
 
-    /**
-     * Opens the window containing pictures of arches
-     * @param button
-     * @param imageOne
-     * @param imageTwo
-     */
-    public static void openArchWindow(AbutmentToothButton button, ImageIcon imageOne, ImageIcon imageTwo) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                JFrame frame = new JFrame(button.name);
-                frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-                JPanel panel = new JPanel();
-                JLabel maxilla = new JLabel(imageOne);
-                JLabel mandible = new JLabel(imageTwo);
-                //add logic for abutment teeth
-                panel.add(maxilla);
-                panel.add(mandible);
-                frame.add(panel);
-                frame.pack();
-                frame.setLocationByPlatform(true);
-                frame.setVisible(true);
-                frame.setResizable(true);
-
-            }
-        });
-    }
 
     /**
      * Resets all buttons to default state. Only called when RESET button is clicked.
