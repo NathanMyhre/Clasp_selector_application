@@ -14,6 +14,8 @@ package ClaspSelectorAssistant;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.HashMap;
 
@@ -76,7 +78,10 @@ public class ClaspGUI extends JPanel{
     private ClaspButton ccDistal;
     private ClaspButton ccCingulum;
     private ClaspButton ring;
-    private ClaspButton reset;
+    private JButton reset;
+    private JButton previousButton;
+    private JButton nextButton;
+    private JButton finishButton;
 
     //Data structure to track the active radio buttons
     private HashMap<String, String> activeCriteria;
@@ -88,19 +93,19 @@ public class ClaspGUI extends JPanel{
     HashMap<String, ClaspRadioButton> radioButtons;
     LinkedList<ButtonGroup> buttonGroups;
 
-
-
     //Javadoc: 3 columns, 1 row. 1 JPanel per column
     //Javadoc: Jpanels: 1 cell = 20 height
     public ClaspGUI() {
         this.setLayout(new GridBagLayout());
         leftPanel = new ArchPanel(new GridBagLayout(), this);
+        leftPanel.setPreferredSize(new Dimension(500, 1000));
         middlePanel = new JPanel(new GridBagLayout());
+        middlePanel.setPreferredSize(new Dimension (500, 1000));
         rightPanel = new JPanel(new GridBagLayout());
 
         //create images of mandibular arches
-        mandibularArchPic = createImageIcon("images\\mandibular.PNG", "Mandibular Arch US numbering system");
-        maxillaryArchPic = createImageIcon("images\\maxillary.PNG", "Maxillary Arch US numbering system");
+        //mandibularArchPic = createImageIcon("images\\mandibular.PNG", "Mandibular Arch US numbering system");
+        //maxillaryArchPic = createImageIcon("images\\maxillary.PNG", "Maxillary Arch US numbering system");
 
         //Note: create GBC now, and only change within static methods - scope keeps safe.
         GridBagConstraints c = new GridBagConstraints();
@@ -129,12 +134,20 @@ public class ClaspGUI extends JPanel{
         ccDistal = ClaspButton.factory("CC Clasp Distal Rest", this); buttons.add(ccDistal);
         ccCingulum = ClaspButton.factory("CC Clasp Cingulum Rest", this); buttons.add(ccCingulum);
         ring = ClaspButton.factory("Ring Clasp", this); buttons.add(ring);
-        reset = ClaspButton.factory("RESET", this);
+        reset = new JButton("RESET");
+        reset.addActionListener((ActionListener) -> ClaspGUI.resetButtons(ClaspGUI.this));
+        previousButton = new JButton("PREVIOUS");
+        //previousButton.addActionListener((ActionListener) -> pressPreviousButton(ClaspGUI.this);
+        nextButton = new JButton("NEXT");
+        //nextButton.addActionListener((ActionListener) -> pressNextButton(ClaspGUI.this);
+        finishButton = new JButton("FINISH");
+
 
         //Add and place clasp buttons to GUI
         ClaspGUI.addClaspButtons(this, c);
 
         //Add and place radio buttons for patient selection criteria
+        c.gridwidth = 1;
         ClaspGUI.addStressReleaseButtons(this, c);
         ClaspGUI.addSurveyLineButtons(this, c);
         ClaspGUI.addRetentiveUndercutButtons(this, c);
@@ -160,8 +173,11 @@ public class ClaspGUI extends JPanel{
         buttonGroups.add(estheticGroup); buttonGroups.add(toothTypeGroup);
 
         //Add the three thirds of the GUI.
+        c.gridx = 0;
         this.add(leftPanel);
+        c.gridx = 1;
         this.add(middlePanel);
+        c.gridx = 2;
         this.add(rightPanel);
 
     }
@@ -510,11 +526,13 @@ public class ClaspGUI extends JPanel{
     //adds and places ClaspButtons in the GUI
     private static void addClaspButtons(ClaspGUI gui, GridBagConstraints c) {
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.ipadx = 175;
+        c.ipadx = 150;
         c.ipady = 15;
         c.insets = insets;
+        c.gridx = 0;
         c.gridy = 0;
         c.gridheight = 1;
+        c.gridwidth = 3;
 
         //Add buttons to right panel in vertical order
         gui.rightPanel.add(gui.iBarMesial, c);
@@ -543,16 +561,31 @@ public class ClaspGUI extends JPanel{
         c.gridy = 12;
         gui.rightPanel.add(gui.ring, c);
 
+        //add the "Next" and Finish buttons
+        c.fill = 0;
+        c.gridy = 13;
+        c.gridx = 0;
+        c.ipadx = 40;
+        c.ipady = 5;
+        c.gridwidth = 1;
+        gui.rightPanel.add(gui.previousButton, c);
+
+        c.gridx =2;
+        gui.rightPanel.add(gui.nextButton, c);
+
+        c.gridx = 1;
+        gui.rightPanel.add(gui.finishButton, c);
+
         //Add the reset button
         c.fill = 0;
-        c.gridy = GridBagConstraints.RELATIVE;
-        c.gridx = 0;
-        c.ipady = 5;
-        c.ipadx = 40;
+        c.gridy = 14;
+        c.gridx = 2;
+        //c.ipady = 5;
+        //c.ipadx = 40;
 
         c.anchor = GridBagConstraints.PAGE_END;
-        c.weightx = 1.0;
-        c.weighty = 1.0;
+        //c.weightx = 1.0;
+        //c.weighty = 1.0;
         gui.rightPanel.add(gui.reset, c);
 
     }
@@ -682,6 +715,7 @@ public class ClaspGUI extends JPanel{
             b.clearSelection();
         }
     }
+
 
     /**
      * Creates an ImageIcon if the path is valid.

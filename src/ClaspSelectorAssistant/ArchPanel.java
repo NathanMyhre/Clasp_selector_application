@@ -18,12 +18,16 @@ import javax.imageio.ImageIO;
 import java.net.URL;
 
 //Note: need to make documentation for ArchPanel
+//Bug: need error reporting mechanisms
 public class ArchPanel extends JPanel  {
     ClaspGUI gui;
-    static String maxillaryImagePath = "images/maxillary.PNG";
-    static String mandibularImagePath = "image/mandibular.PNG";
-    ArchPicPanel maxillaryPanel;
-    ArchPicPanel mandibularPanel;
+    JLayeredPane archPane;
+    static String maxillaryImagePath = "../resources/icons/maxillary.PNG";
+    static String mandibularImagePath = "../resources/icons/mandibular.PNG";
+    ImageIcon maxillaryIcon;
+    ImageIcon mandibularIcon;
+    //ArchPicPanel maxillaryPanel;
+    //ArchPicPanel mandibularPanel;
 
     //Red Circle's xpos, ypos, width, and height
     int circleX = 50;
@@ -51,20 +55,54 @@ public class ArchPanel extends JPanel  {
 
         super(layout);
         gui = g;
+        archPane = new JLayeredPane();
+        archPane.setPreferredSize(new Dimension(1000, 1000));
 
         //Make images of arches
-        //mandibularIcon = this.createImage("images\\mandibular.PNG");
-        //maxillaryIcon = this.createImage("images\\maxillary.PNG");
-        try {
-            maxillaryPanel = new ArchPicPanel(new GridBagLayout(), maxillaryImagePath);
-            mandibularPanel = new ArchPicPanel(new GridBagLayout(), mandibularImagePath);
-        } catch(IOException e) {
-            String workingDir = System.getProperty("user.dir");
-            System.out.println("Current working directory : " + workingDir);
-            e.printStackTrace();
-            System.err.println("Could not find the Image path for either maxillary or mandibular arch");
-            throw new RuntimeException(e);
-        }
+        mandibularIcon = createImageIcon(mandibularImagePath, "Mandibular Arch, US Numbering System");
+        maxillaryIcon = createImageIcon(maxillaryImagePath, "Maxillary Arch, US Numbering System");
+        JLabel maxillaryLabel = new JLabel(maxillaryIcon);
+        JLabel mandibularLabel = new JLabel(mandibularIcon);
+
+
+        //maxillaryPanel = new ArchPicPanel(this, "maxillary");
+
+        //Add listener to the Maxillary image
+        maxillaryLabel.addMouseListener( new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                ArchPanel.this.maxillaClick(e.getX(), e.getY());
+                //System.out.println(e.getX());
+                //System.out.println(e.getY());
+            }
+        });
+
+        //Add listener to the mandibular image
+        mandibularLabel.addMouseListener( new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                ArchPanel.this.mandibleClick(e.getX(), e.getY());
+                //System.out.println(e.getX());
+                //System.out.println(e.getY());
+            }
+        });
+
+        GridBagConstraints constraint = new GridBagConstraints();
+
+        //place components on panel, with an inset to separate from middle panel.
+        Insets inset = new Insets(0,0, 0, 20);
+        constraint.insets = inset;
+        constraint.gridy = 0;
+        this.add(maxillaryLabel, constraint);
+        constraint.gridy = 1;
+        this.add(mandibularLabel, constraint);
+
+
+
+        //this.add(mandibularPanel, constraint);
+        //this.add();
+        //this.add();
+
         //Make new teeth and add them to the list to be remembered.
         //Maxilla teeth
         teethMax = new HashMap<InvisiSquare, Integer>();
@@ -143,37 +181,7 @@ public class ArchPanel extends JPanel  {
         //"Tooth Type ; PreMolar"
         //"Tooth Type ; Molar"
 
-        //Add listener to the Maxillary image
-        maxillaryPanel.addMouseListener( new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                ArchPanel.this.maxillaClick(e.getX(), e.getY());
-                //System.out.println(e.getX());
-                //System.out.println(e.getY());
-            }
-        });
 
-        //Add listener to the mandibular image
-        mandibularPanel.addMouseListener( new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                ArchPanel.this.mandibleClick(e.getX(), e.getY());
-                //System.out.println(e.getX());
-                //System.out.println(e.getY());
-            }
-        });
-
-        GridBagConstraints constraint = new GridBagConstraints();
-
-        //place components on panel, with an inset to separate from middle panel.
-        Insets inset = new Insets(0,0, 0, 20);
-        constraint.insets = inset;
-        constraint.gridy = 0;
-        this.add(maxillaryPanel, constraint);
-        constraint.gridy = 1;
-        this.add(mandibularPanel, constraint);
-        //this.add();
-        //this.add();
     }
 
     //Bug: need to figure out how to repaint image so that the red circle appears where clicked.
@@ -223,6 +231,7 @@ public class ArchPanel extends JPanel  {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+
         // Draw Text
         Color transparentRed = new Color(1f, 0f, 0f, 0.5f); //rgb (colors) a = transparency
         g.setColor(transparentRed); // fill space for rectangle
@@ -230,6 +239,18 @@ public class ArchPanel extends JPanel  {
         g.setColor(Color.BLACK); // draw outlines
         g.drawRect(circleX, circleY, circleW, circleH);
 
+    }
+
+    //Create an image icon for adding to a JLabel
+    private ImageIcon createImageIcon(String path,
+                                     String description) {
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL, description);
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            return null;
+        }
     }
 
     /*public Image createImage(String path,
@@ -245,31 +266,6 @@ public class ArchPanel extends JPanel  {
 
 }
 
-class ArchPicPanel extends JPanel {
-    Image background;
-
-    public ArchPicPanel(GridBagLayout layout, String path) throws IOException {
-        super(layout);
-        /*String[] pathComponents = path.split(" ");
-        for(String s : pathComponents) {
-            System.out.println(s);
-        }*/
-        //Note: URL gets at the class path resources.
-        URL imgURL = getClass().getResource(path);
-        System.out.println(imgURL.getPath());
-        background = javax.imageio.ImageIO.read(new File(imgURL.getPath()));
-
-    }
-
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
-        // Draw the background image.
-        g.drawImage(background, 0, 0, this);
-    }
-
-}
 
 /**
  * Opaque red circle used to highlight selected teeth

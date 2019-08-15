@@ -74,7 +74,7 @@ public abstract class ClaspButton extends JButton implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         ImageIcon image = createImageIcon(path, name);
         ClaspGUI.makeClaspWindow(this, image);
-        System.out.println("Proof");
+        //System.out.println("Proof");
     }
 
     /**
@@ -107,7 +107,7 @@ public abstract class ClaspButton extends JButton implements ActionListener {
 class IBarMesialButton extends ClaspButton{
     IBarMesialButton(String input, ClaspGUI g) {
         super(input, g);
-        path = "images\\ibarmesial.PNG";
+        path = "../resources/icons/ibarmesial.PNG";
 
     }
 
@@ -150,7 +150,7 @@ class IBarMesialButton extends ClaspButton{
 class IBarDistalButton extends ClaspButton{
     IBarDistalButton(String input, ClaspGUI g) {
         super(input, g);
-        path = "images\\ibardistal.PNG";
+        path = "../resources/icons/ibarmesial.PNG";
 
     }
 
@@ -194,7 +194,7 @@ class IBarDistalButton extends ClaspButton{
 class IBarCingulumButton extends ClaspButton{
     IBarCingulumButton(String input, ClaspGUI g) {
         super(input, g);
-        path = "images\\ibarcingulum.PNG";
+        path = "../resources/icons/ibarmesial.PNG";
 
     }
 
@@ -230,7 +230,7 @@ class IBarCingulumButton extends ClaspButton{
 class ModTBarMesialButton extends ClaspButton{
     ModTBarMesialButton(String input, ClaspGUI g) {
         super(input, g);
-        path = "images\\modtbarmesial.PNG";
+        path = "../resources/icons/modtbarmesial.PNG";
 
     }
 
@@ -270,7 +270,7 @@ class ModTBarMesialButton extends ClaspButton{
 class ModTBarDistalButton extends ClaspButton{
     ModTBarDistalButton(String input, ClaspGUI g) {
         super(input, g);
-        path = "images\\modtbardistal.PNG";
+        path = "../resources/icons/modtbardistal.PNG";
 
     }
 
@@ -310,7 +310,7 @@ class ModTBarDistalButton extends ClaspButton{
 class ModTBarCingulumButton extends ClaspButton{
     ModTBarCingulumButton(String input, ClaspGUI g) {
         super(input, g);
-        path = "images\\modtbarcingulum.PNG";
+        path = "../resources/icons/modtbarcingulum.PNG";
 
     }
 
@@ -346,7 +346,7 @@ class ModTBarCingulumButton extends ClaspButton{
 class WWMesialButton extends ClaspButton{
     WWMesialButton(String input, ClaspGUI g) {
         super(input, g);
-        path = "images\\wwmesial.PNG";
+        path = "../resources/icons/wwmesial.PNG";
 
     }
 
@@ -386,7 +386,7 @@ class WWMesialButton extends ClaspButton{
 class WWDistalButton extends ClaspButton{
     WWDistalButton(String input, ClaspGUI g) {
         super(input, g);
-        path = "images\\wwdistal.PNG";
+        path = "../resources/icons/wwdistal.PNG";
 
     }
 
@@ -426,7 +426,7 @@ class WWDistalButton extends ClaspButton{
 class WWCingulumButton extends ClaspButton{
     WWCingulumButton(String input, ClaspGUI g) {
         super(input, g);
-        path = "images\\wwcingulum.PNG";
+        path = "../resources/icons/wwcingulum.PNG";
 
     }
 
@@ -462,7 +462,7 @@ class WWCingulumButton extends ClaspButton{
 class CCMesialButton extends ClaspButton{
     CCMesialButton(String input, ClaspGUI g) {
         super(input, g);
-        path = "images\\ccmesial.PNG";
+        path = "../resources/icons/ccmesial.PNG";
 
     }
 
@@ -502,7 +502,7 @@ class CCMesialButton extends ClaspButton{
 class CCDistalButton extends ClaspButton{
     CCDistalButton(String input, ClaspGUI g) {
         super(input, g);
-        path = "images\\ccdistal.PNG";
+        path = "../resources/icons/ccdistal.PNG";
 
     }
 
@@ -542,7 +542,7 @@ class CCDistalButton extends ClaspButton{
 class CCCingulumButton extends ClaspButton{
     CCCingulumButton(String input, ClaspGUI g) {
         super(input, g);
-        path = "images\\cccingulum.png";
+        path = "../resources/icons/cccingulum.png";
 
     }
 
@@ -578,7 +578,7 @@ class CCCingulumButton extends ClaspButton{
 class RingButton extends ClaspButton{
     RingButton(String input, ClaspGUI g) {
         super(input, g);
-        path = "images\\ring.PNG";
+        path = "../resources/icons/ring.PNG";
 
     }
 
