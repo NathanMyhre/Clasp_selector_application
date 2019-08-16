@@ -18,7 +18,7 @@ public class InfoButton extends JButton implements ActionListener {
     public InfoButton(String input) {
         super(input);
         name = input;
-        description = ClaspGUI.definitions.get(input);
+        description = ClaspBackEnd.criteriaDefs.get(input);
         this.addActionListener(this);
     }
 

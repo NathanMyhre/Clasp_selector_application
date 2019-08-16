@@ -83,12 +83,7 @@ public class ClaspGUI extends JPanel{
     private JButton nextButton;
     private JButton finishButton;
 
-    //Data structure to track the active radio buttons
-    private HashMap<String, String> activeCriteria;
-
     //Data structures to hold buttons
-    //Bug:Abutment tooth selection does not select radio buttons. Might have to make HashMaps with button data structures.
-    public static HashMap<String, String> definitions = ClaspGUI.makeDefinitions();
     LinkedList<ClaspButton> buttons;
     HashMap<String, ClaspRadioButton> radioButtons;
     LinkedList<ButtonGroup> buttonGroups;
@@ -111,7 +106,7 @@ public class ClaspGUI extends JPanel{
         GridBagConstraints c = new GridBagConstraints();
 
         //Map of active criteria
-        activeCriteria = new HashMap<String, String>();
+
         //List of all clasp buttons for checking criteria
         buttons = new LinkedList<ClaspButton>();
         radioButtons = new HashMap<String, ClaspRadioButton>();
@@ -182,19 +177,6 @@ public class ClaspGUI extends JPanel{
 
     }
 
-
-    private static HashMap<String, String> makeDefinitions() {
-        HashMap<String, String> defs = new HashMap<String, String>();
-        defs.put("Stress Release Needed", "Stress Release Definition");
-        defs.put("Survey Line Classification", "Survey Line Classification Definition");
-        defs.put("Retentive Undercut", "Retentive Undercut Definition");
-        defs.put("Occlusion", "Occlusion Definition");
-        defs.put("Soft Tissue Undercut", "Soft Tissue Undercut Definition");
-        defs.put("2mm or More Buccal Vestibule", "2mm or More Buccal Vestibule Definition");
-        defs.put("Esthetically Concerned Patient", "Esthetically Concerned Patient definition");
-        defs.put("Tooth Type", "Tooth Type Definition");
-        return defs;
-    }
 
     //Creates info button and radio buttons for Stress Release choices
     private static void addStressReleaseButtons(ClaspGUI gui, GridBagConstraints c){
@@ -600,10 +582,10 @@ public class ClaspGUI extends JPanel{
         String[] splitString = input.split(" ; ");
         String crit = splitString[0];   //Get the current criterion
         String val = splitString[1];    //Get the current value
-        activeCriteria.put(crit, val);  //remember criteria, value pairing
+        ClaspBackEnd.activeCriteria.put(crit, val);  //remember criteria, value pairing
         int invalidTally = 0;
         for (ClaspButton button : buttons) {
-            button.updateStatus(activeCriteria);    //Update activity status of the ClaspButtons
+            button.updateStatus(ClaspBackEnd.activeCriteria);    //Update activity status of the ClaspButtons
             if(!button.isEnabled()) {
                 invalidTally++;
             }
@@ -706,10 +688,10 @@ public class ClaspGUI extends JPanel{
      * @param g the GUI from which the buttons will be cleared.
      */
     public static void resetButtons(ClaspGUI g) {
-        g.activeCriteria.clear();
+        ClaspBackEnd.activeCriteria.clear();
         ClaspGUI.noValidClasps = false;
         for (ClaspButton b : g.buttons) {
-            b.updateStatus(g.activeCriteria);
+            b.updateStatus(ClaspBackEnd.activeCriteria);
         }
         for(ButtonGroup b : g.buttonGroups) {
             b.clearSelection();
