@@ -579,10 +579,10 @@ public class ClaspGUI extends JPanel{
      */
 
     public void radioButtonClicked(String input) {
-        ClaspBackEnd.putActiveCriteria(input);
+        ClaspBackEnd.setActiveCriteria(input);
         int invalidTally = 0;
         for (ClaspButton button : buttons) {
-            button.updateStatus(ClaspBackEnd.activeCriteria);    //Update activity status of the ClaspButtons
+            button.updateStatus(ClaspBackEnd.getActiveCriteria());    //Update activity status of the ClaspButtons
             if(!button.isEnabled()) {
                 invalidTally++;
             }
@@ -684,11 +684,12 @@ public class ClaspGUI extends JPanel{
      * Resets all buttons to default state. Only called when RESET button is clicked.
      * @param g the GUI from which the buttons will be cleared.
      */
+    //Bug: ClaspBackEnd.activeCriteria getter method can allow control
     public static void resetButtons(ClaspGUI g) {
-        ClaspBackEnd.activeCriteria.clear();
+        ClaspBackEnd.getActiveCriteria().clear();
         ClaspGUI.noValidClasps = false;
         for (ClaspButton b : g.buttons) {
-            b.updateStatus(ClaspBackEnd.activeCriteria);
+            b.updateStatus(ClaspBackEnd.getActiveCriteria());
         }
         for(ButtonGroup b : g.buttonGroups) {
             b.clearSelection();
@@ -713,7 +714,7 @@ public class ClaspGUI extends JPanel{
     }
 
     //Builds and shows the GUI.
-    private static void createAndShowGUI() {
+    static void createAndShowGUI() {
         JFrame frame = new JFrame("Clasp Selector Assistant");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

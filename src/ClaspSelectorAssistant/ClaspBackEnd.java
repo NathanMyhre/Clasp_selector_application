@@ -16,40 +16,40 @@ public class ClaspBackEnd {
     //Teeth, labeled by the US numbering System
 
     //Maxilla teeth
-    static tooth toothOne = new tooth("One",57, 98, 306, 328);
-    static tooth toothTwo = new tooth("Two",57, 92, 260, 285);
-    static tooth toothThree = new tooth("Three",59, 103, 207, 240);
-    static tooth toothFour = new tooth("Four",76, 102, 165,186);
-    static tooth toothFive = new tooth("Five",90, 119, 132, 153);
-    static tooth toothSix = new tooth("Six",108, 134, 96, 117);
-    static tooth toothSeven = new tooth("Seven",134, 166, 67, 101);
-    static tooth toothEight = new tooth("Eight",170, 207, 51, 91);
-    static tooth toothNine = new tooth("Nine",218, 257, 48, 92);
-    static tooth toothTen = new tooth("Ten",262, 292, 65, 101);
-    static tooth toothEleven = new tooth("Eleven",290,322,94,120);
-    static tooth toothTwelve = new tooth("Twelve",303, 344, 130,155);
-    static tooth toothThirteen = new tooth( "Thirteen",316,352,165,188);
-    static tooth toothFourteen = new tooth("Fourteen",316,368,203,241);
-    static tooth toothFifteen = new tooth("Fifteen",325,377,257,290);
-    static tooth toothSixteen = new tooth("Sixteen",330,384,303,336);
+    static tooth toothOne = new tooth("1",57, 98, 306, 328);
+    static tooth toothTwo = new tooth("2",57, 92, 260, 285);
+    static tooth toothThree = new tooth("3",59, 103, 207, 240);
+    static tooth toothFour = new tooth("4",76, 102, 165,186);
+    static tooth toothFive = new tooth("5",90, 119, 132, 153);
+    static tooth toothSix = new tooth("6",108, 134, 96, 117);
+    static tooth toothSeven = new tooth("7",134, 166, 67, 101);
+    static tooth toothEight = new tooth("8",170, 207, 51, 91);
+    static tooth toothNine = new tooth("9",218, 257, 48, 92);
+    static tooth toothTen = new tooth("10",262, 292, 65, 101);
+    static tooth toothEleven = new tooth("11",290,322,94,120);
+    static tooth toothTwelve = new tooth("12",303, 344, 130,155);
+    static tooth toothThirteen = new tooth( "13",316,352,165,188);
+    static tooth toothFourteen = new tooth("14",316,368,203,241);
+    static tooth toothFifteen = new tooth("15",325,377,257,290);
+    static tooth toothSixteen = new tooth("16",330,384,303,336);
 
     //Mandible teeth
-    static tooth toothSeventeen = new tooth("Seventeen",344, 389, 47,91);
-    static tooth toothEighteen = new tooth("Eighteen",334,384,100,150);
-    static tooth toothNineteen = new tooth("Nineteen",320,369,156,210);
-    static tooth toothTwenty = new tooth("Twenty",311,353,210,252);
-    static tooth toothTwentyOne = new tooth("Twenty One",300,343,248,287);
-    static tooth toothTwentyTwo = new tooth("Twenty Two",284,315,285,321);
-    static tooth toothTwentyThree = new tooth("Twenty Three",258,283,301,333);
-    static tooth toothTwentyFour = new tooth("Twenty Four",229,254,307,338);
-    static tooth toothTwentyFive = new tooth("Twenty Five",200,220,306,336);
-    static tooth toothTwentySix = new tooth("Twenty Six",171,191,303,335);
-    static tooth toothTwentySeven = new tooth("Twenty Seven",133,161,295,320);
-    static tooth toothTwentyEight = new tooth("Twenty Eight",113,151,259,282);
-    static tooth toothTwentyNine = new tooth("Twenty Nine",95,140,220,244);
-    static tooth toothThirty = new tooth("Thirty",74,134,159,205);
-    static tooth toothThirtyOne = new tooth("Thirty One",63,122,100,150);
-    static tooth toothThirtyTwo = new tooth("Thirty Two",59,114,48,95);
+    static tooth toothSeventeen = new tooth("17",344, 389, 47,91);
+    static tooth toothEighteen = new tooth("18",334,384,100,150);
+    static tooth toothNineteen = new tooth("19",320,369,156,210);
+    static tooth toothTwenty = new tooth("20",311,353,210,252);
+    static tooth toothTwentyOne = new tooth("21",300,343,248,287);
+    static tooth toothTwentyTwo = new tooth("22",284,315,285,321);
+    static tooth toothTwentyThree = new tooth("23",258,283,301,333);
+    static tooth toothTwentyFour = new tooth("24",229,254,307,338);
+    static tooth toothTwentyFive = new tooth("25",200,220,306,336);
+    static tooth toothTwentySix = new tooth("26",171,191,303,335);
+    static tooth toothTwentySeven = new tooth("27",133,161,295,320);
+    static tooth toothTwentyEight = new tooth("28",113,151,259,282);
+    static tooth toothTwentyNine = new tooth("29",95,140,220,244);
+    static tooth toothThirty = new tooth("30",74,134,159,205);
+    static tooth toothThirtyOne = new tooth("31",63,122,100,150);
+    static tooth toothThirtyTwo = new tooth("32",59,114,48,95);
 
     //"Tooth Type ; Anterior"
     //"Tooth Type ; PreMolar"
@@ -62,11 +62,15 @@ public class ClaspBackEnd {
 
     static LinkedList<tooth> abutmentTeeth = new LinkedList<>();
 
-    static void putActiveCriteria(String input) {
+    static void setActiveCriteria(String input) {
         String[] splitString = input.split(" ; ");
         String crit = splitString[0];   //Get the current criterion
         String val = splitString[1];    //Get the current value
         ClaspBackEnd.activeCriteria.put(crit, val);  //remember criteria, value pairing
+    }
+
+    static HashMap<String, String> getActiveCriteria() {
+        return ClaspBackEnd.activeCriteria;
     }
 
     private static HashMap<String, String> makeDefinitions() {
