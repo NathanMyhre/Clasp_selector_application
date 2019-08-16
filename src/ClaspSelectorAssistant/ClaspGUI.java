@@ -579,10 +579,7 @@ public class ClaspGUI extends JPanel{
      */
 
     public void radioButtonClicked(String input) {
-        String[] splitString = input.split(" ; ");
-        String crit = splitString[0];   //Get the current criterion
-        String val = splitString[1];    //Get the current value
-        ClaspBackEnd.activeCriteria.put(crit, val);  //remember criteria, value pairing
+        ClaspBackEnd.putActiveCriteria(input);
         int invalidTally = 0;
         for (ClaspButton button : buttons) {
             button.updateStatus(ClaspBackEnd.activeCriteria);    //Update activity status of the ClaspButtons

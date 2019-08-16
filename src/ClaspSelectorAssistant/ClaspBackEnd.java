@@ -13,9 +13,6 @@ public class ClaspBackEnd {
     **************************Tooth Definitions*****************************************************************
      */
 
-
-
-
     //Teeth, labeled by the US numbering System
 
     //Maxilla teeth
@@ -63,6 +60,14 @@ public class ClaspBackEnd {
     public static final HashMap<tooth, Integer> teethMan = makeTeethMapMandible();
     public static final HashMap<Integer, String> teethDefs = makeToothTypeMap();
 
+    static LinkedList<tooth> abutmentTeeth = new LinkedList<>();
+
+    static void putActiveCriteria(String input) {
+        String[] splitString = input.split(" ; ");
+        String crit = splitString[0];   //Get the current criterion
+        String val = splitString[1];    //Get the current value
+        ClaspBackEnd.activeCriteria.put(crit, val);  //remember criteria, value pairing
+    }
 
     private static HashMap<String, String> makeDefinitions() {
         HashMap<String, String> defs = new HashMap<String, String>();
