@@ -56,8 +56,11 @@ public class ClaspBackEnd {
     //"Tooth Type ; Molar"
 
     //Make the mappings for tooth to integer, and integer to tooth type
+    //teethMax and teethMan are used in selecting abutment teeth from an image.
     public static final HashMap<tooth, Integer> teethMax = makeTeethMapMaxilla();
     public static final HashMap<tooth, Integer> teethMan = makeTeethMapMandible();
+
+    //teethDefs is used to reference the tooth from the US numbering system. References number to tooth type
     public static final HashMap<Integer, String> teethDefs = makeToothTypeMap();
 
     static LinkedList<tooth> abutmentTeeth = new LinkedList<>();

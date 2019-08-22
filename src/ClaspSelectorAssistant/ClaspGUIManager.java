@@ -48,6 +48,9 @@ public class ClaspGUIManager extends JPanel{
         });
     }
 
+    /**
+     * Creates and shows the GUI manager. This function executes via main().
+     */
     public static void createAndShowGUI() {
         JFrame frame = new JFrame("Clasp Selector Assistant");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
