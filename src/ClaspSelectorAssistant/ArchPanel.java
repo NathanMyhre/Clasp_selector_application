@@ -24,8 +24,10 @@ public class ArchPanel extends JPanel  {
     AbutmentTeethWindow abutmentGUI;
     String guiType;
     JLayeredPane archPane;
+    static String archImagePath = "../resources/icons/ArchesCombined.PNG";
     static String maxillaryImagePath = "../resources/icons/maxillary.PNG";
     static String mandibularImagePath = "../resources/icons/mandibular.PNG";
+    ImageIcon archIcon;
     ImageIcon maxillaryIcon;
     ImageIcon mandibularIcon;
     //ArchPicPanel maxillaryPanel;
@@ -53,17 +55,27 @@ public class ArchPanel extends JPanel  {
         //Make images of arches
         mandibularIcon = createImageIcon(mandibularImagePath, "Mandibular Arch, US Numbering System");
         maxillaryIcon = createImageIcon(maxillaryImagePath, "Maxillary Arch, US Numbering System");
+        archIcon = createImageIcon(archImagePath, "Maxillary and Mandibular arches, US Numbering System");
+        JLabel archIconLabel = new JLabel(archIcon);
         JLabel maxillaryLabel = new JLabel(maxillaryIcon);
         JLabel mandibularLabel = new JLabel(mandibularIcon);
 
 
         //maxillaryPanel = new ArchPicPanel(this, "maxillary");
 
+        //Add listener to the archIcon image that responds appropriately for ClaspGUI
+        archIconLabel.addMouseListener( new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                System.out.println(e.getX());
+                System.out.println(e.getY());
+            }
+        });
+
         //Add listener to the Maxillary image that responds appropriately for ClaspGUI
         maxillaryLabel.addMouseListener( new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                ArchPanel.this.maxillaClickClaspGUI(e.getX(), e.getY());
+                //ArchPanel.this.maxillaClickClaspGUI(e.getX(), e.getY());
                 //System.out.println(e.getX());
                 //System.out.println(e.getY());
             }
@@ -73,7 +85,7 @@ public class ArchPanel extends JPanel  {
         mandibularLabel.addMouseListener( new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                ArchPanel.this.mandibleClickClaspGUI(e.getX(), e.getY());
+                //ArchPanel.this.mandibleClickClaspGUI(e.getX(), e.getY());
                 //System.out.println(e.getX());
                 //System.out.println(e.getY());
             }
@@ -85,9 +97,8 @@ public class ArchPanel extends JPanel  {
         Insets inset = new Insets(0,0, 0, 20);
         constraint.insets = inset;
         constraint.gridy = 0;
-        this.add(maxillaryLabel, constraint);
-        constraint.gridy = 1;
-        this.add(mandibularLabel, constraint);
+        this.add(archIconLabel, constraint);
+
 
         //this.add(mandibularPanel, constraint);
         //this.add();
@@ -107,12 +118,25 @@ public class ArchPanel extends JPanel  {
         //Make images of arches
         mandibularIcon = createImageIcon(mandibularImagePath, "Mandibular Arch, US Numbering System");
         maxillaryIcon = createImageIcon(maxillaryImagePath, "Maxillary Arch, US Numbering System");
+        archIcon = createImageIcon(archImagePath, "Maxillary and Mandibular arches, US Numbering System");
+        JLabel archIconLabel = new JLabel(archIcon);
         JLabel maxillaryLabel = new JLabel(maxillaryIcon);
         JLabel mandibularLabel = new JLabel(mandibularIcon);
 
 
         //maxillaryPanel = new ArchPicPanel(this, "maxillary");
 
+        //Add listener to the archIcon image that responds appropriately for ClaspGUI
+        archIconLabel.addMouseListener( new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                ArchPanel.this.toothClick(e.getX(), e.getY());
+                System.out.println(e.getX());
+                System.out.println(e.getY());
+            }
+        });
+
+        //maxillaryPanel = new ArchPicPanel(this, "maxillary");
+        /*
         //Add listener to the Maxillary image
         maxillaryLabel.addMouseListener( new MouseAdapter() {
             @Override
@@ -131,7 +155,7 @@ public class ArchPanel extends JPanel  {
                 //System.out.println(e.getX());
                 //System.out.println(e.getY());
             }
-        });
+        });*/
 
         GridBagConstraints constraint = new GridBagConstraints();
 
@@ -139,9 +163,8 @@ public class ArchPanel extends JPanel  {
         Insets inset = new Insets(0,0, 0, 20);
         constraint.insets = inset;
         constraint.gridy = 0;
-        this.add(maxillaryLabel, constraint);
-        constraint.gridy = 1;
-        this.add(mandibularLabel, constraint);
+        this.add(archIconLabel, constraint);
+
 
         //this.add(mandibularPanel, constraint);
         //this.add();
@@ -149,105 +172,22 @@ public class ArchPanel extends JPanel  {
 
     }
 
-    //Bug: need to figure out how to repaint image so that the red circle appears where clicked.
-    //Helper method to decide which tooth is clicked on.
-    private void maxillaClickClaspGUI (int x, int y) {
-        //System.out.println("x is: " + x);
-        //System.out.println("y is: " + y);
-        for (tooth t : ClaspBackEnd.teethMax.keySet()) {
-            /*System.out.println(ClaspBackEnd.teethMax.get(t));
-            System.out.println(t);
-            System.out.println(t.xLeft);
-            System.out.println(t.xRight);
-            System.out.println(t.yTop);
-            System.out.println(t.yBottom);*/
-            if ((x > t.xLeft)  && (x < t.xRight) && (y > t.yBottom) && (y < t.yTop)) {
-                //System.out.println ("True");
+    //Calculates if click is within a tooth's coordinate space.
+    //Makes call to add abutment tooth to map if it is a valid tooth space.
+    private void toothClick(int x, int y) {
+        for (Integer i : ClaspBackEnd.teethMap.keySet()) {
+            Tooth t = ClaspBackEnd.teethMap.get(i);
+            if ((x > t.xLeft) && (x < t.xRight) && (y > t.yBottom) && (y < t.yTop)) {
+
+                System.out.println("Tooth number is: " + t.name);
                 //System.out.println(teethDefs.get(teethMax.get(t)));
                 //System.out.println(gui.radioButtons.get(teethDefs.get(teethMax.get(t))).myString());
-                claspGUI.radioButtonClicked(ClaspBackEnd.teethDefs.get(ClaspBackEnd.teethMax.get(t))); //Click the corresponding radio button.
-                claspGUI.radioButtons.get(ClaspBackEnd.teethDefs.get(ClaspBackEnd.teethMax.get(t))).setSelected(true);
-                //repaint circle
-                /*repaint(circleX, circleY, circleW, circleH);
-                circleX = x;
-                circleY = y;
-                repaint(circleX, circleY, circleW, circleH);*/
+                //claspGUI.radioButtonClicked(ClaspBackEnd.teethDefs.get(ClaspBackEnd.teethMax.get(t))); //Click the corresponding radio button.
+                //claspGUI.radioButtons.get(ClaspBackEnd.teethDefs.get(ClaspBackEnd.teethMax.get(t))).setSelected(true);
             }
         }
     }
 
-    //Helper method to decide which tooth is clicked on.
-    //Maxilla and mandible are separately searched because they each have their own mouse listener
-    private void mandibleClickClaspGUI (int x, int y) {
-        //System.out.println("x is: " + x);
-        //System.out.println("y is: " + y);
-        for (tooth t : ClaspBackEnd.teethMan.keySet()) {
-
-            if ((x > t.xLeft)  && (x < t.xRight) && (y > t.yBottom) && (y < t.yTop)) {
-                //System.out.println ("True");
-                //Click the corresponding radio button
-                claspGUI.radioButtonClicked(ClaspBackEnd.teethDefs.get(ClaspBackEnd.teethMan.get(t)));
-                claspGUI.radioButtons.get(ClaspBackEnd.teethDefs.get(ClaspBackEnd.teethMan.get(t))).setSelected(true);
-                //repaint circle
-                /*repaint(circleX, circleY, circleW, circleH);
-                circleX = x;
-                circleY = y;
-                repaint(circleX, circleY, circleW, circleH);*/
-            }
-        }
-    }
-
-    //Helper method to decide which tooth is clicked on. Used in the AbutmentTooth Window
-    //Avoids if/else logic at every radio button click.
-    private void maxillaClickAbutmentGUI (int x, int y) {
-        //System.out.println("x is: " + x);
-        //System.out.println("y is: " + y);
-        for (tooth t : ClaspBackEnd.teethMax.keySet()) {
-            /*System.out.println(ClaspBackEnd.teethMax.get(t));
-            System.out.println(t);
-            System.out.println(t.xLeft);
-            System.out.println(t.xRight);
-            System.out.println(t.yTop);
-            System.out.println(t.yBottom);*/
-            if ((x > t.xLeft)  && (x < t.xRight) && (y > t.yBottom) && (y < t.yTop)) {
-                //System.out.println ("True");
-                Integer toothNumber = Integer.parseInt(t.name);
-                abutmentGUI.abutmentRadioButtons.get(toothNumber).setSelected(true);
-                //Add to Active Criteria - gets tooth type from the Integer number
-                ClaspBackEnd.setActiveCriteria(ClaspBackEnd.teethDefs.get(toothNumber));
-                System.out.println(ClaspBackEnd.activeCriteria.get("Tooth Type"));
-
-
-                //repaint circle
-                /*repaint(circleX, circleY, circleW, circleH);
-                circleX = x;
-                circleY = y;
-                repaint(circleX, circleY, circleW, circleH);*/
-            }
-        }
-    }
-
-    private void mandibleClickAbutmentGUI (int x, int y) {
-        //System.out.println("x is: " + x);
-        //System.out.println("y is: " + y);
-        for (tooth t : ClaspBackEnd.teethMan.keySet()) {
-
-            if ((x > t.xLeft)  && (x < t.xRight) && (y > t.yBottom) && (y < t.yTop)) {
-                //System.out.println ("True");
-                //Click the corresponding radio button
-                Integer toothNumber = Integer.parseInt(t.name);
-                abutmentGUI.abutmentRadioButtons.get(toothNumber).setSelected(true);
-                //Add to Active Criteria - gets tooth type from the Integer number
-                ClaspBackEnd.setActiveCriteria(ClaspBackEnd.teethDefs.get(toothNumber));
-                System.out.println(ClaspBackEnd.activeCriteria.get("Tooth Type"));
-                //repaint circle
-                /*repaint(circleX, circleY, circleW, circleH);
-                circleX = x;
-                circleY = y;
-                repaint(circleX, circleY, circleW, circleH);*/
-            }
-        }
-    }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);

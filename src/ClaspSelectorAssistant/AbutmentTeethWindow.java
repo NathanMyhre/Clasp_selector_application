@@ -12,6 +12,11 @@ public class AbutmentTeethWindow extends JPanel{
     JPanel middlePanel;
     JPanel rightPanel;
 
+    JTextField abText = new JTextField("Please Select abutment tooth");
+
+    static int abutmentUSNumber;
+    static int abToothNumber = 1;
+
     //Abutment tooth radio buttons
     JRadioButton abT1;
     JRadioButton abT2;
@@ -48,6 +53,9 @@ public class AbutmentTeethWindow extends JPanel{
 
     ButtonGroup abTButtonGroup;
 
+    JButton nextButton;
+    JButton finishButton;
+
     HashMap<Integer, JRadioButton> abutmentRadioButtons;
 
     public AbutmentTeethWindow(){
@@ -57,8 +65,12 @@ public class AbutmentTeethWindow extends JPanel{
         rightPanel = new JPanel(new GridBagLayout());
         middlePanel = new JPanel(new GridBagLayout());
 
+
+
         //variable to set constraints in the window
         GridBagConstraints c = new GridBagConstraints();
+
+        addTextArea(this, c);
 
         //Start adding abutment Radio Buttons to window
         abTButtonGroup = new ButtonGroup();
@@ -68,7 +80,6 @@ public class AbutmentTeethWindow extends JPanel{
           dictionary in the Back End to figure out how to store data. Example: abT1 is tooth 1, which is Molar, so it
           looks up in the dictionary for Integer 1, and pulls back "Tooth Type ; Molar" as its result. This result is then
           stored in ActiveCriteria.
-
          */
         for (JRadioButton b : abutmentRadioButtons.values()) {
             abTButtonGroup.add(b);
@@ -76,26 +87,35 @@ public class AbutmentTeethWindow extends JPanel{
             b.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    String input = ClaspBackEnd.teethDefs.get(Integer.parseInt(e.getActionCommand()));
+                    //set US-labeled abutment tooth number
+                    abutmentUSNumber = Integer.parseInt(e.getActionCommand());
+                    //get the definitions
+                    String input = ClaspBackEnd.teethDefs.get(abutmentUSNumber);
                     ClaspBackEnd.setActiveCriteria(input);
+
+                    System.out.println(abutmentUSNumber);
                     System.out.println(ClaspBackEnd.teethDefs.get(Integer.parseInt(e.getActionCommand())));
                 }
             });
         }
 
+        nextButton = new JButton("Select Next Tooth");
+        nextButton.addActionListener((ActionListener) -> setAbutmentTooth());
+
         middlePanel.add(new ArchPanel(new GridBagLayout(), this));
-        rightPanel.add(new JButton("TEST"));
+        rightPanel.add(nextButton);
 
 
         this.add(leftPanel); this.add(middlePanel); this.add(rightPanel);
     }
 
     private static void addAbutmentRadioButtons(AbutmentTeethWindow gui, GridBagConstraints c) {
+        int gridxInt = 0;
+
         //add text to left panel
         Insets inset = new Insets(5,5,5,20);
         c.insets = inset;
-        c.gridy = 0;
-        c.gridheight = 1;
+
         //add radio buttons to left panel
         c.gridy = 1;
         gui.abT1 = new JRadioButton("1");
@@ -255,6 +275,37 @@ public class AbutmentTeethWindow extends JPanel{
         gui.abT32 = new JRadioButton("32");
         gui.rightPanel.add(gui.abT32, c);
         gui.abutmentRadioButtons.put( 32,gui.abT32);
+    }
+
+    //Add text component to the left panel in AbutmentTeethWindow
+    private static void addTextArea(AbutmentTeethWindow gui, GridBagConstraints c) {
+        Insets inset = new Insets(5,5,5,20);
+        c.insets = inset;
+        c.gridy = 0;
+        c.gridheight = 1;
+        gui.abText = new JTextField("Please Select abutment tooth " + abToothNumber);
+        gui.abText.setEditable(false);
+        gui.abText.setFont(new Font("Arial", Font.BOLD, 16));
+        gui.leftPanel.add(gui.abText, c);
+    }
+
+    private void setAbutmentTooth() {
+        //figure out which tooth is active - Can set a field to point to a tooth upon clicking.
+        //Add abutment tooth to the list of abutment teeth to be remembered
+        //initialize Active criteria?
+        //for abutment teeth 0-16, get tooth from teethMax, 17-32 get from teethMan.
+        //put this abutment tooth as the first, second, etc abutment tooth in line for examination.
+        if ((abutmentUSNumber > 0) && (abutmentUSNumber < 17)) {
+            Tooth t = ClaspBackEnd.teethMap.get(abutmentUSNumber);
+            ClaspBackEnd.abutmentTeeth.put(abToothNumber, t);
+        } else if ((abutmentUSNumber > 16) && (abutmentUSNumber < 33)) {
+            Tooth t = ClaspBackEnd.teethMap.get(abutmentUSNumber);
+            ClaspBackEnd.abutmentTeeth.put(abToothNumber, t);
+        } else {
+            System.err.println("Error, tried to put an illegal abutment tooth in for examination");
+        }
+        abToothNumber++;
+        abText.setText("Please select abutment tooth " + abToothNumber);
     }
 
     public static void createAndShowGUI() {

@@ -4,10 +4,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 public class ClaspBackEnd {
-    static HashMap<String, String> activeCriteria = new HashMap<String, String>();;
-    static LinkedList<HashMap<String, String>> totalActiveCriteria = new LinkedList<>();
-
-    public static final HashMap<String, String> criteriaDefs = makeDefinitions();
 
     /*
     **************************Tooth Definitions*****************************************************************
@@ -16,54 +12,59 @@ public class ClaspBackEnd {
     //Teeth, labeled by the US numbering System
 
     //Maxilla teeth
-    static tooth toothOne = new tooth("1",57, 98, 306, 328);
-    static tooth toothTwo = new tooth("2",57, 92, 260, 285);
-    static tooth toothThree = new tooth("3",59, 103, 207, 240);
-    static tooth toothFour = new tooth("4",76, 102, 165,186);
-    static tooth toothFive = new tooth("5",90, 119, 132, 153);
-    static tooth toothSix = new tooth("6",108, 134, 96, 117);
-    static tooth toothSeven = new tooth("7",134, 166, 67, 101);
-    static tooth toothEight = new tooth("8",170, 207, 51, 91);
-    static tooth toothNine = new tooth("9",218, 257, 48, 92);
-    static tooth toothTen = new tooth("10",262, 292, 65, 101);
-    static tooth toothEleven = new tooth("11",290,322,94,120);
-    static tooth toothTwelve = new tooth("12",303, 344, 130,155);
-    static tooth toothThirteen = new tooth( "13",316,352,165,188);
-    static tooth toothFourteen = new tooth("14",316,368,203,241);
-    static tooth toothFifteen = new tooth("15",325,377,257,290);
-    static tooth toothSixteen = new tooth("16",330,384,303,336);
+    static Tooth toothOne = new Tooth("1",67, 113, 301 ,341);
+    static Tooth toothTwo = new Tooth("2",59, 119, 254, 300);
+    static Tooth toothThree = new Tooth("3",70, 117, 196, 248);
+    static Tooth toothFour = new Tooth("4",83, 131, 159, 198);
+    static Tooth toothFive = new Tooth("5",96, 143, 125, 166);
+    static Tooth toothSix = new Tooth("6",123, 151, 92, 121);
+    static Tooth toothSeven = new Tooth("7",154, 183, 66, 105);
+    static Tooth toothEight = new Tooth("8",183, 227, 48, 96);
+    static Tooth toothNine = new Tooth("9",232, 270, 47, 99);
+    static Tooth toothTen = new Tooth("10",279, 302, 61, 112);
+    static Tooth toothEleven = new Tooth("11",310, 340, 89, 120);
+    static Tooth toothTwelve = new Tooth("12",312, 361, 128, 159);
+    static Tooth toothThirteen = new Tooth( "13",328, 373, 167, 192);
+    static Tooth toothFourteen = new Tooth("14",327, 384, 201, 248);
+    static Tooth toothFifteen = new Tooth("15",333, 394, 257, 293);
+    static Tooth toothSixteen = new Tooth("16",341, 399, 305, 343);
 
     //Mandible teeth
-    static tooth toothSeventeen = new tooth("17",344, 389, 47,91);
-    static tooth toothEighteen = new tooth("18",334,384,100,150);
-    static tooth toothNineteen = new tooth("19",320,369,156,210);
-    static tooth toothTwenty = new tooth("20",311,353,210,252);
-    static tooth toothTwentyOne = new tooth("21",300,343,248,287);
-    static tooth toothTwentyTwo = new tooth("22",284,315,285,321);
-    static tooth toothTwentyThree = new tooth("23",258,283,301,333);
-    static tooth toothTwentyFour = new tooth("24",229,254,307,338);
-    static tooth toothTwentyFive = new tooth("25",200,220,306,336);
-    static tooth toothTwentySix = new tooth("26",171,191,303,335);
-    static tooth toothTwentySeven = new tooth("27",133,161,295,320);
-    static tooth toothTwentyEight = new tooth("28",113,151,259,282);
-    static tooth toothTwentyNine = new tooth("29",95,140,220,244);
-    static tooth toothThirty = new tooth("30",74,134,159,205);
-    static tooth toothThirtyOne = new tooth("31",63,122,100,150);
-    static tooth toothThirtyTwo = new tooth("32",59,114,48,95);
+    static Tooth toothSeventeen = new Tooth("17",343, 395, 416, 468);
+    static Tooth toothEighteen = new Tooth("18",337, 387, 474, 527);
+    static Tooth toothNineteen = new Tooth("19",324, 376, 529, 585);
+    static Tooth toothTwenty = new Tooth("20",314, 358, 588, 626);
+    static Tooth toothTwentyOne = new Tooth("21",305, 342, 626, 657);
+    static Tooth toothTwentyTwo = new Tooth("22",289, 321, 659, 692);
+    static Tooth toothTwentyThree = new Tooth("23",263, 287, 673, 707);
+    static Tooth toothTwentyFour = new Tooth("24",231, 259, 678, 711);
+    static Tooth toothTwentyFive = new Tooth("25",204, 227, 678, 712);
+    static Tooth toothTwentySix = new Tooth("26",177, 199, 674, 711);
+    static Tooth toothTwentySeven = new Tooth("27",138, 169, 666, 692);
+    static Tooth toothTwentyEight = new Tooth("28",118, 159, 632, 656);
+    static Tooth toothTwentyNine = new Tooth("29",101, 147, 593, 620);
+    static Tooth toothThirty = new Tooth("30",83, 139, 534, 580);
+    static Tooth toothThirtyOne = new Tooth("31",71, 126, 476, 524);
+    static Tooth toothThirtyTwo = new Tooth("32",66, 115, 418, 468);
 
     //"Tooth Type ; Anterior"
     //"Tooth Type ; PreMolar"
     //"Tooth Type ; Molar"
 
+    static HashMap<String, String> activeCriteria = new HashMap<String, String>();;
+    static LinkedList<HashMap<String, String>> totalActiveCriteria = new LinkedList<>();
+
+    //criteriaDefs is used to parse tooth type category and value - molar, premolar, or anterior.
+    public static final HashMap<String, String> criteriaDefs = makeDefinitions();
     //Make the mappings for tooth to integer, and integer to tooth type
     //teethMax and teethMan are used in selecting abutment teeth from an image.
-    public static final HashMap<tooth, Integer> teethMax = makeTeethMapMaxilla();
-    public static final HashMap<tooth, Integer> teethMan = makeTeethMapMandible();
+    public static final HashMap<Integer, Tooth> teethMap = makeTeethMap();
+    public static final HashMap<Tooth, Integer> teethIntegers = makeTeethIntegers();
 
     //teethDefs is used to reference the tooth from the US numbering system. References number to tooth type
     public static final HashMap<Integer, String> teethDefs = makeToothTypeMap();
 
-    static LinkedList<tooth> abutmentTeeth = new LinkedList<>();
+    static HashMap<Integer, Tooth> abutmentTeeth = new HashMap<>();
 
     static void setActiveCriteria(String input) {
         String[] splitString = input.split(" ; ");
@@ -128,16 +129,55 @@ public class ClaspBackEnd {
         return teeth;
     }
 
-    private static HashMap<tooth, Integer> makeTeethMapMaxilla(){
-        HashMap<tooth, Integer> teeth = new HashMap<>();
+    private static HashMap<Integer, Tooth> makeTeethMap(){
+        HashMap<Integer, Tooth> teeth = new HashMap<>();
+        teeth.put(1, toothOne);
+        teeth.put(2, toothTwo);
+        teeth.put(3, toothThree);
+        teeth.put(4, toothFour);
+        teeth.put(5, toothFive);
+        teeth.put(6, toothSix);
+        teeth.put(7, toothSeven);
+        teeth.put(8,toothEight);
+        teeth.put(9, toothNine);
+        teeth.put(10, toothTen);
+        teeth.put(11, toothEleven);
+        teeth.put(12, toothTwelve);
+        teeth.put(13, toothThirteen);
+        teeth.put(14, toothFourteen);
+        teeth.put(15, toothFifteen);
+        teeth.put(16, toothSixteen);
+        teeth.put(17, toothSeventeen);
+        teeth.put(18, toothEighteen);
+        teeth.put(19, toothNineteen);
+        teeth.put(20, toothTwenty);
+        teeth.put(21, toothTwentyOne);
+        teeth.put(22, toothTwentyTwo);
+        teeth.put(23, toothTwentyThree);
+        teeth.put(24, toothTwentyFour);
+        teeth.put(25, toothTwentyFive);
+        teeth.put(26, toothTwentySix);
+        teeth.put(27, toothTwentySeven);
+        teeth.put(28, toothTwentyEight);
+        teeth.put(29, toothTwentyNine);
+        teeth.put(30, toothThirty);
+        teeth.put(31, toothThirtyOne);
+        teeth.put(32, toothThirtyTwo);
+        return teeth;
+    }
+
+    //Make the mapping of teeth to integers.
+    //Bug: could probably use a BiMap to do two way dictionary search for teeth and integers.
+    private static HashMap<Tooth, Integer> makeTeethIntegers(){
+        HashMap teeth = new HashMap<Tooth, Integer>();
         teeth.put(toothOne, 1);
         teeth.put(toothTwo, 2);
         teeth.put(toothThree, 3);
-        teeth.put(toothFour,4);
+        teeth.put(toothFour, 4);
         teeth.put(toothFive, 5);
         teeth.put(toothSix, 6);
         teeth.put(toothSeven, 7);
-        teeth.put(toothEight, 8);
+        teeth.put(toothEight,8);
         teeth.put(toothNine, 9);
         teeth.put(toothTen, 10);
         teeth.put(toothEleven, 11);
@@ -146,15 +186,10 @@ public class ClaspBackEnd {
         teeth.put(toothFourteen, 14);
         teeth.put(toothFifteen, 15);
         teeth.put(toothSixteen, 16);
-        return teeth;
-    }
-
-    private static HashMap<tooth, Integer> makeTeethMapMandible(){
-        HashMap<tooth, Integer> teeth = new HashMap<>();
         teeth.put(toothSeventeen, 17);
         teeth.put(toothEighteen, 18);
         teeth.put(toothNineteen, 19);
-        teeth.put(toothTwenty,20);
+        teeth.put(toothTwenty, 20);
         teeth.put(toothTwentyOne, 21);
         teeth.put(toothTwentyTwo, 22);
         teeth.put(toothTwentyThree, 23);
@@ -169,12 +204,13 @@ public class ClaspBackEnd {
         teeth.put(toothThirtyTwo, 32);
         return teeth;
     }
+
 }
 
 /**
  * Invisible placeholder for teeth. Provides an interactive region which to click, shaped like a rectangle.
  */
-class tooth {
+class Tooth {
     public final int xLeft;
     public final int xRight;
     public final int yTop;
@@ -182,13 +218,14 @@ class tooth {
     public final String name;
 
     /**
-     * Make tooth
+     * Make Tooth
+     * @param n Name of the tooth, using the US Numbering system
      * @param xL x-coordinate location for left side of rectangle.
      * @param xR x-coordinate location for right side of rectangle.
      * @param yB y-coordinate location for top of triangle
      * @param yT
      */
-    public tooth(String n, int xL, int xR, int yB, int yT) {
+    public Tooth(String n, int xL, int xR, int yB, int yT) {
         xLeft = xL;
         xRight = xR;
         yBottom = yB;
