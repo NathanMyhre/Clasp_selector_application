@@ -25,11 +25,7 @@ public class ArchPanel extends JPanel  {
     String guiType;
     JLayeredPane archPane;
     static String archImagePath = "../resources/icons/ArchesCombined.PNG";
-    static String maxillaryImagePath = "../resources/icons/maxillary.PNG";
-    static String mandibularImagePath = "../resources/icons/mandibular.PNG";
     ImageIcon archIcon;
-    ImageIcon maxillaryIcon;
-    ImageIcon mandibularIcon;
     //ArchPicPanel maxillaryPanel;
     //ArchPicPanel mandibularPanel;
 
@@ -53,12 +49,9 @@ public class ArchPanel extends JPanel  {
         archPane.setPreferredSize(new Dimension(1000, 1000));
 
         //Make images of arches
-        mandibularIcon = createImageIcon(mandibularImagePath, "Mandibular Arch, US Numbering System");
-        maxillaryIcon = createImageIcon(maxillaryImagePath, "Maxillary Arch, US Numbering System");
         archIcon = createImageIcon(archImagePath, "Maxillary and Mandibular arches, US Numbering System");
         JLabel archIconLabel = new JLabel(archIcon);
-        JLabel maxillaryLabel = new JLabel(maxillaryIcon);
-        JLabel mandibularLabel = new JLabel(mandibularIcon);
+
 
 
         //maxillaryPanel = new ArchPicPanel(this, "maxillary");
@@ -66,30 +59,10 @@ public class ArchPanel extends JPanel  {
         //Add listener to the archIcon image that responds appropriately for ClaspGUI
         archIconLabel.addMouseListener( new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
-                System.out.println(e.getX());
-                System.out.println(e.getY());
+                ArchPanel.this.toothClick(e.getX(), e.getY());
             }
         });
 
-        //Add listener to the Maxillary image that responds appropriately for ClaspGUI
-        maxillaryLabel.addMouseListener( new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                //ArchPanel.this.maxillaClickClaspGUI(e.getX(), e.getY());
-                //System.out.println(e.getX());
-                //System.out.println(e.getY());
-            }
-        });
-
-        //Add listener to the mandibular image that responds appropriately for ClaspGUI
-        mandibularLabel.addMouseListener( new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                //ArchPanel.this.mandibleClickClaspGUI(e.getX(), e.getY());
-                //System.out.println(e.getX());
-                //System.out.println(e.getY());
-            }
-        });
 
         GridBagConstraints constraint = new GridBagConstraints();
 
@@ -116,12 +89,8 @@ public class ArchPanel extends JPanel  {
         archPane.setPreferredSize(new Dimension(1000, 1000));
 
         //Make images of arches
-        mandibularIcon = createImageIcon(mandibularImagePath, "Mandibular Arch, US Numbering System");
-        maxillaryIcon = createImageIcon(maxillaryImagePath, "Maxillary Arch, US Numbering System");
         archIcon = createImageIcon(archImagePath, "Maxillary and Mandibular arches, US Numbering System");
         JLabel archIconLabel = new JLabel(archIcon);
-        JLabel maxillaryLabel = new JLabel(maxillaryIcon);
-        JLabel mandibularLabel = new JLabel(mandibularIcon);
 
 
         //maxillaryPanel = new ArchPicPanel(this, "maxillary");
@@ -130,32 +99,8 @@ public class ArchPanel extends JPanel  {
         archIconLabel.addMouseListener( new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 ArchPanel.this.toothClick(e.getX(), e.getY());
-                System.out.println(e.getX());
-                System.out.println(e.getY());
             }
         });
-
-        //maxillaryPanel = new ArchPicPanel(this, "maxillary");
-        /*
-        //Add listener to the Maxillary image
-        maxillaryLabel.addMouseListener( new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                ArchPanel.this.maxillaClickAbutmentGUI(e.getX(), e.getY());
-                //System.out.println(e.getX());
-                //System.out.println(e.getY());
-            }
-        });
-
-        //Add listener to the mandibular image
-        mandibularLabel.addMouseListener( new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                ArchPanel.this.mandibleClickAbutmentGUI(e.getX(), e.getY());
-                //System.out.println(e.getX());
-                //System.out.println(e.getY());
-            }
-        });*/
 
         GridBagConstraints constraint = new GridBagConstraints();
 
@@ -179,7 +124,11 @@ public class ArchPanel extends JPanel  {
             Tooth t = ClaspBackEnd.teethMap.get(i);
             if ((x > t.xLeft) && (x < t.xRight) && (y > t.yBottom) && (y < t.yTop)) {
 
-                System.out.println("Tooth number is: " + t.name);
+                System.out.println("Tooth number is: " + t.usNumber);
+                ClaspBackEnd.putAbutmentTooth(t);
+                //if abutment teeth.contains tooth, remove from set
+                //repaint so that circle is removed
+                //if !abutmentTooth.contains(t)
                 //System.out.println(teethDefs.get(teethMax.get(t)));
                 //System.out.println(gui.radioButtons.get(teethDefs.get(teethMax.get(t))).myString());
                 //claspGUI.radioButtonClicked(ClaspBackEnd.teethDefs.get(ClaspBackEnd.teethMax.get(t))); //Click the corresponding radio button.

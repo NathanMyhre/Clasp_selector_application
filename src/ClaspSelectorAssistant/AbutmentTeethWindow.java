@@ -18,6 +18,7 @@ public class AbutmentTeethWindow extends JPanel{
     static int abToothNumber = 1;
 
     //Abutment tooth radio buttons
+    //Note: need to delete abutment tooth radio buttons.
     JRadioButton abT1;
     JRadioButton abT2;
     JRadioButton abT3;
@@ -90,11 +91,11 @@ public class AbutmentTeethWindow extends JPanel{
                     //set US-labeled abutment tooth number
                     abutmentUSNumber = Integer.parseInt(e.getActionCommand());
                     //get the definitions
-                    String input = ClaspBackEnd.teethDefs.get(abutmentUSNumber);
+                    String input = ClaspBackEnd.teethTypeMap.get(abutmentUSNumber);
                     ClaspBackEnd.setActiveCriteria(input);
 
                     System.out.println(abutmentUSNumber);
-                    System.out.println(ClaspBackEnd.teethDefs.get(Integer.parseInt(e.getActionCommand())));
+                    System.out.println(ClaspBackEnd.teethTypeMap.get(Integer.parseInt(e.getActionCommand())));
                 }
             });
         }
@@ -297,10 +298,10 @@ public class AbutmentTeethWindow extends JPanel{
         //put this abutment tooth as the first, second, etc abutment tooth in line for examination.
         if ((abutmentUSNumber > 0) && (abutmentUSNumber < 17)) {
             Tooth t = ClaspBackEnd.teethMap.get(abutmentUSNumber);
-            ClaspBackEnd.abutmentTeeth.put(abToothNumber, t);
+            ClaspBackEnd.selectedAbutmentTeeth.put(abToothNumber, t);
         } else if ((abutmentUSNumber > 16) && (abutmentUSNumber < 33)) {
             Tooth t = ClaspBackEnd.teethMap.get(abutmentUSNumber);
-            ClaspBackEnd.abutmentTeeth.put(abToothNumber, t);
+            ClaspBackEnd.selectedAbutmentTeeth.put(abToothNumber, t);
         } else {
             System.err.println("Error, tried to put an illegal abutment tooth in for examination");
         }
