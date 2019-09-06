@@ -79,11 +79,11 @@ public class ArchPanel extends JPanel  {
 
     }
 
-    public ArchPanel(GridBagLayout layout, AbutmentTeethWindow g) {
+    public ArchPanel(GridBagLayout layout, AbutmentTeethWindow gui) {
         //Bug: abutmentGUI or claspGUI can be null and potentially accessed, resulting in null pointer exception.
         //Bug: need better way to distinguish type of parent GUI that doesn't result in NPE.
         super(layout);
-        abutmentGUI = g;
+        abutmentGUI = gui;
         guiType = "AbutmentTeethWindow";
         archPane = new JLayeredPane();
         archPane.setPreferredSize(new Dimension(1000, 1000));
@@ -124,7 +124,8 @@ public class ArchPanel extends JPanel  {
             Tooth t = ClaspBackEnd.teethMap.get(i);
             if ((x > t.xLeft) && (x < t.xRight) && (y > t.yBottom) && (y < t.yTop)) {
 
-                System.out.println("Tooth number is: " + t.usNumber);
+                //System.out.println("Tooth number is: " + t.usNumber);
+                ArchPanel.this.abutmentGUI.setAbtRadioButton(i);
                 ClaspBackEnd.putAbutmentTooth(t);
                 //if abutment teeth.contains tooth, remove from set
                 //repaint so that circle is removed

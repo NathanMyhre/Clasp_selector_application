@@ -23,17 +23,17 @@ import java.util.HashMap;
 //Note: make a list of data structures that I need for making a data storage class.
 
 /** Bug: Javadoc for fields
- * ClaspGUI is a Clasp selecting assistance application.
- *
+ * ClaspGUI is the interface for selecting options per selected abutment tooth. ClaspGUI is also referred to as Options window.
  */
 public class ClaspGUI extends JPanel{
-    private ArchPanel leftPanel;
+    private static JFrame claspGUIFrame = new JFrame ("Options Selection by Abutment");
+
+    private JPanel leftPanel;
     private JPanel middlePanel, rightPanel;
 
     private static Insets insets = new Insets(5,5,5,5 );
     private static Insets defaultInset = new Insets(0,0,0,0);
-    private ImageIcon mandibularArchPic;
-    private ImageIcon maxillaryArchPic;
+    private ImageIcon arches;
     private static boolean noValidClasps = false;
 
     //buttons that go in middle pane
@@ -92,15 +92,18 @@ public class ClaspGUI extends JPanel{
     //Javadoc: Jpanels: 1 cell = 20 height
     public ClaspGUI() {
         this.setLayout(new GridBagLayout());
-        leftPanel = new ArchPanel(new GridBagLayout(), this);
+        leftPanel = new JPanel(new GridBagLayout());
         leftPanel.setPreferredSize(new Dimension(500, 1000));
         middlePanel = new JPanel(new GridBagLayout());
         middlePanel.setPreferredSize(new Dimension (500, 1000));
         rightPanel = new JPanel(new GridBagLayout());
 
-        //create images of mandibular arches
-        //mandibularArchPic = createImageIcon("images\\mandibular.PNG", "Mandibular Arch US numbering system");
-        //maxillaryArchPic = createImageIcon("images\\maxillary.PNG", "Maxillary Arch US numbering system");
+        //create images arches
+        //Bug: need to implement painting on arches.
+        arches = createImageIcon("../resources/icons/ArchesCombined.PNG",
+                "Maxillary and Mandibular arches, US Numbering System");
+        JLabel archLabel = new JLabel(arches);
+        leftPanel.add(archLabel);
 
         //Note: create GBC now, and only change within static methods - scope keeps safe.
         GridBagConstraints c = new GridBagConstraints();
@@ -715,16 +718,15 @@ public class ClaspGUI extends JPanel{
 
     //Builds and shows the GUI.
     static void createAndShowGUI() {
-        JFrame frame = new JFrame("Clasp Selector Assistant");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        claspGUIFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        frame.setContentPane(new ClaspGUI());
+        claspGUIFrame.setContentPane(new ClaspGUI());
 
         //frame.setLocationByPlatform(true);
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        claspGUIFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         //frame.setUndecorated(true);
-        frame.pack();
-        frame.setVisible(true);
+        claspGUIFrame.pack();
+        claspGUIFrame.setVisible(true);
     }
 
     public static void main(String[] args) {

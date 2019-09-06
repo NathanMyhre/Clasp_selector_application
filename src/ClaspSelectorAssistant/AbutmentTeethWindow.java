@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 public class AbutmentTeethWindow extends JPanel{
+    //Bug: need a way to switch to missing teeth selection.
+    static JFrame abutmentFrame = new JFrame("Select AbutmentTeeth");
+
     JPanel leftPanel;
     JPanel middlePanel;
     JPanel rightPanel;
@@ -15,7 +18,6 @@ public class AbutmentTeethWindow extends JPanel{
     JTextField abText = new JTextField("Please Select abutment tooth");
 
     static int abutmentUSNumber;
-    static int abToothNumber = 1;
 
     //Abutment tooth radio buttons
     //Note: need to delete abutment tooth radio buttons.
@@ -54,7 +56,6 @@ public class AbutmentTeethWindow extends JPanel{
 
     ButtonGroup abTButtonGroup;
 
-    JButton nextButton;
     JButton finishButton;
 
     HashMap<Integer, JRadioButton> abutmentRadioButtons;
@@ -65,8 +66,6 @@ public class AbutmentTeethWindow extends JPanel{
         leftPanel = new JPanel(new GridBagLayout());
         rightPanel = new JPanel(new GridBagLayout());
         middlePanel = new JPanel(new GridBagLayout());
-
-
 
         //variable to set constraints in the window
         GridBagConstraints c = new GridBagConstraints();
@@ -83,13 +82,16 @@ public class AbutmentTeethWindow extends JPanel{
           stored in ActiveCriteria.
          */
         for (JRadioButton b : abutmentRadioButtons.values()) {
-            abTButtonGroup.add(b);
+            //abTButtonGroup.add(b);
             b.setActionCommand(b.getText());
             b.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     //set US-labeled abutment tooth number
                     abutmentUSNumber = Integer.parseInt(e.getActionCommand());
+                    //get tooth corresponding to US Number and add/remove selected abutment.
+                    Tooth abutment = ClaspBackEnd.teethMap.get(abutmentUSNumber);
+                    ClaspBackEnd.putAbutmentTooth(abutment);
                     //get the definitions
                     String input = ClaspBackEnd.teethTypeMap.get(abutmentUSNumber);
                     ClaspBackEnd.setActiveCriteria(input);
@@ -100,11 +102,11 @@ public class AbutmentTeethWindow extends JPanel{
             });
         }
 
-        nextButton = new JButton("Select Next Tooth");
-        nextButton.addActionListener((ActionListener) -> setAbutmentTooth());
+        finishButton = new JButton("Finished Selecting Abutments");
+        finishButton.addActionListener((ActionListener) -> abutmentsDone());
 
         middlePanel.add(new ArchPanel(new GridBagLayout(), this));
-        rightPanel.add(nextButton);
+        rightPanel.add(finishButton);
 
 
         this.add(leftPanel); this.add(middlePanel); this.add(rightPanel);
@@ -278,48 +280,48 @@ public class AbutmentTeethWindow extends JPanel{
         gui.abutmentRadioButtons.put( 32,gui.abT32);
     }
 
+    //Set a radio button as selected or not. Used currently only by abutment tooth clicking.
+    void setAbtRadioButton(Integer buttonName) {
+        JRadioButton button = abutmentRadioButtons.get(buttonName);
+        if (!button.isSelected()) {     //if not selected, make button selected
+            button.setSelected(true);
+        } else if (button.isSelected()) {
+            button.setSelected(false);  //if already selected, make button de-selected.
+        } else {
+            System.err.println("Unknown error while trying to select radio buttons");
+        }
+    }
+
     //Add text component to the left panel in AbutmentTeethWindow
     private static void addTextArea(AbutmentTeethWindow gui, GridBagConstraints c) {
         Insets inset = new Insets(5,5,5,20);
         c.insets = inset;
         c.gridy = 0;
         c.gridheight = 1;
-        gui.abText = new JTextField("Please Select abutment tooth " + abToothNumber);
+        gui.abText = new JTextField("Please Select abutment teeth");
         gui.abText.setEditable(false);
         gui.abText.setFont(new Font("Arial", Font.BOLD, 16));
         gui.leftPanel.add(gui.abText, c);
     }
 
-    private void setAbutmentTooth() {
-        //figure out which tooth is active - Can set a field to point to a tooth upon clicking.
-        //Add abutment tooth to the list of abutment teeth to be remembered
-        //initialize Active criteria?
-        //for abutment teeth 0-16, get tooth from teethMax, 17-32 get from teethMan.
-        //put this abutment tooth as the first, second, etc abutment tooth in line for examination.
-        if ((abutmentUSNumber > 0) && (abutmentUSNumber < 17)) {
-            Tooth t = ClaspBackEnd.teethMap.get(abutmentUSNumber);
-            ClaspBackEnd.selectedAbutmentTeeth.put(abToothNumber, t);
-        } else if ((abutmentUSNumber > 16) && (abutmentUSNumber < 33)) {
-            Tooth t = ClaspBackEnd.teethMap.get(abutmentUSNumber);
-            ClaspBackEnd.selectedAbutmentTeeth.put(abToothNumber, t);
-        } else {
-            System.err.println("Error, tried to put an illegal abutment tooth in for examination");
-        }
-        abToothNumber++;
-        abText.setText("Please select abutment tooth " + abToothNumber);
+    //At conclusion of abutment selection, this function closes the window and tells ClaspGUIManager that it is finished.
+    private void abutmentsDone() {
+        ClaspGUIManager.selectOptions();
+        abutmentFrame.dispose();
     }
 
+    /**
+     * Creates and shows the GUI for Abutment tooth selection.
+     */
     public static void createAndShowGUI() {
-        JFrame frame = new JFrame("Clasp Selector Assistant");
-        //Bug: when closing an abutmentTeethWindow, we want active criteria to be cleared somehow. Could also ensure cleared when clicking on initial button choices.
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        abutmentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        frame.setContentPane(new AbutmentTeethWindow());
+        abutmentFrame.setContentPane(new AbutmentTeethWindow());
 
         //frame.setLocationByPlatform(true);
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        abutmentFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         //frame.setUndecorated(true);
-        frame.pack();
-        frame.setVisible(true);
+        abutmentFrame.pack();
+        abutmentFrame.setVisible(true);
     }
 }

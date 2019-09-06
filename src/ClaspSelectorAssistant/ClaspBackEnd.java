@@ -51,9 +51,10 @@ public class ClaspBackEnd {
     //"Tooth Type ; PreMolar"
     //"Tooth Type ; Molar"
 
-    //Make the mappings for tooth to integer, and integer to tooth type
+    //Make the bidirectional mappings for tooth to integer, and integer to tooth type
     public static final HashMap<Integer, Tooth> teethMap = makeTeethMap();              //Used to return Tooth
     public static final HashMap<Tooth, Integer> teethUSNumberMap = makeTeethIntegers(); //Used to return US Number
+
     //teethDefs is used to reference the tooth from the US numbering system. References number to tooth type
     public static final HashMap<Integer, String> teethTypeMap = makeToothTypeMap();
 
@@ -66,7 +67,6 @@ public class ClaspBackEnd {
     //criteriaDefs is used to parse tooth type category and value - molar, premolar, or anterior.
     public static final HashMap<String, String> criteriaDefs = makeDefinitions();
 
-
     static void setActiveCriteria(String input) {
         String[] splitString = input.split(" ; ");
         String crit = splitString[0];   //Get the current criterion
@@ -76,6 +76,34 @@ public class ClaspBackEnd {
 
     static HashMap<String, String> getActiveCriteria() {
         return ClaspBackEnd.activeCriteria;
+    }
+
+    /**
+     * Place abutment tooth in memory for later options selection. If tooth has been selected, then remove tooth from memory.
+     * @param abutmentTooth abutment tooth for selection.
+     */
+    public static void putAbutmentTooth(Tooth abutmentTooth) {
+
+        if (!selectedAbutmentTeeth.containsValue(abutmentTooth)) {  // If abutment tooth has not been selected, make it so
+            System.out.println("Putting tooth: " + abutmentTooth.myString());
+            selectedAbutmentTeeth.put(abutmentTooth.usNumber, abutmentTooth);
+        } else if (selectedAbutmentTeeth.containsValue(abutmentTooth)) {    //If abutment has been selected, remove it.
+            System.out.println("Removing tooth: " + abutmentTooth.myString());
+            selectedAbutmentTeeth.remove(abutmentTooth.usNumber);
+        } else {
+            System.err.println("Illegal operation on abutment tooth selection.");
+        }
+
+    }
+
+    /**
+     * Clears the data found in activeCriteria, totalActiveCriteria, selectedAbutmentTeeth.
+     */
+    public static void clearData() {
+        //Bug: I don't want other classes to have access to ClaspBackEnd.clearData() than ClaspGUIManager.
+        selectedAbutmentTeeth.clear();
+        activeCriteria.clear();
+        totalActiveCriteria.clear();
     }
 
     private static HashMap<String, String> makeDefinitions() {
@@ -206,19 +234,7 @@ public class ClaspBackEnd {
         return teeth;
     }
 
-    /**
-     * Place abutment tooth in memory for later options selection. If tooth has been selected, then remove tooth from memory.
-     * @param abutmentTooth abutment tooth for selection.
-     */
-    public static void putAbutmentTooth(Tooth abutmentTooth) {
-        if (!selectedAbutmentTeeth.containsValue(abutmentTooth)) {
-            selectedAbutmentTeeth.put(abutmentTooth.usNumber, abutmentTooth);
-        } else if (selectedAbutmentTeeth.containsValue(abutmentTooth)) {
-            selectedAbutmentTeeth.remove(abutmentTooth.usNumber);
-        } else {
-            System.err.println("Illegal operation on abutment tooth selection.");
-        }
-    }
+
 
     public static Tooth getSelectedAbutmentTooth(Tooth abutmentTooth) {
         return (null);
@@ -251,6 +267,8 @@ class Tooth {
         yTop = yT;
         usNumber = n;
     }
+
+    //put a mouse hovering listener to make curser turn into a hand when hovering over.
 
     public String myString() {
         return Integer.toString(this.usNumber);
