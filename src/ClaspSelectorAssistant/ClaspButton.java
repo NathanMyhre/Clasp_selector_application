@@ -618,7 +618,7 @@ class ResetButton extends ClaspButton {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ClaspGUI.resetButtons(gui);
+        gui.resetButtons();
         //System.out.println("called");
     }
 }

@@ -16,6 +16,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.HashMap;
 
@@ -27,6 +28,7 @@ import java.util.HashMap;
  */
 public class ClaspGUI extends JPanel{
     private static JFrame claspGUIFrame = new JFrame ("Options Selection by Abutment");
+    public ClaspGUIManager guiManager;
 
     private JPanel leftPanel;
     private JPanel middlePanel, rightPanel;
@@ -83,14 +85,20 @@ public class ClaspGUI extends JPanel{
     private JButton nextButton;
     private JButton finishButton;
 
+    private HashMap<String, String> activeCriteria;     //Links tooth options to values and stores for later
+
     //Data structures to hold buttons
     LinkedList<ClaspButton> buttons;
     HashMap<String, ClaspRadioButton> radioButtons;
     LinkedList<ButtonGroup> buttonGroups;
 
+    //Bug: make sure previous is disabled when currentAbutment is 0.
+    private static int currentAbutment = 0;
+
     //Javadoc: 3 columns, 1 row. 1 JPanel per column
     //Javadoc: Jpanels: 1 cell = 20 height
-    public ClaspGUI() {
+    public ClaspGUI(ClaspGUIManager gui) {
+        guiManager = gui;
         this.setLayout(new GridBagLayout());
         leftPanel = new JPanel(new GridBagLayout());
         leftPanel.setPreferredSize(new Dimension(500, 1000));
@@ -133,11 +141,11 @@ public class ClaspGUI extends JPanel{
         ccCingulum = ClaspButton.factory("CC Clasp Cingulum Rest", this); buttons.add(ccCingulum);
         ring = ClaspButton.factory("Ring Clasp", this); buttons.add(ring);
         reset = new JButton("RESET");
-        reset.addActionListener((ActionListener) -> ClaspGUI.resetButtons(ClaspGUI.this));
+        reset.addActionListener((ActionListener) -> ClaspGUI.this.resetButtons());
         previousButton = new JButton("PREVIOUS");
         //previousButton.addActionListener((ActionListener) -> pressPreviousButton(ClaspGUI.this);
         nextButton = new JButton("NEXT");
-        //nextButton.addActionListener((ActionListener) -> pressNextButton(ClaspGUI.this);
+        nextButton.addActionListener((ActionListener) -> pressNextButton());
         finishButton = new JButton("FINISH");
 
 
@@ -178,6 +186,7 @@ public class ClaspGUI extends JPanel{
         c.gridx = 2;
         this.add(rightPanel);
 
+        //selectOptionsOnAbutments();
     }
 
 
@@ -581,13 +590,19 @@ public class ClaspGUI extends JPanel{
      * @param input String input from the action event performed.
      */
 
+    //Bug: no way for invalid tally to decrement
     public void radioButtonClicked(String input) {
-        ClaspBackEnd.setActiveCriteria(input);
+        Integer toothNum = ClaspBackEnd.selectedAbutmentTeeth.get(currentAbutment).usNumber;
+        LinkedList<String> currentValidClasps = ClaspBackEnd.validClasps.get(toothNum);
+        ClaspBackEnd.setActiveCriteria(input, activeCriteria);
         int invalidTally = 0;
         for (ClaspButton button : buttons) {
-            button.updateStatus(ClaspBackEnd.getActiveCriteria());    //Update activity status of the ClaspButtons
-            if(!button.isEnabled()) {
+            button.updateStatus(activeCriteria);    //Update activity status of the ClaspButtons
+            if (button.isEnabled()) {
+                addWithoutDuplicating(currentValidClasps, button.name);
+            } else if(!button.isEnabled()) {
                 invalidTally++;
+                currentValidClasps.remove(button.name);
             }
         }
         // Make a new window to alert users that there are no valid clasps available.
@@ -631,6 +646,70 @@ public class ClaspGUI extends JPanel{
         //Bug: Special character parsing is flimsy, is there a better way we can do this?
     }
 
+    private static LinkedList<String> addWithoutDuplicating(LinkedList myList, String element) {
+        if (!myList.contains(element)) {
+            myList.add(element);
+        }
+        return myList;
+    }
+
+
+
+    /**
+     * Takes the action when Next button is pressed. Either goes to next abutment selection or triggers opening of results window.
+     */
+    private void pressNextButton() {
+        int sizeOfAbutmentList = ClaspBackEnd.selectedAbutmentTeeth.size();
+        //Make sure input is valid: i.e.
+        currentAbutment++;
+        if ((currentAbutment > -1) && (currentAbutment < sizeOfAbutmentList)) {
+            this.selectOptionsOnAbutments();
+        } else if (currentAbutment == sizeOfAbutmentList) {
+            guiManager.getResults();
+            claspGUIFrame.dispose();
+        } else {
+            System.err.println("Invalid index pressing next button in Clasp GUI");
+        }
+
+    }
+
+    /**
+     * Gets the lowest numbered active criteria map and allows users to select options via button presses.
+     */
+    //Bug: make the tooth type selection enabled for abutments after first one.
+    //Bug: need to make sure that current abutment is remembered for future passes that are saved.
+    public void selectOptionsOnAbutments() {
+        resetButtons();
+        //if the current abutment index is valid, pull the active criteria map corresponding to this tooth.
+        Integer toothNum = ClaspBackEnd.selectedAbutmentTeeth.get(currentAbutment).usNumber;
+        activeCriteria = ClaspBackEnd.totalActiveCriteria.get(toothNum);
+        //Finish selections if we have reached the end
+        System.out.println(activeCriteria);
+        checkAndSetToothType();
+}
+
+    //Checks to see if the value "Tooth Type" is in the active criteria, if yes, then click the requisite button.
+    private void checkAndSetToothType() {
+        String toothTypeOption = activeCriteria.get("Tooth Type");
+        System.out.println(toothTypeOption);
+        //Make sure tooth type selected was valid, and that there was indeed a Tooth type value added.
+        if (toothTypeOption != null && activeCriteria.keySet().contains("Tooth Type")) {
+            toothTypeOption = "Tooth Type ; " + toothTypeOption;
+            radioButtonClicked(toothTypeOption);
+            radioButtons.get(toothTypeOption).setSelected(true);
+            Enumeration<AbstractButton> toothTypeButtons = toothTypeGroup.getElements();
+            while (toothTypeButtons.hasMoreElements()) {
+                JRadioButton button = (JRadioButton) toothTypeButtons.nextElement();
+                if (!button.isSelected()) {
+                    button.setEnabled(false);
+                }
+
+            }
+        }
+    }
+
+
+
     /**
      * Opens a new window when a ClaspButton is clicked
      * @param claspButton The clasp button clicked.
@@ -655,6 +734,8 @@ public class ClaspGUI extends JPanel{
         });
 
     }
+
+
 
     /**
      * Produces an information window by clicking on one of the Patient Criteria buttons
@@ -685,16 +766,16 @@ public class ClaspGUI extends JPanel{
 
     /**
      * Resets all buttons to default state. Only called when RESET button is clicked.
-     * @param g the GUI from which the buttons will be cleared.
+     *
      */
-    //Bug: ClaspBackEnd.activeCriteria getter method can allow control
-    public static void resetButtons(ClaspGUI g) {
-        ClaspBackEnd.getActiveCriteria().clear();
+    //Bug: Can reset all buttons at present. Should know which tooth type button to leave clicked.
+    public void resetButtons( ) {
+        //ClaspBackEnd.getActiveCriteria().clear();
         ClaspGUI.noValidClasps = false;
-        for (ClaspButton b : g.buttons) {
-            b.updateStatus(ClaspBackEnd.getActiveCriteria());
+        for (ClaspButton b : buttons) {
+            b.setEnabled(true);
         }
-        for(ButtonGroup b : g.buttonGroups) {
+        for(ButtonGroup b : this.buttonGroups) {
             b.clearSelection();
         }
     }
@@ -720,7 +801,7 @@ public class ClaspGUI extends JPanel{
     static void createAndShowGUI() {
         claspGUIFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        claspGUIFrame.setContentPane(new ClaspGUI());
+        //claspGUIFrame.setContentPane(new ClaspGUI());
 
         //frame.setLocationByPlatform(true);
         claspGUIFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -739,4 +820,5 @@ public class ClaspGUI extends JPanel{
         });
     }
 }
+
 

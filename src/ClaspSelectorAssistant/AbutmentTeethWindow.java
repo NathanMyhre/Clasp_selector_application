@@ -11,6 +11,8 @@ public class AbutmentTeethWindow extends JPanel{
     //Bug: need a way to switch to missing teeth selection.
     static JFrame abutmentFrame = new JFrame("Select AbutmentTeeth");
 
+    public ClaspGUIManager guiManager;
+
     JPanel leftPanel;
     JPanel middlePanel;
     JPanel rightPanel;
@@ -58,9 +60,13 @@ public class AbutmentTeethWindow extends JPanel{
 
     JButton finishButton;
 
+
+    //Bug: index out of bounds if no abutment teeth are selected
     HashMap<Integer, JRadioButton> abutmentRadioButtons;
 
-    public AbutmentTeethWindow(){
+    public AbutmentTeethWindow(ClaspGUIManager gui){
+        guiManager = gui;
+
         this.setLayout(new GridBagLayout());
 
         leftPanel = new JPanel(new GridBagLayout());
@@ -84,6 +90,7 @@ public class AbutmentTeethWindow extends JPanel{
         for (JRadioButton b : abutmentRadioButtons.values()) {
             //abTButtonGroup.add(b);
             b.setActionCommand(b.getText());
+            b.setEnabled(false);
             b.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -94,8 +101,6 @@ public class AbutmentTeethWindow extends JPanel{
                     ClaspBackEnd.putAbutmentTooth(abutment);
                     //get the definitions
                     String input = ClaspBackEnd.teethTypeMap.get(abutmentUSNumber);
-                    ClaspBackEnd.setActiveCriteria(input);
-
                     System.out.println(abutmentUSNumber);
                     System.out.println(ClaspBackEnd.teethTypeMap.get(Integer.parseInt(e.getActionCommand())));
                 }
@@ -280,6 +285,7 @@ public class AbutmentTeethWindow extends JPanel{
         gui.abutmentRadioButtons.put( 32,gui.abT32);
     }
 
+
     //Set a radio button as selected or not. Used currently only by abutment tooth clicking.
     void setAbtRadioButton(Integer buttonName) {
         JRadioButton button = abutmentRadioButtons.get(buttonName);
@@ -306,17 +312,42 @@ public class AbutmentTeethWindow extends JPanel{
 
     //At conclusion of abutment selection, this function closes the window and tells ClaspGUIManager that it is finished.
     private void abutmentsDone() {
-        ClaspGUIManager.selectOptions();
-        abutmentFrame.dispose();
+        //Sort the selected abutment teeth by US number.
+        //Save abutments as new active criteria mappings
+        if (ClaspBackEnd.selectedAbutmentTeeth.size() == 0) {
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    JFrame alertFrame = new JFrame("Alert");
+                    alertFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+                    JTextArea textArea = new JTextArea(10,30);
+                    textArea.setWrapStyleWord(true);
+                    textArea.setEditable(false);
+                    textArea.append("Please select at least one abutment.");
+                    JPanel infoPanel = new JPanel();
+                    infoPanel.add(textArea);
+                    alertFrame.add(infoPanel);
+                    alertFrame.pack();
+                    alertFrame.setLocationByPlatform(true);
+                    alertFrame.setVisible(true);
+                    alertFrame.setResizable(false);
+                    //ClaspGUI.createAndShowGUI();
+                }
+            });
+        } else {
+            ClaspBackEnd.finalizeSelectedAbutments();
+            guiManager.selectOptions();
+            abutmentFrame.dispose();
+        }
+
     }
 
     /**
-     * Creates and shows the GUI for Abutment tooth selection.
+     * Creates and shows the GUI for Abutment tooth selection in a new window.
      */
     public static void createAndShowGUI() {
-        abutmentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        abutmentFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        abutmentFrame.setContentPane(new AbutmentTeethWindow());
+        //abutmentFrame.setContentPane(new AbutmentTeethWindow());
 
         //frame.setLocationByPlatform(true);
         abutmentFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);

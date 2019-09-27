@@ -1,7 +1,6 @@
 package ClaspSelectorAssistant;
 
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
 
 public class ClaspBackEnd {
 
@@ -12,40 +11,40 @@ public class ClaspBackEnd {
     //Teeth, labeled by the US numbering System
 
     //Maxilla teeth
-    static Tooth toothOne = new Tooth(1,67, 113, 301 ,341);
-    static Tooth toothTwo = new Tooth(2,59, 119, 254, 300);
-    static Tooth toothThree = new Tooth(3,70, 117, 196, 248);
-    static Tooth toothFour = new Tooth(4,83, 131, 159, 198);
-    static Tooth toothFive = new Tooth(5,96, 143, 125, 166);
-    static Tooth toothSix = new Tooth(6,123, 151, 92, 121);
-    static Tooth toothSeven = new Tooth(7,154, 183, 66, 105);
-    static Tooth toothEight = new Tooth(8,183, 227, 48, 96);
-    static Tooth toothNine = new Tooth(9,232, 270, 47, 99);
-    static Tooth toothTen = new Tooth(10,279, 302, 61, 112);
-    static Tooth toothEleven = new Tooth(11,310, 340, 89, 120);
-    static Tooth toothTwelve = new Tooth(12,312, 361, 128, 159);
-    static Tooth toothThirteen = new Tooth( 13,328, 373, 167, 192);
-    static Tooth toothFourteen = new Tooth(14,327, 384, 201, 248);
-    static Tooth toothFifteen = new Tooth(15,333, 394, 257, 293);
-    static Tooth toothSixteen = new Tooth(16,341, 399, 305, 343);
+    static Tooth toothOne = new Tooth(1,67, 113, 301 ,341,89,322);
+    static Tooth toothTwo = new Tooth(2,59, 119, 254, 300,86,276);
+    static Tooth toothThree = new Tooth(3,70, 117, 196, 248,95, 224);
+    static Tooth toothFour = new Tooth(4,83, 131, 159, 198,104,180);
+    static Tooth toothFive = new Tooth(5,96, 143, 125, 166,119,143);
+    static Tooth toothSix = new Tooth(6,123, 151, 92, 121,136, 108);
+    static Tooth toothSeven = new Tooth(7,154, 183, 66, 105,168,83);
+    static Tooth toothEight = new Tooth(8,183, 227, 48, 96,204,72);
+    static Tooth toothNine = new Tooth(9,232, 270, 47, 99,251,72);
+    static Tooth toothTen = new Tooth(10,279, 302, 61, 112,289,84);
+    static Tooth toothEleven = new Tooth(11,310, 340, 89, 120,322,107);
+    static Tooth toothTwelve = new Tooth(12,312, 361, 128, 159,337,144);
+    static Tooth toothThirteen = new Tooth( 13,328, 373, 167, 192,351,178);
+    static Tooth toothFourteen = new Tooth(14,327, 384, 201, 248,359,226);
+    static Tooth toothFifteen = new Tooth(15,333, 394, 257, 293,364,276);
+    static Tooth toothSixteen = new Tooth(16,341, 399, 305, 343,371,321);
 
     //Mandible teeth
-    static Tooth toothSeventeen = new Tooth(17,343, 395, 416, 468);
-    static Tooth toothEighteen = new Tooth(18,337, 387, 474, 527);
-    static Tooth toothNineteen = new Tooth(19,324, 376, 529, 585);
-    static Tooth toothTwenty = new Tooth(20,314, 358, 588, 626);
-    static Tooth toothTwentyOne = new Tooth(21,305, 342, 626, 657);
-    static Tooth toothTwentyTwo = new Tooth(22,289, 321, 659, 692);
-    static Tooth toothTwentyThree = new Tooth(23,263, 287, 673, 707);
-    static Tooth toothTwentyFour = new Tooth(24,231, 259, 678, 711);
-    static Tooth toothTwentyFive = new Tooth(25,204, 227, 678, 712);
-    static Tooth toothTwentySix = new Tooth(26,177, 199, 674, 711);
-    static Tooth toothTwentySeven = new Tooth(27,138, 169, 666, 692);
-    static Tooth toothTwentyEight = new Tooth(28,118, 159, 632, 656);
-    static Tooth toothTwentyNine = new Tooth(29,101, 147, 593, 620);
-    static Tooth toothThirty = new Tooth(30,83, 139, 534, 580);
-    static Tooth toothThirtyOne = new Tooth(31,71, 126, 476, 524);
-    static Tooth toothThirtyTwo = new Tooth(32,66, 115, 418, 468);
+    static Tooth toothSeventeen = new Tooth(17,343, 395, 416, 468,368,443);
+    static Tooth toothEighteen = new Tooth(18,337, 387, 474, 527,361,496);
+    static Tooth toothNineteen = new Tooth(19,324, 376, 529, 585,351,556);
+    static Tooth toothTwenty = new Tooth(20,314, 358, 588, 626,335,604);
+    static Tooth toothTwentyOne = new Tooth(21,305, 342, 626, 657,324,640);
+    static Tooth toothTwentyTwo = new Tooth(22,289, 321, 659, 692,304,677);
+    static Tooth toothTwentyThree = new Tooth(23,263, 287, 673, 707,275,691);
+    static Tooth toothTwentyFour = new Tooth(24,231, 259, 678, 711,244,698);
+    static Tooth toothTwentyFive = new Tooth(25,204, 227, 678, 712,215,698);
+    static Tooth toothTwentySix = new Tooth(26,177, 199, 674, 711,187,693);
+    static Tooth toothTwentySeven = new Tooth(27,138, 169, 666, 692,158,679);
+    static Tooth toothTwentyEight = new Tooth(28,118, 159, 632, 656,139,643);
+    static Tooth toothTwentyNine = new Tooth(29,101, 147, 593, 620,127,608);
+    static Tooth toothThirty = new Tooth(30,83, 139, 534, 580,112,559);
+    static Tooth toothThirtyOne = new Tooth(31,71, 126, 476, 524,98,500);
+    static Tooth toothThirtyTwo = new Tooth(32,66, 115, 418, 468,94,447);
 
     //"Tooth Type ; Anterior"
     //"Tooth Type ; PreMolar"
@@ -56,27 +55,31 @@ public class ClaspBackEnd {
     public static final HashMap<Tooth, Integer> teethUSNumberMap = makeTeethIntegers(); //Used to return US Number
 
     //teethDefs is used to reference the tooth from the US numbering system. References number to tooth type
+    //map is (USNumber, tooth type description)
     public static final HashMap<Integer, String> teethTypeMap = makeToothTypeMap();
+
 
     //Data structures remembering abutment teeth, active criteria, and all of the criteria for each clasp selection
     //Note: at most, 32 abutment teeth, and no need to look up more than we already have, so Linked List is fast.
-    static HashMap<Integer, Tooth> selectedAbutmentTeeth = new HashMap<>();    //Key is US tooth Number
-    static HashMap<String, String> activeCriteria = new HashMap<String, String>();          //Links tooth options to values and stores for later
-    static LinkedList<HashMap<String, String>> totalActiveCriteria = new LinkedList<>();    //Remembers list of options
+    static LinkedList<Tooth> selectedAbutmentTeeth = new LinkedList<>();    //Key is US tooth Number
+
+    static HashMap<Integer, HashMap<String, String>> totalActiveCriteria = new HashMap<Integer, HashMap<String, String>>();    //Remembers list of options
+    public static HashMap<Integer, LinkedList<String>> validClasps = new HashMap<>();
+    //Note: need to save options for future usage.
 
     //criteriaDefs is used to parse tooth type category and value - molar, premolar, or anterior.
     public static final HashMap<String, String> criteriaDefs = makeDefinitions();
 
-    static void setActiveCriteria(String input) {
+    static HashMap<String, String> setActiveCriteria(String input, HashMap<String, String> activeOptions) {
+
         String[] splitString = input.split(" ; ");
         String crit = splitString[0];   //Get the current criterion
         String val = splitString[1];    //Get the current value
-        ClaspBackEnd.activeCriteria.put(crit, val);  //remember criteria, value pairing
+        activeOptions.put(crit, val);  //remember criteria, value pairing
+        return activeOptions;
     }
 
-    static HashMap<String, String> getActiveCriteria() {
-        return ClaspBackEnd.activeCriteria;
-    }
+
 
     /**
      * Place abutment tooth in memory for later options selection. If tooth has been selected, then remove tooth from memory.
@@ -84,16 +87,15 @@ public class ClaspBackEnd {
      */
     public static void putAbutmentTooth(Tooth abutmentTooth) {
 
-        if (!selectedAbutmentTeeth.containsValue(abutmentTooth)) {  // If abutment tooth has not been selected, make it so
+        if (!selectedAbutmentTeeth.contains(abutmentTooth)) {  // If abutment tooth has not been selected, make it so
             System.out.println("Putting tooth: " + abutmentTooth.myString());
-            selectedAbutmentTeeth.put(abutmentTooth.usNumber, abutmentTooth);
-        } else if (selectedAbutmentTeeth.containsValue(abutmentTooth)) {    //If abutment has been selected, remove it.
+            selectedAbutmentTeeth.add(abutmentTooth);
+        } else if (selectedAbutmentTeeth.contains(abutmentTooth)) {    //If abutment has been selected, remove it.
             System.out.println("Removing tooth: " + abutmentTooth.myString());
-            selectedAbutmentTeeth.remove(abutmentTooth.usNumber);
+            selectedAbutmentTeeth.remove(abutmentTooth);
         } else {
             System.err.println("Illegal operation on abutment tooth selection.");
         }
-
     }
 
     /**
@@ -102,10 +104,61 @@ public class ClaspBackEnd {
     public static void clearData() {
         //Bug: I don't want other classes to have access to ClaspBackEnd.clearData() than ClaspGUIManager.
         selectedAbutmentTeeth.clear();
-        activeCriteria.clear();
         totalActiveCriteria.clear();
+        validClasps.clear();
     }
 
+    /**
+     * Finalizes the abutment selection and saves to active criteria mappings.
+     */
+    public static void finalizeSelectedAbutments() {
+        sortSelectedAbutments();
+        //Set each abutment tooth in the active criteria mapping.
+        //make a new activeCriteria map for each tooth, and place it in the TotalActiveCriteria map
+        for(int i =0; i <selectedAbutmentTeeth.size(); i++ ) {
+            Integer toothnum = selectedAbutmentTeeth.get(i).usNumber;
+            validClasps.put(toothnum, new LinkedList());
+            HashMap<String, String> activeOptions = new HashMap<String, String>();
+            totalActiveCriteria.put(toothnum, activeOptions);
+            System.out.println("tooth number: " + toothnum);
+            String description = teethTypeMap.get(toothnum);
+            setActiveCriteria(description, activeOptions);
+        }
+    }
+
+    public static LinkedList<String> criteriaToString(HashMap<String, String> criteriaMap) {
+        LinkedList<String> result = new LinkedList();
+        result.add( "Tooth Type: " + criteriaMap.get("Tooth Type") + "         ");
+        result.add("Stress Release Needed: " + criteriaMap.get("Stress Release Needed"));
+        result.add("Survey Line Classification: " + criteriaMap.get("Survey Line Classification"));
+        result.add("Retentive Undercut: " + criteriaMap.get("Retentive Undercut"));
+        result.add("Occlusion: " + criteriaMap.get("Occlusion")+ "        ");
+        result.add("Soft Tissue Undercut: " + criteriaMap.get("Soft Tissue Undercut"));
+        result.add("2mm or more Buccal vestibule: " + criteriaMap.get("2mm or More Buccal Vestibule"));
+        result.add("Esthetically Concerned Patient: " + criteriaMap.get("Esthetically Concerned Patient"));
+        for (String s : result) {
+            if (s.contains ("null")) {
+                s.replace("null", "Not Selected");
+            }
+        }
+        return result;
+    }
+
+    private static void sortSelectedAbutments() {
+        int i = 0;
+        while (i<selectedAbutmentTeeth.size()) {
+            int j = i;
+            while (j > 0 && (selectedAbutmentTeeth.get(j-1).usNumber > selectedAbutmentTeeth.get(j).usNumber)) {
+                Tooth workingTooth = selectedAbutmentTeeth.get(j-1);
+                selectedAbutmentTeeth.set(j-1, selectedAbutmentTeeth.get(j));
+                selectedAbutmentTeeth.set(j, workingTooth);
+                j--;
+            }
+            i++;
+        }
+    }
+
+    //Makes definitions of Tooth options that are listed in the help window.
     private static HashMap<String, String> makeDefinitions() {
         HashMap<String, String> defs = new HashMap<String, String>();
         defs.put("Stress Release Needed", "Stress Release Definition");
@@ -197,6 +250,7 @@ public class ClaspBackEnd {
 
     //Make the mapping of teeth to integers.
     //Bug: could probably use a BiMap to do two way dictionary search for teeth and integers.
+    //Bug: Unchecked call to put(K,V) etc.
     private static HashMap<Tooth, Integer> makeTeethIntegers(){
         HashMap teeth = new HashMap<Tooth, Integer>();
         teeth.put(toothOne, 1);
@@ -245,11 +299,13 @@ public class ClaspBackEnd {
 /**
  * Invisible placeholder for teeth. Provides an interactive region which to click, shaped like a rectangle.
  */
-class Tooth {
+class Tooth implements Comparator {
     public final int xLeft;
     public final int xRight;
     public final int yTop;
     public final int yBottom;
+    public final int xCenterPoint;
+    public final int yCenterPoint;
     public final Integer usNumber;
 
     /**
@@ -257,15 +313,37 @@ class Tooth {
      * @param n Name of the tooth, using the US Numbering system
      * @param xL x-coordinate location for left side of rectangle.
      * @param xR x-coordinate location for right side of rectangle.
-     * @param yB y-coordinate location for top of triangle
-     * @param yT
+     * @param yB y-coordinate location for top of triangle (smaller pixel number)
+     * @param yT y-coordinate location for bottom of triangle (larger pixel number).
+     * @param xC x-coordinate location of tooth center.
+     * @param yC y-coordinate location of tooth center.
      */
-    public Tooth(int n, int xL, int xR, int yB, int yT) {
+    public Tooth(int n, int xL, int xR, int yB, int yT, int xC, int yC) {
+        // set
         xLeft = xL;
         xRight = xR;
         yBottom = yB;
         yTop = yT;
         usNumber = n;
+        xCenterPoint = xC;
+        yCenterPoint = yC;
+    }
+
+    /**
+     * Defines comparing of teeth, which allows to be sorted by US Tooth Number from 1 to 32, or 32 to 1.
+     * @param a First argument to compare.
+     * @param b Second argument to compare.
+     * @return a positive int if the first argument > second, and a negative int if the first argument < second.
+     */
+    @Override
+    public int compare(Object a, Object b) {
+        int result;
+        Tooth firstTooth = (Tooth) a;
+        Tooth secondTooth = (Tooth) b;
+        if (firstTooth.usNumber > secondTooth.usNumber) { result = 1; }
+        else if (firstTooth.usNumber < secondTooth.usNumber) { result = -1; }
+        else { result = 0; }
+        return result;
     }
 
     //put a mouse hovering listener to make curser turn into a hand when hovering over.

@@ -17,6 +17,10 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import java.net.URL;
 
+//For circles, blue for abutment selection
+//Red to remember old selections
+
+
 //Note: need to make documentation for ArchPanel
 //Bug: need error reporting mechanisms
 public class ArchPanel extends JPanel  {
@@ -26,6 +30,7 @@ public class ArchPanel extends JPanel  {
     JLayeredPane archPane;
     static String archImagePath = "../resources/icons/ArchesCombined.PNG";
     ImageIcon archIcon;
+    ArchLabel archIconLabel;
     //ArchPicPanel maxillaryPanel;
     //ArchPicPanel mandibularPanel;
 
@@ -36,6 +41,8 @@ public class ArchPanel extends JPanel  {
     int circleH = 20;
 
     Graphics redCircle;
+
+
 
     public ArchPanel(GridBagLayout layout, ClaspGUI g) {
         //add images
@@ -50,18 +57,13 @@ public class ArchPanel extends JPanel  {
 
         //Make images of arches
         archIcon = createImageIcon(archImagePath, "Maxillary and Mandibular arches, US Numbering System");
-        JLabel archIconLabel = new JLabel(archIcon);
+        archIconLabel = new ArchLabel(archIcon, this);
 
 
 
         //maxillaryPanel = new ArchPicPanel(this, "maxillary");
 
-        //Add listener to the archIcon image that responds appropriately for ClaspGUI
-        archIconLabel.addMouseListener( new MouseAdapter() {
-            public void mousePressed(MouseEvent e) {
-                ArchPanel.this.toothClick(e.getX(), e.getY());
-            }
-        });
+
 
 
         GridBagConstraints constraint = new GridBagConstraints();
@@ -90,17 +92,10 @@ public class ArchPanel extends JPanel  {
 
         //Make images of arches
         archIcon = createImageIcon(archImagePath, "Maxillary and Mandibular arches, US Numbering System");
-        JLabel archIconLabel = new JLabel(archIcon);
+        archIconLabel = new ArchLabel(archIcon, this);
 
 
         //maxillaryPanel = new ArchPicPanel(this, "maxillary");
-
-        //Add listener to the archIcon image that responds appropriately for ClaspGUI
-        archIconLabel.addMouseListener( new MouseAdapter() {
-            public void mousePressed(MouseEvent e) {
-                ArchPanel.this.toothClick(e.getX(), e.getY());
-            }
-        });
 
         GridBagConstraints constraint = new GridBagConstraints();
 
@@ -117,26 +112,7 @@ public class ArchPanel extends JPanel  {
 
     }
 
-    //Calculates if click is within a tooth's coordinate space.
-    //Makes call to add abutment tooth to map if it is a valid tooth space.
-    private void toothClick(int x, int y) {
-        for (Integer i : ClaspBackEnd.teethMap.keySet()) {
-            Tooth t = ClaspBackEnd.teethMap.get(i);
-            if ((x > t.xLeft) && (x < t.xRight) && (y > t.yBottom) && (y < t.yTop)) {
 
-                //System.out.println("Tooth number is: " + t.usNumber);
-                ArchPanel.this.abutmentGUI.setAbtRadioButton(i);
-                ClaspBackEnd.putAbutmentTooth(t);
-                //if abutment teeth.contains tooth, remove from set
-                //repaint so that circle is removed
-                //if !abutmentTooth.contains(t)
-                //System.out.println(teethDefs.get(teethMax.get(t)));
-                //System.out.println(gui.radioButtons.get(teethDefs.get(teethMax.get(t))).myString());
-                //claspGUI.radioButtonClicked(ClaspBackEnd.teethDefs.get(ClaspBackEnd.teethMax.get(t))); //Click the corresponding radio button.
-                //claspGUI.radioButtons.get(ClaspBackEnd.teethDefs.get(ClaspBackEnd.teethMax.get(t))).setSelected(true);
-            }
-        }
-    }
 
 
     public void paintComponent(Graphics g) {
@@ -177,15 +153,95 @@ public class ArchPanel extends JPanel  {
 
 }
 
+class ArchLabel extends JLabel {
+    ArchPanel parentPanel;
+    ImageIcon archImage;
+
+    Circle testCircle;
+
+    static HashMap<Integer, Circle> circleMap = makeCircleMap();
+
+    public ArchLabel(ImageIcon image, ArchPanel gui) {
+        super(image);
+        archImage = image;
+        parentPanel = gui;
+
+        //testCircle  = new Circle(89,322);
+        //testCircle.setActiveBoolean();
+
+        //Add listener to the archIcon image that responds appropriately for ClaspGUI
+        this.addMouseListener( new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                ArchLabel.this.toothClick(e.getX(), e.getY());
+            }
+        });
+    }
+
+    //Make the mapping of numbers to circles. Allows us to activate and deactivate circles by looking up number.
+    private static HashMap<Integer, Circle> makeCircleMap() {
+        HashMap<Integer, Circle> circles = new HashMap<Integer,Circle>();
+        Tooth usTooth;
+        for (Integer usToothNumber = 1; usToothNumber < 33; usToothNumber++) {
+            usTooth = ClaspBackEnd.teethMap.get(usToothNumber);
+            circles.put(usToothNumber, new Circle(usTooth.xCenterPoint, usTooth.yCenterPoint));
+        }
+
+        return circles;
+    }
+
+    //Calculates if click is within a tooth's coordinate space.
+    //Makes call to add abutment tooth to map if it is a valid tooth space.
+
+    protected void toothClick(int x, int y) {
+        for (Integer i : ClaspBackEnd.teethMap.keySet()) {
+            Tooth t = ClaspBackEnd.teethMap.get(i);
+            Circle thisCircle = circleMap.get(i);
+            if ((x > t.xLeft) && (x < t.xRight) && (y > t.yBottom) && (y < t.yTop)) {
+                thisCircle.setActiveBoolean();
+                this.repaint(thisCircle.getX(),thisCircle.getY(),thisCircle.getWidth()+1,thisCircle.getHeight()+1);
+                //System.out.println("Tooth number is: " + t.usNumber);
+                parentPanel.abutmentGUI.setAbtRadioButton(i);
+                ClaspBackEnd.putAbutmentTooth(t);
+
+            }
+        }
+    }
+
+    //all painting goes through here.
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        for (Integer index = 1; index < 33; index++) {
+            circleMap.get(index).paintCircle(g);
+        }
+    }
+
+}
 
 /**
  * Opaque red circle used to highlight selected teeth
  */
-class RedCircle  {
-    private int xPos = 50;
-    private int yPos = 50;
+class Circle  {
+    private int xPos;
+    private int yPos;
     private int width = 20;
     private int height = 20;
+    private boolean active = false;
+    private static Color transRed = new Color(1,0,0, 0.5f);
+    private static Color clear = new Color(0,0,0,0.0f);
+
+    public Circle(int xCenter, int yCenter) {
+        xPos = xCenter - 10;
+        yPos = yCenter - 10;
+        //this.active = true;
+    }
+
+    public void setActiveBoolean(){
+        if (active) {
+            active = false;
+        } else if (!active) {
+            active = true;
+        }
+    }
 
     public void setX(int xPos){
         this.xPos = xPos;
@@ -212,11 +268,15 @@ class RedCircle  {
     }
 
     public void paintCircle(Graphics g){
-        Color transRed = new Color(1,0,0, 0.5f);
-        g.setColor(transRed);
-        g.fillOval(xPos,yPos,width,height);
-        g.setColor(Color.BLACK);
-        g.drawOval(xPos,yPos,width,height);
+        //If the circle is active, then paint a red circle over the space indicated by top left corner.
+        //Place logic for selecting missing/abutment/saved teeth here.
+        if (active) {
+            g.setColor(Color.RED);
+            g.fillOval(xPos,yPos,width,height);
+            g.setColor(Color.BLACK);
+            g.drawOval(xPos,yPos,width,height);
+        }
+
     }
 
 }
