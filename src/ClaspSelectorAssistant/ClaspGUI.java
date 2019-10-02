@@ -93,7 +93,7 @@ public class ClaspGUI extends JPanel{
     LinkedList<ButtonGroup> buttonGroups;
 
     //Bug: make sure previous is disabled when currentAbutment is 0.
-    private static int currentAbutment = 0;
+    static int currentAbutment = 0;
 
     //Javadoc: 3 columns, 1 row. 1 JPanel per column
     //Javadoc: Jpanels: 1 cell = 20 height

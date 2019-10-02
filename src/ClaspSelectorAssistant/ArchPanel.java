@@ -207,6 +207,25 @@ class ArchLabel extends JLabel {
         }
     }
 
+    /**
+     * Repaints tooth space from ArchLabel; removes circle if one already painted, or vice versa. Contains the exact code
+     * as toothClick, but without adding a new tooth to the abutment list.
+     * @param x x coordinate of "click"
+     * @param y y coordinate of "click"
+     */
+    protected void toothRepaint(int x, int y) {
+        for (Integer i : ClaspBackEnd.teethMap.keySet()) {
+            Tooth t = ClaspBackEnd.teethMap.get(i);
+            Circle thisCircle = circleMap.get(i);
+            if ((x > t.xLeft) && (x < t.xRight) && (y > t.yBottom) && (y < t.yTop)) {
+                thisCircle.setActiveBoolean();
+                this.repaint(thisCircle.getX(),thisCircle.getY(),thisCircle.getWidth()+1,thisCircle.getHeight()+1);
+                //System.out.println("Tooth number is: " + t.usNumber);
+                parentPanel.abutmentGUI.setAbtRadioButton(i);
+            }
+        }
+    }
+
     //all painting goes through here.
     public void paintComponent(Graphics g) {
         super.paintComponent(g);

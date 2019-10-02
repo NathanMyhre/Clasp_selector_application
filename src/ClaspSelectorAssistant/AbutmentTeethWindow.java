@@ -14,7 +14,7 @@ public class AbutmentTeethWindow extends JPanel{
     public ClaspGUIManager guiManager;
 
     JPanel leftPanel;
-    JPanel middlePanel;
+    ArchPanel middlePanel;
     JPanel rightPanel;
 
     JTextField abText = new JTextField("Please Select abutment tooth");
@@ -71,7 +71,7 @@ public class AbutmentTeethWindow extends JPanel{
 
         leftPanel = new JPanel(new GridBagLayout());
         rightPanel = new JPanel(new GridBagLayout());
-        middlePanel = new JPanel(new GridBagLayout());
+        middlePanel = new ArchPanel(new GridBagLayout(), this);
 
         //variable to set constraints in the window
         GridBagConstraints c = new GridBagConstraints();
@@ -110,7 +110,6 @@ public class AbutmentTeethWindow extends JPanel{
         finishButton = new JButton("Finished Selecting Abutments");
         finishButton.addActionListener((ActionListener) -> abutmentsDone());
 
-        middlePanel.add(new ArchPanel(new GridBagLayout(), this));
         rightPanel.add(finishButton);
 
 

@@ -34,7 +34,7 @@ public class ResultsWindow extends JPanel{
         //this.setLayout();
         claspGUIManager = gui;
         GridBagConstraints constraints = new GridBagConstraints();
-        this.setPreferredSize(new Dimension(ClaspGUIManager.screenSize.width, ClaspGUIManager.screenSize.height));
+        this.setPreferredSize(new Dimension(ClaspGUIManager.screenSize.width, (ClaspGUIManager.screenSize.height - 500)));
 
 
         panelOne = new JPanel();
@@ -53,7 +53,9 @@ public class ResultsWindow extends JPanel{
         resultsText.setOpaque(false);
         resultsText.setFont(new Font("Arial", Font.BOLD, 16));
 
-        resultsScrollPane = new JScrollPane(resultsText);
+        JPanel textArea = new JPanel();
+        textArea.add(resultsText);
+        resultsScrollPane = new JScrollPane(textArea);
         resultsScrollPane.setPreferredSize(new Dimension(ClaspGUIManager.screenSize.width/2, ClaspGUIManager.screenSize.height));
 
         panelTwo.add(resultsScrollPane);

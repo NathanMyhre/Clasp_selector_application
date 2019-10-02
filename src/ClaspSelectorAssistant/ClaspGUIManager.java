@@ -38,7 +38,7 @@ public class ClaspGUIManager extends JFrame{
         claspGUI = new ClaspGUI(this);
         resultsWindow = new ResultsWindow(this);
 
-
+        makeFrameFullSize(this);
 
 
         this.setPreferredSize(new Dimension(screenSize.width, screenSize.height));
@@ -116,6 +116,10 @@ public class ClaspGUIManager extends JFrame{
      */
     public void restartSelection(int code) {
         if (code == 0 ){
+            for (Tooth tooth : ClaspBackEnd.selectedAbutmentTeeth) {
+                this.abutmentTeethWindow.middlePanel.archIconLabel.toothRepaint(tooth.xCenterPoint, tooth.yCenterPoint);
+            }
+            ClaspGUI.currentAbutment = 0;
             ClaspBackEnd.clearData();
         }
         setWindowBooleans(0);
@@ -161,7 +165,7 @@ public class ClaspGUIManager extends JFrame{
 
     private static void makeFrameFullSize(JFrame aFrame) {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        aFrame.setSize(screenSize.width, screenSize.height);
+        aFrame.setSize(screenSize.width, (screenSize.height - 100));
     }
 
     /**
