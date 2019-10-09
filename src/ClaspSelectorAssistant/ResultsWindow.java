@@ -31,7 +31,7 @@ public class ResultsWindow extends JPanel{
 
 
     public ResultsWindow(ClaspGUIManager gui) {
-        //this.setLayout();
+        this.setLayout(new GridBagLayout());
         claspGUIManager = gui;
         GridBagConstraints constraints = new GridBagConstraints();
         this.setPreferredSize(new Dimension(ClaspGUIManager.screenSize.width, (ClaspGUIManager.screenSize.height - 500)));
@@ -44,8 +44,8 @@ public class ResultsWindow extends JPanel{
         panelFour = new JPanel(new GridBagLayout());
 
         archIcon = createImageIcon(archImagePath, "Maxillary and Mandibular arches, US Numbering System.");
-
-        panelOne.add(new JLabel(archIcon));
+        archLabel = new StaticArchLabel(archIcon);
+        panelOne.add(archLabel);
 
         resultsText = new JTextArea();
         resultsText.setWrapStyleWord(true);
@@ -84,11 +84,13 @@ public class ResultsWindow extends JPanel{
     public void addComponentsToWindow() {
         int gridX = 0;
         int gridY = 0;
+
         GridBagConstraints constraints = new GridBagConstraints();
         Insets abutmentInset = new Insets(20,20,0,5);
         Insets criteriaInset = new Insets(1,5,1,5);
         JTextArea toothTextArea = new JTextArea();
         for (Tooth abutment : ClaspBackEnd.selectedAbutmentTeeth){
+            archLabel.toothRepaint(abutment.xCenterPoint, abutment.yCenterPoint);
             Integer abutmentNumber = abutment.usNumber;
             LinkedList<String> criteria = buildResultTextContent(abutmentNumber);
             resultsText.append("Abutment Tooth " + abutmentNumber +": \n");

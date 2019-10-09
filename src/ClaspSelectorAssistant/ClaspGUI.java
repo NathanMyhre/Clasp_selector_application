@@ -36,7 +36,10 @@ public class ClaspGUI extends JPanel{
     private static Insets insets = new Insets(5,5,5,5 );
     private static Insets defaultInset = new Insets(0,0,0,0);
     private ImageIcon arches;
+    private StaticArchLabel archLabel;
     private static boolean noValidClasps = false;
+
+    private JTextArea abutmentNumberText;
 
     //buttons that go in middle pane
     private InfoButton stressReleaseInfo;
@@ -110,7 +113,7 @@ public class ClaspGUI extends JPanel{
         //Bug: need to implement painting on arches.
         arches = createImageIcon("../resources/icons/ArchesCombined.PNG",
                 "Maxillary and Mandibular arches, US Numbering System");
-        JLabel archLabel = new JLabel(arches);
+        archLabel = new StaticArchLabel(arches);
         leftPanel.add(archLabel);
 
         //Note: create GBC now, and only change within static methods - scope keeps safe.
@@ -143,7 +146,7 @@ public class ClaspGUI extends JPanel{
         reset = new JButton("RESET");
         reset.addActionListener((ActionListener) -> ClaspGUI.this.resetButtons());
         previousButton = new JButton("PREVIOUS");
-        //previousButton.addActionListener((ActionListener) -> pressPreviousButton(ClaspGUI.this);
+        previousButton.addActionListener((ActionListener) -> pressPreviousButton());
         nextButton = new JButton("NEXT");
         nextButton.addActionListener((ActionListener) -> pressNextButton());
         finishButton = new JButton("FINISH");
@@ -154,6 +157,7 @@ public class ClaspGUI extends JPanel{
 
         //Add and place radio buttons for patient selection criteria
         c.gridwidth = 1;
+        ClaspGUI.addText(this, c);
         ClaspGUI.addStressReleaseButtons(this, c);
         ClaspGUI.addSurveyLineButtons(this, c);
         ClaspGUI.addRetentiveUndercutButtons(this, c);
@@ -189,6 +193,20 @@ public class ClaspGUI extends JPanel{
         //selectOptionsOnAbutments();
     }
 
+    //add abutment tooth text to the window.
+    private static void addText(ClaspGUI gui, GridBagConstraints c) {
+        gui.abutmentNumberText = new JTextArea("Abutment Tooth: xx");
+        gui.abutmentNumberText.setFont(new Font ("Arial", Font.BOLD, 16));
+        gui.abutmentNumberText.setEditable(false);
+        gui.abutmentNumberText.setOpaque(false);
+        gui.abutmentNumberText.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridheight = 1;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        gui.middlePanel.add(gui.abutmentNumberText, c);
+        //gui.replaceText();
+    }
 
     //Creates info button and radio buttons for Stress Release choices
     private static void addStressReleaseButtons(ClaspGUI gui, GridBagConstraints c){
@@ -198,7 +216,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 2;
         c.ipady = 30;
         c.gridx = 0;
-        c.gridy = 3;
+        c.gridy = 4;
         c.insets = insets;
         gui.middlePanel.add(gui.stressReleaseInfo, c);
 
@@ -214,7 +232,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 1;
         c.ipady = 15;
         c.gridx = 1;
-        c.gridy = 3;
+        c.gridy = 4;
         gui.stressReleaseGroup.add(gui.stressReleaseYes);
         gui.middlePanel.add(gui.stressReleaseYes, c);
 
@@ -226,7 +244,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 1;
         c.ipady = 15;
         c.gridx = 1;
-        c.gridy = 4;
+        c.gridy = 5;
         gui.stressReleaseGroup.add(gui.stressReleaseNo);
         gui.middlePanel.add(gui.stressReleaseNo, c);
 
@@ -240,7 +258,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 3;   //next gridy = 5
         c.ipady = 45;
         c.gridx = 0;
-        c.gridy = 5;
+        c.gridy = 6;
         c.insets = insets;
         gui.middlePanel.add(gui.surveyLineInfo, c);
         //Bug:  add item listener to survey line info to open new text window.
@@ -257,7 +275,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 1;
         c.ipady = 15;
         c.gridx = 1;
-        c.gridy = 5;
+        c.gridy = 6;
         gui.surveyLineGroup.add(gui.surveyLineClass1);
         gui.middlePanel.add(gui.surveyLineClass1, c);
 
@@ -267,7 +285,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 1;
         c.ipady = 15;
         c.gridx = 1;
-        c.gridy = 6;
+        c.gridy = 7;
         gui.surveyLineGroup.add(gui.surveyLineClass2);
         gui.middlePanel.add(gui.surveyLineClass2, c);
 
@@ -277,7 +295,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 1;
         c.ipady = 15;
         c.gridx = 1;
-        c.gridy = 7;
+        c.gridy = 8;
         gui.surveyLineGroup.add(gui.surveyLineClass3);
         gui.middlePanel.add(gui.surveyLineClass3, c);
     }
@@ -290,7 +308,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 2;   //next gridy = 7
         c.ipady = 30;
         c.gridx = 0;
-        c.gridy = 8;
+        c.gridy = 9;
         c.insets = insets;
         gui.middlePanel.add(gui.retentiveUndercutInfo, c);
 
@@ -305,7 +323,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 1;
         c.ipady = 15;
         c.gridx = 1;
-        c.gridy = 8;
+        c.gridy = 9;
         gui.retentiveUndercutGroup.add(gui.retentiveUndercut1);
         gui.middlePanel.add(gui.retentiveUndercut1, c);
 
@@ -315,7 +333,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 1;
         c.ipady = 15;
         c.gridx = 1;
-        c.gridy = 9;
+        c.gridy = 10;
         gui.retentiveUndercutGroup.add(gui.retentiveUndercut2);
         gui.middlePanel.add(gui.retentiveUndercut2, c);
     }
@@ -328,7 +346,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 2;   //next gridy = 9
         c.ipady = 30;
         c.gridx = 0;
-        c.gridy = 10;
+        c.gridy = 11;
         c.insets = insets;
         gui.middlePanel.add(gui.occlusionInfo, c);
 
@@ -343,7 +361,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 1;
         c.ipady = 15;
         c.gridx = 1;
-        c.gridy = 10;
+        c.gridy = 11;
         gui.occlusionGroup.add(gui.occlusionMesial);
         gui.middlePanel.add(gui.occlusionMesial, c);
 
@@ -353,7 +371,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 1;
         c.ipady = 15;
         c.gridx = 1;
-        c.gridy = 11;
+        c.gridy = 12;
         gui.occlusionGroup.add(gui.occlusionDistal);
         gui.middlePanel.add(gui.occlusionDistal, c);
     }
@@ -365,7 +383,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 2;
         c.ipady = 30;
         c.gridx = 0;
-        c.gridy = 12;
+        c.gridy = 13;
         c.insets = insets;
         gui.middlePanel.add(gui.softTissueUndercutInfo, c);
 
@@ -380,7 +398,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 1;
         c.ipady = 15;
         c.gridx = 1;
-        c.gridy = 12;
+        c.gridy = 13;
         gui.softTissueUndercutGroup.add(gui.softTissueUndercutYes);
         gui.middlePanel.add(gui.softTissueUndercutYes, c);
 
@@ -390,7 +408,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 1;
         c.ipady = 15;
         c.gridx = 1;
-        c.gridy = 13;
+        c.gridy = 14;
         gui.softTissueUndercutGroup.add(gui.softTissueUndercutNo);
         gui.middlePanel.add(gui.softTissueUndercutNo, c);
     }
@@ -402,7 +420,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 2;   //next gridy = 13
         c.ipady = 30;
         c.gridx = 0;
-        c.gridy = 14;
+        c.gridy = 15;
         c.insets = insets;
         gui.middlePanel.add(gui.buccalVestib2mmInfo, c);
 
@@ -417,7 +435,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 1;
         c.ipady = 15;
         c.gridx = 1;
-        c.gridy = 14;
+        c.gridy = 15;
         gui.buccalVestib2mmGroup.add(gui.buccalVestib2mmYes);
         gui.middlePanel.add(gui.buccalVestib2mmYes, c);
 
@@ -427,7 +445,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 1;
         c.ipady = 15;
         c.gridx = 1;
-        c.gridy = 15;
+        c.gridy = 16;
         gui.buccalVestib2mmGroup.add(gui.buccalVestib2mmNo);
         gui.middlePanel.add(gui.buccalVestib2mmNo, c);
     }
@@ -439,7 +457,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 2;   //next gridy = 15
         c.ipady = 30;
         c.gridx = 0;
-        c.gridy = 16;
+        c.gridy = 17;
         c.insets = insets;
         gui.middlePanel.add(gui.estheticInfo, c);
 
@@ -454,7 +472,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 1;
         c.ipady = 15;
         c.gridx = 1;
-        c.gridy = 16;
+        c.gridy = 17;
         gui.estheticGroup.add(gui.estheticYes);
         gui.middlePanel.add(gui.estheticYes, c);
 
@@ -464,7 +482,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 1;
         c.ipady = 15;
         c.gridx = 1;
-        c.gridy = 17;
+        c.gridy = 18;
         gui.estheticGroup.add(gui.estheticNo);
         gui.middlePanel.add(gui.estheticNo, c);
     }
@@ -476,7 +494,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 3;
         c.ipady = 45;
         c.gridx = 0;
-        c.gridy = 0;
+        c.gridy = 1;
         c.insets = insets;
         gui.middlePanel.add(gui.toothTypeInfo, c);
 
@@ -491,7 +509,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 1;
         c.ipady = 15;
         c.gridx = 1;
-        c.gridy = 0;
+        c.gridy = 1;
         gui.toothTypeGroup.add(gui.toothTypeAnterior);
         gui.middlePanel.add(gui.toothTypeAnterior, c);
 
@@ -501,7 +519,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 1;
         c.ipady = 15;
         c.gridx = 1;
-        c.gridy = 1;
+        c.gridy = 2;
         gui.toothTypeGroup.add(gui.toothTypePremolar);
         gui.middlePanel.add(gui.toothTypePremolar, c);
 
@@ -511,7 +529,7 @@ public class ClaspGUI extends JPanel{
         c.gridheight = 1;
         c.ipady = 15;
         c.gridx = 1;
-        c.gridy = 2;
+        c.gridy = 3;
         gui.toothTypeGroup.add(gui.toothTypeMolar);
         gui.middlePanel.add(gui.toothTypeMolar, c);
 
@@ -638,7 +656,6 @@ public class ClaspGUI extends JPanel{
                     frame.setLocationByPlatform(true);
                     frame.setVisible(true);
                     frame.setResizable(false);
-
                 }
             });
         }
@@ -674,6 +691,19 @@ public class ClaspGUI extends JPanel{
     }
 
     /**
+     * Takes the action when Previous button is pressed. Goes to previous abutment selections or opens an error window.
+     */
+    private void pressPreviousButton() {
+        int sizeOfAbutmentList = ClaspBackEnd.selectedAbutmentTeeth.size();
+        currentAbutment--;
+        if ((currentAbutment > -1) && (currentAbutment < sizeOfAbutmentList)) {
+            this.selectOptionsOnAbutments();
+        } else if (currentAbutment < 0) {
+            currentAbutment++;
+        }
+    }
+
+    /**
      * Gets the lowest numbered active criteria map and allows users to select options via button presses.
      */
     //Bug: make the tooth type selection enabled for abutments after first one.
@@ -682,6 +712,13 @@ public class ClaspGUI extends JPanel{
         resetButtons();
         //if the current abutment index is valid, pull the active criteria map corresponding to this tooth.
         Integer toothNum = ClaspBackEnd.selectedAbutmentTeeth.get(currentAbutment).usNumber;
+        if(toothNum <10 ) {
+            abutmentNumberText.replaceRange(("0" + toothNum.toString()), 16, 18) ;
+        } else if(toothNum >=10 ) {
+            abutmentNumberText.replaceRange((toothNum.toString()), 16, 18) ;
+
+        }
+        System.out.println(abutmentNumberText.toString());
         activeCriteria = ClaspBackEnd.totalActiveCriteria.get(toothNum);
         //Finish selections if we have reached the end
         System.out.println(activeCriteria);

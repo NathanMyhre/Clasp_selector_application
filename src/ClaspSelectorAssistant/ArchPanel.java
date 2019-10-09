@@ -161,10 +161,14 @@ class ArchLabel extends JLabel {
 
     static HashMap<Integer, Circle> circleMap = makeCircleMap();
 
+    public ArchLabel() {
+        super();
+    }
+
     public ArchLabel(ImageIcon image, ArchPanel gui) {
         super(image);
         archImage = image;
-        parentPanel = gui;
+        parentPanel = (ArchPanel) gui;
 
         //testCircle  = new Circle(89,322);
         //testCircle.setActiveBoolean();
@@ -234,6 +238,58 @@ class ArchLabel extends JLabel {
         }
     }
 
+}
+
+class StaticArchLabel extends ArchLabel {
+
+    public StaticArchLabel(ImageIcon image) {
+        super(image, null);
+
+    }
+
+    @Override
+    protected void toothClick(int x, int y) {
+        //do nothing for clicks on these pictures.
+    }
+
+    @Override
+    protected void toothRepaint(int x, int y) {
+        for (Integer i : ClaspBackEnd.teethMap.keySet()) {
+            Tooth t = ClaspBackEnd.teethMap.get(i);
+            Circle thisCircle = circleMap.get(i);
+            if ((x > t.xLeft) && (x < t.xRight) && (y > t.yBottom) && (y < t.yTop)) {
+                this.repaint(thisCircle.getX(),thisCircle.getY(),thisCircle.getWidth()+1,thisCircle.getHeight()+1);
+                //System.out.println("Tooth number is: " + t.usNumber);
+            }
+        }
+    }
+}
+
+class OptionsArchLabel extends ArchLabel {
+    //static LinkedList<Integer>
+
+
+    public OptionsArchLabel(ImageIcon image) {
+        super(image, null);
+
+    }
+
+    @Override
+    protected void toothClick(int x, int y) {
+        //do nothing for clicks on these pictures.
+    }
+
+    @Override
+    protected void toothRepaint(int x, int y) {
+        for (Integer i : ClaspBackEnd.teethMap.keySet()) {
+            Tooth t = ClaspBackEnd.teethMap.get(i);
+            Circle thisCircle = circleMap.get(i);
+            if ((x > t.xLeft) && (x < t.xRight) && (y > t.yBottom) && (y < t.yTop)) {
+                this.repaint(thisCircle.getX(),thisCircle.getY(),thisCircle.getWidth()+1,thisCircle.getHeight()+1);
+                //System.out.println("Tooth number is: " + t.usNumber);
+            }
+        }
+    }
 }
 
 /**
